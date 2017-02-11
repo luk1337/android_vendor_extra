@@ -1,4 +1,4 @@
-ROOT='/home/luk/android/lineage-14.1'
+ROOT="${PWD}"
 REPOSITORIES=(
     'packages/apps/ContactsCommon'
     'packages/apps/Contacts'
