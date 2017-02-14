@@ -14,7 +14,7 @@ REPOSITORIES=(
 for repository in "${REPOSITORIES[@]}"; do
     cd "${ROOT}/${repository}"
 
-    git am "${ROOT}/oms-patches/${repository}"/*
+    git am "${ROOT}/vendor/extra/patches/${repository}"/*
 
     cd "${ROOT}"
 done

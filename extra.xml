@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <project name="luk1337/android_vendor_extra" path="vendor/extra" remote="github" />
+  <project name="TeamSubstratum/masquerade" path="packages/apps/masquerade" remote="github" revision="n" />
+</manifest>
