@@ -1,4 +1,4 @@
-From db55a4020f8942389b3862ddb7442c5f50d62f15 Mon Sep 17 00:00:00 2001
+From 2cffbe56ae7585e6d863b9647e88303e921bc4de Mon Sep 17 00:00:00 2001
 From: Kuba Schenk <abukcz@gmail.com>
 Date: Thu, 1 Dec 2016 21:48:26 +0100
 Subject: [PATCH 28/38] OMS7-N: ApplicationsState: add filter for Substratum
@@ -15,7 +15,7 @@ Change-Id: I594c993977733e67f566ac65df50ad2e1bbdbdd3
  1 file changed, 11 insertions(+)
 
 diff --git a/packages/SettingsLib/src/com/android/settingslib/applications/ApplicationsState.java b/packages/SettingsLib/src/com/android/settingslib/applications/ApplicationsState.java
-index 6fecd40..d3a6e21 100644
+index 6fecd4044ca..d3a6e217735 100644
 --- a/packages/SettingsLib/src/com/android/settingslib/applications/ApplicationsState.java
 +++ b/packages/SettingsLib/src/com/android/settingslib/applications/ApplicationsState.java
 @@ -1325,6 +1325,17 @@ public class ApplicationsState {
@@ -37,5 +37,5 @@ index 6fecd40..d3a6e21 100644
          private int mCurrentUser;
  
 -- 
-2.9.3
+2.11.1
 

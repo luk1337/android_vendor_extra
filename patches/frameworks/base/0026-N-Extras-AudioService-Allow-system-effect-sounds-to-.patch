@@ -1,4 +1,4 @@
-From f3f83a64481e2abdf561f7c42d7f2e7d5f32012b Mon Sep 17 00:00:00 2001
+From 2ae9c134e5eefee70bb1abce584b0db310baa8f5 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Sun, 17 Jul 2016 17:56:40 -0400
 Subject: [PATCH 26/38] N-Extras: AudioService: Allow system effect sounds to
@@ -17,7 +17,7 @@ Change-Id: I7666c2bd259443ccec442bf6059786bea3dc069e
  1 file changed, 21 insertions(+), 5 deletions(-)
 
 diff --git a/services/core/java/com/android/server/audio/AudioService.java b/services/core/java/com/android/server/audio/AudioService.java
-index cd766af..2e3d5a6 100644
+index f5db48806de..c6144d0b0b9 100644
 --- a/services/core/java/com/android/server/audio/AudioService.java
 +++ b/services/core/java/com/android/server/audio/AudioService.java
 @@ -123,6 +123,7 @@ import com.android.server.pm.UserManagerService;
@@ -75,5 +75,5 @@ index cd766af..2e3d5a6 100644
                          mediaPlayer.setAudioStreamType(AudioSystem.STREAM_SYSTEM);
                          mediaPlayer.prepare();
 -- 
-2.9.3
+2.11.1
 

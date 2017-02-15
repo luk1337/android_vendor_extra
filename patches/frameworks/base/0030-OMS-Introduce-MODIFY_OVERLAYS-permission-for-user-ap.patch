@@ -1,4 +1,4 @@
-From 4045dd2c0cbb895e8d430a9388d33b5596a9fd2b Mon Sep 17 00:00:00 2001
+From 1808dee12401982a7df5f7538a40f78de9c1dfe8 Mon Sep 17 00:00:00 2001
 From: bigrushdog <randall.rushing@gmail.com>
 Date: Mon, 19 Dec 2016 04:33:31 -0800
 Subject: [PATCH 30/38] OMS: Introduce MODIFY_OVERLAYS permission for user apps
@@ -16,10 +16,10 @@ Change-Id: Ib6b10b516577f338aee31e759bfd16278f902c20
  3 files changed, 29 insertions(+), 8 deletions(-)
 
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index 986be28..abed0df 100644
+index 6a5bd3946db..3ceb17ba568 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
-@@ -3160,6 +3160,12 @@
+@@ -3162,6 +3162,12 @@
      <permission android:name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"
                  android:protectionLevel="signature|privileged" />
  
@@ -33,7 +33,7 @@ index 986be28..abed0df 100644
                   android:persistent="true"
                   android:hasCode="false"
 diff --git a/core/res/res/values/strings.xml b/core/res/res/values/strings.xml
-index 8f5f8cf..8313d5d 100644
+index 1823629341c..d0923ccf6dc 100755
 --- a/core/res/res/values/strings.xml
 +++ b/core/res/res/values/strings.xml
 @@ -1411,6 +1411,11 @@
@@ -49,7 +49,7 @@ index 8f5f8cf..8313d5d 100644
  
      <!-- Title of policy access to limiting the user's password choices -->
 diff --git a/services/core/java/com/android/server/om/OverlayManagerService.java b/services/core/java/com/android/server/om/OverlayManagerService.java
-index deb9046..e205ce1 100644
+index deb9046a2d4..e205ce1d030 100644
 --- a/services/core/java/com/android/server/om/OverlayManagerService.java
 +++ b/services/core/java/com/android/server/om/OverlayManagerService.java
 @@ -36,6 +36,7 @@ import android.content.om.IOverlayManager;
@@ -116,5 +116,5 @@ index deb9046..e205ce1 100644
          }
  
 -- 
-2.9.3
+2.11.1
 

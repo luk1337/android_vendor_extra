@@ -1,4 +1,4 @@
-From a71d0e0ea46b7d910dea2f9c0eafbab2b1e3ef24 Mon Sep 17 00:00:00 2001
+From 3dc4ac418abd5cb3e3fa49377fbc12a6c88fae8c Mon Sep 17 00:00:00 2001
 From: Alex Cruz <mazdarider23@gmail.com>
 Date: Tue, 24 Jan 2017 11:14:46 +0100
 Subject: [PATCH 35/38] Expose external qs tile tint color
@@ -14,7 +14,7 @@ Change-Id: If6dbf9ab29f8007d85a3c45524b1cf4ba1b032fb
  2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
-index 83b8524..e31d124 100644
+index 83b852416e1..e31d1244ac8 100644
 --- a/packages/SystemUI/res/values/projekt_colors.xml
 +++ b/packages/SystemUI/res/values/projekt_colors.xml
 @@ -30,4 +30,6 @@
@@ -25,7 +25,7 @@ index 83b8524..e31d124 100644
 +    <color name="external_qs_tile_tint_color">@android:color/white</color>
  </resources>
 diff --git a/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java b/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java
-index 0cd6490..6fabc61 100644
+index 0cd6490614b..6fabc6101ca 100644
 --- a/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java
 +++ b/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java
 @@ -177,7 +177,7 @@ public class TileQueryHelper {
@@ -38,5 +38,5 @@ index 0cd6490..6fabc61 100644
                  addTile(spec, icon, label != null ? label.toString() : "null", appLabel, mContext);
              }
 -- 
-2.9.3
+2.11.1
 

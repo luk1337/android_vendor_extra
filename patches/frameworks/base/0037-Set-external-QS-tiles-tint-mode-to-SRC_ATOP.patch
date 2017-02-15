@@ -1,4 +1,4 @@
-From 1a4d5be7f78b87480be19243ae88e543a1b9db58 Mon Sep 17 00:00:00 2001
+From 00fbcc2ad550555e8059fac66d621d427851ed81 Mon Sep 17 00:00:00 2001
 From: Alex Cruz <mazdarider23@gmail.com>
 Date: Sat, 4 Feb 2017 14:13:26 +0100
 Subject: [PATCH 37/38] Set external QS tiles tint mode to SRC_ATOP
@@ -19,7 +19,7 @@ Change-Id: I6d577573dd494d61a3e87abebd919b02a481db56
  1 file changed, 2 insertions(+)
 
 diff --git a/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java b/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java
-index 6fabc61..dbdb614 100644
+index 6fabc6101ca..dbdb614c8e1 100644
 --- a/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java
 +++ b/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java
 @@ -23,6 +23,7 @@ import android.content.Context;
@@ -39,5 +39,5 @@ index 6fabc61..dbdb614 100644
                  addTile(spec, icon, label != null ? label.toString() : "null", appLabel, mContext);
              }
 -- 
-2.9.3
+2.11.1
 

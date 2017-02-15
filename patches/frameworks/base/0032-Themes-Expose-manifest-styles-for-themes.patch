@@ -1,4 +1,4 @@
-From b865d57f51ef8545a434dfdfee32055954ce952b Mon Sep 17 00:00:00 2001
+From e1dfd205fa7e1f3c7008e72fb15fe01577ad944c Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Fri, 6 Jan 2017 21:12:15 +0800
 Subject: [PATCH 32/38] Themes: Expose manifest styles for themes
@@ -11,10 +11,10 @@ Change-Id: Ie3a4fdead4f4fa1c121018b38de1c86a05bbcff2
  create mode 100644 core/res/res/values/projekt_styles.xml
 
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index abed0df..6ac87ca 100644
+index 3ceb17ba568..36df6eac13e 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
-@@ -3212,7 +3212,7 @@
+@@ -3214,7 +3214,7 @@
                  android:label="@string/managed_profile_label">
          </activity-alias>
          <activity android:name="com.android.internal.app.HeavyWeightSwitcherActivity"
@@ -23,7 +23,7 @@ index abed0df..6ac87ca 100644
                  android:label="@string/heavy_weight_switcher_title"
                  android:finishOnCloseSystemDialogs="true"
                  android:excludeFromRecents="true"
-@@ -3245,7 +3245,7 @@
+@@ -3247,7 +3247,7 @@
          <activity android:name="android.accounts.ChooseAccountActivity"
                  android:excludeFromRecents="true"
                  android:exported="true"
@@ -32,7 +32,7 @@ index abed0df..6ac87ca 100644
                  android:label="@string/choose_account_label"
                  android:process=":ui">
          </activity>
-@@ -3253,14 +3253,14 @@
+@@ -3255,14 +3255,14 @@
          <activity android:name="android.accounts.ChooseTypeAndAccountActivity"
                  android:excludeFromRecents="true"
                  android:exported="true"
@@ -49,7 +49,7 @@ index abed0df..6ac87ca 100644
                  android:label="@string/choose_account_label"
                  android:process=":ui">
          </activity>
-@@ -3268,19 +3268,19 @@
+@@ -3270,19 +3270,19 @@
          <activity android:name="android.accounts.CantAddAccountActivity"
                  android:excludeFromRecents="true"
                  android:exported="true"
@@ -72,7 +72,7 @@ index abed0df..6ac87ca 100644
                 android:label="@string/sync_too_many_deletes"
                 android:process=":ui">
          </activity>
-@@ -3300,7 +3300,7 @@
+@@ -3302,7 +3302,7 @@
          </activity>
  
          <activity android:name="com.android.internal.app.NetInitiatedActivity"
@@ -81,7 +81,7 @@ index abed0df..6ac87ca 100644
                  android:excludeFromRecents="true"
                  android:process=":ui">
          </activity>
-@@ -3321,7 +3321,7 @@
+@@ -3323,7 +3323,7 @@
          <activity android:name="com.android.internal.app.ConfirmUserCreationActivity"
                  android:excludeFromRecents="true"
                  android:process=":ui"
@@ -90,7 +90,7 @@ index abed0df..6ac87ca 100644
              <intent-filter android:priority="1000">
                  <action android:name="android.os.action.CREATE_USER" />
                  <category android:name="android.intent.category.DEFAULT" />
-@@ -3329,7 +3329,7 @@
+@@ -3331,7 +3331,7 @@
          </activity>
  
          <activity android:name="com.android.internal.app.UnlaunchableAppActivity"
@@ -101,7 +101,7 @@ index abed0df..6ac87ca 100644
          </activity>
 diff --git a/core/res/res/values/projekt_styles.xml b/core/res/res/values/projekt_styles.xml
 new file mode 100644
-index 0000000..e5fe635
+index 00000000000..e5fe635818a
 --- /dev/null
 +++ b/core/res/res/values/projekt_styles.xml
 @@ -0,0 +1,41 @@
@@ -147,5 +147,5 @@ index 0000000..e5fe635
 +
 +</resources>
 -- 
-2.9.3
+2.11.1
 

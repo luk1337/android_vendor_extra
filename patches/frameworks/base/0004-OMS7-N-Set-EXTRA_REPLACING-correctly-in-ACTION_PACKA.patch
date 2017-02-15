@@ -1,4 +1,4 @@
-From 06912868733feadee85507d9f40ede2468a9a496 Mon Sep 17 00:00:00 2001
+From a1d27bf6ba22b9189350bf26df2918ff2ac551c8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Mon, 25 Apr 2016 16:29:22 +0200
 Subject: [PATCH 04/38] OMS7-N: Set EXTRA_REPLACING correctly in
@@ -35,10 +35,10 @@ Change-Id: Icf869013d5d652de4bf0f6df4529b7a68d35a25c
  1 file changed, 1 insertion(+)
 
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index f700522..7277f6a 100644
+index 89549231806..3abcdbb19d2 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
-@@ -1714,6 +1714,7 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -1715,6 +1715,7 @@ public class PackageManagerService extends IPackageManager.Stub {
  
                  // Send added for users that don't see the package for the first time
                  if (update) {
@@ -47,5 +47,5 @@ index f700522..7277f6a 100644
                  }
                  sendPackageBroadcast(Intent.ACTION_PACKAGE_ADDED, packageName,
 -- 
-2.9.3
+2.11.1
 

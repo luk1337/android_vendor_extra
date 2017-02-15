@@ -1,4 +1,4 @@
-From fc7d694af82449a4d4a3456ffd486a5afa30a2ef Mon Sep 17 00:00:00 2001
+From 881efe212818d0cd62fb90f41f15bd368c7cc58d Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Sun, 19 Jun 2016 10:37:13 -0400
 Subject: [PATCH 09/38] OMS7-N: Persistence on boot through
@@ -14,7 +14,7 @@ Change-Id: Ic6eeb38b5e7bcec4211405d4504ba37a75738227
  1 file changed, 21 insertions(+), 10 deletions(-)
 
 diff --git a/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java b/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
-index 2a0d88b..4c61968 100644
+index 2a0d88b416d..4c6196824cf 100644
 --- a/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
 +++ b/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
 @@ -402,34 +402,45 @@ final class OverlayManagerServiceImpl {
@@ -74,5 +74,5 @@ index 2a0d88b..4c61968 100644
  
      private void removeIdmapIfPossible(@NonNull final OverlayInfo oi) {
 -- 
-2.9.3
+2.11.1
 

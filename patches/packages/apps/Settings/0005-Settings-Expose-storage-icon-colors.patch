@@ -1,4 +1,4 @@
-From d4beb2fe4bbf5105446f23735674a48a0bff5b59 Mon Sep 17 00:00:00 2001
+From 5cb9037f346b3c96ba7e457410d87388499f144c Mon Sep 17 00:00:00 2001
 From: SpiritCroc <spiritcroc@gmail.com>
 Date: Thu, 8 Dec 2016 20:40:16 +0100
 Subject: [PATCH 05/15] Settings: Expose storage icon colors
@@ -11,7 +11,7 @@ Change-Id: I97ce427f0683791670f1bbf82eaef66152fe4961
  3 files changed, 29 insertions(+), 14 deletions(-)
 
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index 00252332..bb6099b 100644
+index 00252332ba..bb6099ba98 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -31,5 +31,12 @@
@@ -29,7 +29,7 @@ index 00252332..bb6099b 100644
 +    <color name="storage_private_5">#ffc0ca33</color>
  </resources>
 diff --git a/src/com/android/settings/deviceinfo/StorageSettings.java b/src/com/android/settings/deviceinfo/StorageSettings.java
-index 7757efc..b01013b 100644
+index 533799a1dd..57fd13b734 100755
 --- a/src/com/android/settings/deviceinfo/StorageSettings.java
 +++ b/src/com/android/settings/deviceinfo/StorageSettings.java
 @@ -24,6 +24,7 @@ import android.app.Fragment;
@@ -88,13 +88,13 @@ index 7757efc..b01013b 100644
 @@ -178,7 +186,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
                  }
              } else if (vol.getType() == VolumeInfo.TYPE_PUBLIC) {
-                 mExternalCategory.addPreference(
--                        new StorageVolumePreference(context, vol, COLOR_PUBLIC, 0));
-+                        new StorageVolumePreference(context, vol, getColorPublic(getResources()), 0));
-             }
-         }
+                 StorageVolumePreference ExStorageVolumePreference =
+-                        new StorageVolumePreference(context, vol, COLOR_PUBLIC, 0);
++                        new StorageVolumePreference(context, vol, getColorPublic(getResources()), 0);
  
-@@ -190,7 +198,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
+                 //Disable preference when in change
+                 ExStorageVolumePreference.setEnabled(vol.getState()!= VolumeInfo.STATE_CHECKING
+@@ -195,7 +203,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
                  // TODO: add actual storage type to record
                  final Drawable icon = context.getDrawable(R.drawable.ic_sim_sd);
                  icon.mutate();
@@ -104,7 +104,7 @@ index 7757efc..b01013b 100644
                  final Preference pref = new Preference(context);
                  pref.setKey(rec.getFsUuid());
 diff --git a/src/com/android/settings/deviceinfo/StorageVolumePreference.java b/src/com/android/settings/deviceinfo/StorageVolumePreference.java
-index 9d3c7dc..8a2780a 100644
+index 9d3c7dccf2..8a2780a90b 100644
 --- a/src/com/android/settings/deviceinfo/StorageVolumePreference.java
 +++ b/src/com/android/settings/deviceinfo/StorageVolumePreference.java
 @@ -89,7 +89,7 @@ public class StorageVolumePreference extends Preference {
@@ -117,5 +117,5 @@ index 9d3c7dc..8a2780a 100644
              }
  
 -- 
-2.9.3
+2.11.1
 

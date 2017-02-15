@@ -1,4 +1,4 @@
-From c41b5f7552e5ef1f221d1f755b37501037463c66 Mon Sep 17 00:00:00 2001
+From accdb618c530796534fc4b84e69fc81ea6d98f07 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Thu, 27 Oct 2016 07:08:00 +0200
 Subject: [PATCH 10/38] OMS7-N: Do not enforce code policy limiting overlay
@@ -10,10 +10,10 @@ Change-Id: Iea317f3771f25dbfcbf4938e88cace12fd97d7eb
  1 file changed, 4 deletions(-)
 
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 7277f6a..46679e5 100644
+index 3abcdbb19d2..faaff1f08a2 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
-@@ -8143,10 +8143,6 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -8149,10 +8149,6 @@ public class PackageManagerService extends IPackageManager.Stub {
              pkg.applicationInfo.privateFlags |= ApplicationInfo.PRIVATE_FLAG_PRIVILEGED;
          }
  
@@ -25,5 +25,5 @@ index 7277f6a..46679e5 100644
                  mCustomResolverComponentName.getPackageName().equals(pkg.packageName)) {
              setUpCustomResolverActivity(pkg);
 -- 
-2.9.3
+2.11.1
 
