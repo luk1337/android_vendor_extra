@@ -1,0 +1,2644 @@
+From 63b419e89e730b3186fce7cb8a4b95e5b56f81fe Mon Sep 17 00:00:00 2001
+From: Nicholas Chum <nicholaschum@gmail.com>
+Date: Tue, 14 Feb 2017 00:56:09 -0500
+Subject: [PATCH 3/3] Release 23: Introduce the rootless solution for
+ Masquerade [3/3]
+
+Huge thanks to @bigrushdog, @iskandar1023 and @Surge1223 for all
+the hard work put into this.
+
+Clean-up commit by @nicholaschum
+- Introduce Java8 integration
+- Remove all the receivers
+- Remove all the unused imports, methods and permissions.
+- Reformat and optimize all Java files, drawables and XML files.
+- Make sure the project is Android Studio ready
+- Ensure that all permissions are declared Protected if in AS.
+
+To build this in Android Studio (without platform key), you must copy
+the "android.jar" built from your AOSP+OMS build environment to
+%AndroidSDK%/platforms/android-25/android.jar (back up your original
+copy). Then all you have to do is import masquerade as a gradle
+project to Android Studio and you are set!
+
+Change-Id: Ie350497ac5cfaf39c062235b90e3832f8072c7a8
+---
+ app/build.gradle                                   |  32 +-
+ app/src/main/AndroidManifest.xml                   |  49 ++-
+ .../substratum/receivers/BootReceiver.java         |  13 -
+ .../substratum/receivers/UninstallReceiver.java    |  47 ---
+ .../masquerade/substratum/services/JobService.java | 462 +++++++++------------
+ .../masquerade/substratum/services/MasqDemo.java   | 137 ------
+ .../java/masquerade/substratum/utils/IOUtils.java  |  37 +-
+ .../masquerade/substratum/utils/SoundUtils.java    |  72 ++--
+ app/src/main/res/mipmap-hdpi/ic_launcher.png       | Bin 0 -> 2240 bytes
+ .../main/res/mipmap-hdpi/substratum_masquerade.png | Bin 2246 -> 0 bytes
+ app/src/main/res/mipmap-mdpi/ic_launcher.png       | Bin 0 -> 1848 bytes
+ .../main/res/mipmap-mdpi/substratum_masquerade.png | Bin 2094 -> 0 bytes
+ app/src/main/res/mipmap-xhdpi/ic_launcher.png      | Bin 0 -> 2733 bytes
+ .../res/mipmap-xhdpi/substratum_masquerade.png     | Bin 2734 -> 0 bytes
+ app/src/main/res/mipmap-xxhdpi/ic_launcher.png     | Bin 0 -> 3874 bytes
+ .../res/mipmap-xxhdpi/substratum_masquerade.png    | Bin 3894 -> 0 bytes
+ app/src/main/res/mipmap-xxxhdpi/ic_launcher.png    | Bin 0 -> 4947 bytes
+ .../res/mipmap-xxxhdpi/substratum_masquerade.png   | Bin 4966 -> 0 bytes
+ app/src/main/res/values/styles.xml                 |   1 -
+ gradlew                                            |   0
+ gradlew.bat                                        | 180 ++++----
+ 21 files changed, 408 insertions(+), 622 deletions(-)
+ delete mode 100644 app/src/main/java/masquerade/substratum/receivers/BootReceiver.java
+ delete mode 100644 app/src/main/java/masquerade/substratum/receivers/UninstallReceiver.java
+ delete mode 100644 app/src/main/java/masquerade/substratum/services/MasqDemo.java
+ create mode 100644 app/src/main/res/mipmap-hdpi/ic_launcher.png
+ delete mode 100755 app/src/main/res/mipmap-hdpi/substratum_masquerade.png
+ create mode 100644 app/src/main/res/mipmap-mdpi/ic_launcher.png
+ delete mode 100755 app/src/main/res/mipmap-mdpi/substratum_masquerade.png
+ create mode 100644 app/src/main/res/mipmap-xhdpi/ic_launcher.png
+ delete mode 100755 app/src/main/res/mipmap-xhdpi/substratum_masquerade.png
+ create mode 100644 app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+ delete mode 100755 app/src/main/res/mipmap-xxhdpi/substratum_masquerade.png
+ create mode 100644 app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+ delete mode 100755 app/src/main/res/mipmap-xxxhdpi/substratum_masquerade.png
+ mode change 100755 => 100644 gradlew
+
+diff --git a/app/build.gradle b/app/build.gradle
+index 265096a..a2694a8 100644
+--- a/app/build.gradle
++++ b/app/build.gradle
+@@ -1,7 +1,7 @@
+ apply plugin: 'com.android.application'
+ 
+ android {
+-    compileSdkVersion 23
++    compileSdkVersion 25
+     buildToolsVersion "23.0.3"
+ 
+     lintOptions {
+@@ -12,25 +12,41 @@ android {
+     applicationVariants.all { variant ->
+         variant.outputs.each { output ->
+             output.outputFile = new File(
+-                    output.outputFile.parent, "masquerade_beta_testers" + versionCode + ".apk")
++                    output.outputFile.parent, "masquerade_" + versionCode + ".apk")
+         }
+     }
+ 
+     defaultConfig {
+         applicationId "masquerade.substratum"
+-        minSdkVersion 21
+-        targetSdkVersion 23
+-        versionCode 20
+-        versionName "twenty - procyon"
++        minSdkVersion 25
++        targetSdkVersion 25
++        versionCode 23
++        versionName "twenty three"
++    }
++
++    defaultConfig {
++        jackOptions {
++            enabled true
++        }
++    }
++
++    compileOptions {
++        incremental true
++        sourceCompatibility JavaVersion.VERSION_1_8
++        targetCompatibility JavaVersion.VERSION_1_8
++    }
++
++    dexOptions {
++        javaMaxHeapSize '2048m'
+     }
+ 
+     buildTypes {
+         debug {
+-            minifyEnabled true
++            minifyEnabled false
+             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+         }
+         release {
+-            minifyEnabled true
++            minifyEnabled false
+             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+         }
+     }
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+index 13db0f9..2554839 100644
+--- a/app/src/main/AndroidManifest.xml
++++ b/app/src/main/AndroidManifest.xml
+@@ -1,40 +1,39 @@
++<!--suppress AndroidUnknownAttribute -->
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-          package="masquerade.substratum"
+-          android:versionCode="21"
+-          android:versionName="twentyone - something"
++          xmlns:tools="http://schemas.android.com/tools"
+           coreApp="true"
+-          android:sharedUserId="android.uid.system">
++          package="masquerade.substratum"
++          android:sharedUserId="android.uid.system"
++          android:versionCode="23"
++          android:versionName="twenty three"
++          tools:ignore="GradleOverrides">
+ 
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+-    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES"/>
+-    <uses-permission android:name="android.permission.DELETE_PACKAGES"/>
+-    <uses-permission android:name="android.permission.INSTALL_PACKAGES"/>
++    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
++    <uses-permission
++        android:name="android.permission.FORCE_STOP_PACKAGES"
++        tools:ignore="ProtectedPermissions"/>
++    <uses-permission
++        android:name="android.permission.DELETE_PACKAGES"
++        tools:ignore="ProtectedPermissions"/>
++    <uses-permission
++        android:name="android.permission.INSTALL_PACKAGES"
++        tools:ignore="ProtectedPermissions"/>
+     <uses-permission android:name="android.permission.INSTALL_GRANT_RUNTIME_PERMISSIONS"/>
+     <uses-permission android:name="android.permission.MODIFY_OVERLAYS"/>
+ 
+     <application
+-        android:allowBackup="true"
+-        android:icon="@mipmap/substratum_masquerade"
++        android:allowBackup="false"
++        android:icon="@mipmap/ic_launcher"
+         android:label="@string/app_name"
+         android:supportsRtl="true"
+-        android:theme="@style/AppTheme">
+-        <receiver android:name=".receivers.BootReceiver">
+-            <intent-filter>
+-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+-            </intent-filter>
+-        </receiver>
+-        <receiver android:name=".receivers.UninstallReceiver">
+-            <intent-filter>
+-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+-                <data android:scheme="package"/>
+-            </intent-filter>
+-        </receiver>
+-        <service android:name=".services.JobService"
++        android:theme="@style/AppTheme"
++        tools:ignore="GoogleAppIndexingWarning">
++        <service
++            android:name=".services.JobService"
+             android:exported="true"
+-            android:permission="android.permission.MODIFY_OVERLAYS" />
++            android:permission="android.permission.MODIFY_OVERLAYS"/>
+     </application>
+ </manifest>
+diff --git a/app/src/main/java/masquerade/substratum/receivers/BootReceiver.java b/app/src/main/java/masquerade/substratum/receivers/BootReceiver.java
+deleted file mode 100644
+index ebc0c8b..0000000
+--- a/app/src/main/java/masquerade/substratum/receivers/BootReceiver.java
++++ /dev/null
+@@ -1,13 +0,0 @@
+-package masquerade.substratum.receivers;
+-
+-import android.content.BroadcastReceiver;
+-import android.content.Context;
+-import android.content.Intent;
+-
+-
+-public class BootReceiver extends BroadcastReceiver {
+-    @Override
+-    public void onReceive(Context context, Intent intent) {
+-        // do something
+-    }
+-}
+\ No newline at end of file
+diff --git a/app/src/main/java/masquerade/substratum/receivers/UninstallReceiver.java b/app/src/main/java/masquerade/substratum/receivers/UninstallReceiver.java
+deleted file mode 100644
+index b377e27..0000000
+--- a/app/src/main/java/masquerade/substratum/receivers/UninstallReceiver.java
++++ /dev/null
+@@ -1,47 +0,0 @@
+-package masquerade.substratum.receivers;
+-
+-import android.content.BroadcastReceiver;
+-import android.content.Context;
+-import android.content.Intent;
+-import android.net.Uri;
+-import android.os.AsyncTask;
+-import android.os.Environment;
+-import android.util.Log;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-
+-public class UninstallReceiver extends BroadcastReceiver {
+-    @Override
+-    public void onReceive(Context context, Intent intent) {
+-        if ("android.intent.action.PACKAGE_REMOVED".equals(intent.getAction())) {
+-            Uri packageName = intent.getData();
+-            if (packageName.toString().substring(8).equals("projekt.substratum")) {
+-//                new performUninstalls().execute("");
+-            }
+-        }
+-    }
+-/*
+-    public class performUninstalls extends AsyncTask<String, Integer, String> {
+-        @Override
+-        protected String doInBackground(String... sUrl) {
+-            // Substratum was uninstalled, uninstall all remaining overlays
+-            Log.d("Masquerade",
+-                    "Substratum was uninstalled, so all remaining overlays will be removed...");
+-            String[] state4 = {Environment.getExternalStorageDirectory()
+-                    .getAbsolutePath() + "/.substratum/current_overlays.xml", "4"};
+-            String[] state5 = {Environment.getExternalStorageDirectory()
+-                    .getAbsolutePath() + "/.substratum/current_overlays.xml", "5"};
+-            List<String> state5overlays = ReadOverlaysFile.main(state5);
+-            ArrayList<String> all_overlays = new ArrayList<>(ReadOverlaysFile.main(state4));
+-            all_overlays.addAll(state5overlays);
+-            for (int i = 0; i < all_overlays.size(); i++) {
+-                Log.d("Masquerade", "Uninstalling overlay: " + all_overlays.get(i));
+-                Root.runCommand("pm uninstall " + all_overlays.get(i));
+-            }
+-            return null;
+-        }
+-    }
+-    */
+-}
+\ No newline at end of file
+diff --git a/app/src/main/java/masquerade/substratum/services/JobService.java b/app/src/main/java/masquerade/substratum/services/JobService.java
+index 20cf166..0ecd279 100644
+--- a/app/src/main/java/masquerade/substratum/services/JobService.java
++++ b/app/src/main/java/masquerade/substratum/services/JobService.java
+@@ -1,3 +1,23 @@
++/*
++ * Copyright (c) 2017 Project Substratum
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
++ * Also add information on how to contact you by electronic and paper mail.
++ *
++ */
++
+ package masquerade.substratum.services;
+ 
+ import android.app.ActivityManager;
+@@ -7,24 +27,19 @@ import android.app.Service;
+ import android.content.BroadcastReceiver;
+ import android.content.ComponentName;
+ import android.content.Context;
+-import android.content.IIntentReceiver;
+-import android.content.IIntentSender;
+ import android.content.Intent;
+ import android.content.IntentFilter;
+-import android.content.IntentSender;
+ import android.content.om.IOverlayManager;
+ import android.content.om.OverlayInfo;
+ import android.content.pm.IPackageDeleteObserver;
+ import android.content.pm.IPackageInstallObserver2;
+ import android.content.pm.IPackageManager;
+-import android.content.pm.PackageInstaller;
+ import android.content.pm.PackageManager;
+ import android.content.pm.PackageManager.NameNotFoundException;
+ import android.content.res.AssetManager;
+ import android.content.res.Configuration;
+ import android.graphics.Typeface;
+ import android.media.RingtoneManager;
+-import android.os.Binder;
+ import android.os.Bundle;
+ import android.os.Environment;
+ import android.os.FileUtils;
+@@ -42,42 +57,21 @@ import android.provider.Settings;
+ import android.text.TextUtils;
+ import android.util.Log;
+ 
+-import java.io.BufferedInputStream;
+-import java.io.BufferedOutputStream;
+ import java.io.File;
+-import java.io.FileInputStream;
+-import java.io.FileNotFoundException;
+ import java.io.FileOutputStream;
+-import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.OutputStream;
+ import java.lang.reflect.Method;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Locale;
+-import java.util.concurrent.SynchronousQueue;
+-import java.util.concurrent.TimeUnit;
+-import java.util.zip.ZipEntry;
+-import java.util.zip.ZipInputStream;
++import java.util.stream.Collectors;
+ 
+ import masquerade.substratum.utils.IOUtils;
+ import masquerade.substratum.utils.SoundUtils;
+ 
+-import com.android.internal.statusbar.IStatusBarService;
+-
+ public class JobService extends Service {
+-    private static final String TAG = JobService.class.getSimpleName();
+-    private static final boolean DEBUG = true;
+-
+-    private static final String MASQUERADE_TOKEN = "masquerade_token";
+-    private static final String SUBSTRATUM_PACKAGE = "projekt.substratum";
+-    private static final String[] AUTHORIZED_CALLERS = new String[] {
+-            SUBSTRATUM_PACKAGE,
+-            "masquerade.substratum"
+-    };
+-
+     public static final String INTENT_STATUS_CHANGED = "masquerade.substratum.STATUS_CHANGED";
+-
+     public static final String PRIMARY_COMMAND_KEY = "primary_command_key";
+     public static final String JOB_TIME_KEY = "job_time_key";
+     public static final String INSTALL_LIST_KEY = "install_list";
+@@ -109,20 +103,47 @@ public class JobService extends Service {
+     public static final String COMMAND_VALUE_MOVE = "move";
+     public static final String COMMAND_VALUE_DELETE = "delete";
+     public static final String COMMAND_VALUE_PROFILE = "profile";
+-
++    private static final String TAG = JobService.class.getSimpleName();
++    private static final boolean DEBUG = true;
++    private static final String MASQUERADE_TOKEN = "masquerade_token";
++    private static final String MASQUERADE_PACKAGE = "masquerade.substratum";
++    private static final String SUBSTRATUM_PACKAGE = "projekt.substratum";
++    private static final String[] AUTHORIZED_CALLERS = new String[]{
++            MASQUERADE_PACKAGE,
++            SUBSTRATUM_PACKAGE,
++    };
+     private static IOverlayManager mOMS;
+     private static IPackageManager mPM;
+-
+-    private HandlerThread mWorker;
++    private final List<Runnable> mJobQueue = new ArrayList<>(0);
+     private JobHandler mJobHandler;
+     private MainHandler mMainHandler;
+-    private final List<Runnable> mJobQueue = new ArrayList<>(0);
+     private long mLastJobTime;
+     private boolean mIsRunning;
+ 
++    private static IOverlayManager getOMS() {
++        if (mOMS == null) {
++            mOMS = IOverlayManager.Stub.asInterface(
++                    ServiceManager.getService("overlay"));
++        }
++        return mOMS;
++    }
++
++    private static IPackageManager getPM() {
++        if (mPM == null) {
++            mPM = IPackageManager.Stub.asInterface(
++                    ServiceManager.getService("package"));
++        }
++        return mPM;
++    }
++
++    public static void log(String msg) {
++        if (DEBUG) Log.e(TAG, msg);
++    }
++
+     @Override
+     public void onCreate() {
+-        mWorker = new HandlerThread("BackgroundWorker", Process.THREAD_PRIORITY_BACKGROUND);
++        HandlerThread mWorker = new HandlerThread("BackgroundWorker", Process
++                .THREAD_PRIORITY_BACKGROUND);
+         mWorker.start();
+         mJobHandler = new JobHandler(mWorker.getLooper());
+         mMainHandler = new MainHandler(Looper.getMainLooper());
+@@ -137,39 +158,33 @@ public class JobService extends Service {
+         }
+ 
+         // Don't run job if there is another running job
+-        mIsRunning = false;
+-        if (isProcessing()) mIsRunning = true;
++        mIsRunning = isProcessing();
+ 
+-        // filter out duplicate intents
++        // Filter out duplicate intents
+         long jobTime = intent.getLongExtra(JOB_TIME_KEY, 1);
+         if (jobTime == 1 || jobTime == mLastJobTime) {
+-            log("got empty jobtime or duplicate job time, aborting");
++            log("Received empty job time or duplicate job time, aborting");
+             return START_NOT_STICKY;
+         }
+         mLastJobTime = jobTime;
+ 
+-        // must have a primary command
++        // Must have a primary command
+         String command = intent.getStringExtra(PRIMARY_COMMAND_KEY);
+         if (TextUtils.isEmpty(command)) {
+-            log("Got empty primary command, aborting");
++            log("Received empty primary command, aborting");
+             return START_NOT_STICKY;
+         }
+ 
+-        // queue up the job
+-
++        // Queue up the job
+         List<Runnable> jobs_to_add = new ArrayList<>(0);
+ 
+-        log("Starting job with primary command " + command + " With job time " + jobTime);
++        log("Starting job with primary command \'" + command + "\', with job time: " + jobTime);
+         if (TextUtils.equals(command, COMMAND_VALUE_INSTALL)) {
+             List<String> paths = intent.getStringArrayListExtra(INSTALL_LIST_KEY);
+-            for (String path : paths) {
+-                jobs_to_add.add(new Installer(path));
+-            }
++            jobs_to_add.addAll(paths.stream().map(Installer::new).collect(Collectors.toList()));
+         } else if (TextUtils.equals(command, COMMAND_VALUE_UNINSTALL)) {
+             List<String> packages = intent.getStringArrayListExtra(UNINSTALL_LIST_KEY);
+-            for (String _package : packages) {
+-                jobs_to_add.add(new Remover(_package));
+-            }
++            jobs_to_add.addAll(packages.stream().map(Remover::new).collect(Collectors.toList()));
+             if (shouldRestartUi(packages)) jobs_to_add.add(new UiResetJob());
+         } else if (TextUtils.equals(command, COMMAND_VALUE_RESTART_UI)) {
+             jobs_to_add.add(new UiResetJob());
+@@ -194,15 +209,11 @@ public class JobService extends Service {
+             jobs_to_add.add(new UiResetJob());
+         } else if (TextUtils.equals(command, COMMAND_VALUE_ENABLE)) {
+             List<String> packages = intent.getStringArrayListExtra(ENABLE_LIST_KEY);
+-            for (String _package : packages) {
+-                jobs_to_add.add(new Enabler(_package));
+-            }
++            jobs_to_add.addAll(packages.stream().map(Enabler::new).collect(Collectors.toList()));
+             if (shouldRestartUi(packages)) jobs_to_add.add(new UiResetJob());
+         } else if (TextUtils.equals(command, COMMAND_VALUE_DISABLE)) {
+             List<String> packages = intent.getStringArrayListExtra(DISABLE_LIST_KEY);
+-            for (String _package : packages) {
+-                jobs_to_add.add(new Disabler(_package));
+-            }
++            jobs_to_add.addAll(packages.stream().map(Disabler::new).collect(Collectors.toList()));
+             if (shouldRestartUi(packages)) jobs_to_add.add(new UiResetJob());
+         } else if (TextUtils.equals(command, COMMAND_VALUE_PRIORITY)) {
+             List<String> packages = intent.getStringArrayListExtra(PRIORITY_LIST_KEY);
+@@ -241,7 +252,6 @@ public class JobService extends Service {
+                 mJobHandler.sendEmptyMessage(JobHandler.MESSAGE_CHECK_QUEUE);
+             }
+         }
+-
+         return START_NOT_STICKY;
+     }
+ 
+@@ -252,35 +262,13 @@ public class JobService extends Service {
+ 
+     @Override
+     public void onDestroy() {
+-
+     }
+ 
+     private boolean isProcessing() {
+         return mJobQueue.size() > 0;
+     }
+ 
+-    private class LocalService extends Binder {
+-        public JobService getService() {
+-            return JobService.this;
+-        }
+-    }
+-
+-    private static IOverlayManager getOMS() {
+-        if (mOMS == null) {
+-            mOMS = IOverlayManager.Stub.asInterface(
+-                    ServiceManager.getService("overlay"));
+-        }
+-        return mOMS;
+-    }
+-
+-    private static IPackageManager getPM() {
+-        if (mPM == null) {
+-            mPM = IPackageManager.Stub.asInterface(
+-                    ServiceManager.getService("package"));
+-        }
+-        return mPM;
+-    }
+-
++    @SuppressWarnings("deprecation")
+     private void install(String path, IPackageInstallObserver2 observer) {
+         try {
+             getPM().installPackageAsUser(path, observer,
+@@ -292,6 +280,7 @@ public class JobService extends Service {
+         }
+     }
+ 
++    @SuppressWarnings("deprecation")
+     private void uninstall(String packageName, IPackageDeleteObserver observer) {
+         try {
+             getPM().deletePackageAsUser(packageName, observer, 0, UserHandle.USER_SYSTEM);
+@@ -315,7 +304,7 @@ public class JobService extends Service {
+             if (info != null) {
+                 enabled = info.isEnabled();
+             } else {
+-                log("info is null");
++                log("OverlayInfo is null.");
+             }
+         } catch (RemoteException e) {
+             e.printStackTrace();
+@@ -331,24 +320,25 @@ public class JobService extends Service {
+     }
+ 
+     private void copyFonts(String pid, String zipFileName) {
+-        // prepare local cache dir for font package assembly
++        // Prepare local cache dir for font package assembly
+         log("Copy Fonts - Package ID = " + pid + " filename = " + zipFileName);
+         File cacheDir = new File(getCacheDir(), "/FontCache/");
+         if (cacheDir.exists()) {
+             IOUtils.deleteRecursive(cacheDir);
+         }
+-        cacheDir.mkdir();
++        boolean created = cacheDir.mkdir();
++        if (!created) log("Could not create cache directory...");
+ 
+-        // copy system fonts into our cache dir
++        // Copy system fonts into our cache dir
+         IOUtils.copyFolder("/system/fonts", cacheDir.getAbsolutePath());
+ 
+-        // append zip to filename since it is probably removed
++        // Append zip to filename since it is probably removed
+         // for list presentation
+         if (!zipFileName.endsWith(".zip")) {
+             zipFileName = zipFileName + ".zip";
+         }
+ 
+-        // copy target themed fonts zip to our cache dir
++        // Copy target themed fonts zip to our cache dir
+         Context themeContext = getAppContext(pid);
+         AssetManager am = themeContext.getAssets();
+         try {
+@@ -360,12 +350,13 @@ public class JobService extends Service {
+             e.printStackTrace();
+         }
+ 
+-        // unzip new fonts and delete zip file, overwriting any system fonts
++        // Unzip new fonts and delete zip file, overwriting any system fonts
+         File fontZip = new File(getCacheDir(), "/FontCache/" + zipFileName);
+         IOUtils.unzip(fontZip.getAbsolutePath(), cacheDir.getAbsolutePath());
+-        fontZip.delete();
++        boolean deleted = fontZip.delete();
++        if (!deleted) log("Could not delete ZIP file...");
+ 
+-        // check if theme zip included a fonts.xml. If not, Substratum
++        // Check if theme zip included a fonts.xml. If not, Substratum
+         // is kind enough to provide one for us in it's assets
+         try {
+             File testConfig = new File(getCacheDir(), "/FontCache/" + "fonts.xml");
+@@ -380,12 +371,12 @@ public class JobService extends Service {
+             e.printStackTrace();
+         }
+ 
+-        // prepare system theme fonts folder and copy new fonts folder from our cache
++        // Prepare system theme fonts folder and copy new fonts folder from our cache
+         IOUtils.deleteThemedFonts();
+         IOUtils.createFontDirIfNotExists();
+         IOUtils.copyFolder(cacheDir.getAbsolutePath(), IOUtils.SYSTEM_THEME_FONT_PATH);
+ 
+-        // let system know it's time for a font change
++        // Let system know it's time for a font change
+         refreshFonts();
+     }
+ 
+@@ -395,7 +386,7 @@ public class JobService extends Service {
+     }
+ 
+     private void refreshFonts() {
+-        // set permissions on font files and config xml
++        // Set permissions on font files and config xml
+         File themeFonts = new File(IOUtils.SYSTEM_THEME_FONT_PATH);
+         if (themeFonts.exists()) {
+             // Set permissions
+@@ -404,7 +395,7 @@ public class JobService extends Service {
+                     FileUtils.S_IRWXU | FileUtils.S_IRWXG | FileUtils.S_IROTH | FileUtils.S_IXOTH);
+         }
+ 
+-        // let system know it's time for a font change
++        // Let system know it's time for a font change
+         SystemProperties.set("sys.refresh_theme", "1");
+         Typeface.recreateDefaults();
+         float fontSize = Float.valueOf(Settings.System.getString(
+@@ -414,21 +405,23 @@ public class JobService extends Service {
+     }
+ 
+     private void applyThemedSounds(String pid, String zipFileName) {
+-        // prepare local cache dir for font package assembly
+-        log("Copy sounds - Package ID = " + pid + " filename = " + zipFileName);
++        // Prepare local cache dir for font package assembly
++        log("CopySounds - Package ID = \'" + pid + "\'");
++        log("CopySounds - File name = \'" + zipFileName + "\'");
+         File cacheDir = new File(getCacheDir(), "/SoundsCache/");
+         if (cacheDir.exists()) {
+             IOUtils.deleteRecursive(cacheDir);
+         }
+-        cacheDir.mkdir();
++        boolean created = cacheDir.mkdir();
++        if (!created) log("Could not create cache directory...");
+ 
+-        // append zip to filename since it is probably removed
++        // Append zip to filename since it is probably removed
+         // for list presentation
+         if (!zipFileName.endsWith(".zip")) {
+             zipFileName = zipFileName + ".zip";
+         }
+ 
+-        // copy target themed sounds zip to our cache dir
++        // Copy target themed sounds zip to our cache dir
+         Context themeContext = getAppContext(pid);
+         AssetManager am = themeContext.getAssets();
+         try {
+@@ -440,10 +433,11 @@ public class JobService extends Service {
+             e.printStackTrace();
+         }
+ 
+-        // unzip new sounds and delete zip file
++        // Unzip new sounds and delete zip file
+         File soundsZip = new File(getCacheDir(), "/SoundsCache/" + zipFileName);
+         IOUtils.unzip(soundsZip.getAbsolutePath(), cacheDir.getAbsolutePath());
+-        soundsZip.delete();
++        boolean deleted = soundsZip.delete();
++        if (!deleted) log("Could not delete ZIP file...");
+ 
+         clearSounds(this);
+         IOUtils.createAudioDirIfNotExists();
+@@ -454,30 +448,38 @@ public class JobService extends Service {
+             File effect_tick_mp3 = new File(getCacheDir(), "/SoundsCache/ui/Effect_Tick.mp3");
+             File effect_tick_ogg = new File(getCacheDir(), "/SoundsCache/ui/Effect_Tick.ogg");
+             if (effect_tick_ogg.exists()) {
+-                IOUtils.bufferedCopy(effect_tick_ogg, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "Effect_Tick.ogg"));
++                IOUtils.bufferedCopy(effect_tick_ogg, new File(IOUtils
++                        .SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "Effect_Tick.ogg"));
+             } else if (effect_tick_mp3.exists()) {
+-                IOUtils.bufferedCopy(effect_tick_mp3, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "Effect_Tick.mp3"));
++                IOUtils.bufferedCopy(effect_tick_mp3, new File(IOUtils
++                        .SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "Effect_Tick.mp3"));
+             }
+             File new_lock_mp3 = new File(getCacheDir(), "/SoundsCache/ui/Lock.mp3");
+             File new_lock_ogg = new File(getCacheDir(), "/SoundsCache/ui/Lock.ogg");
+             if (new_lock_ogg.exists()) {
+-                IOUtils.bufferedCopy(new_lock_ogg, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "Lock.ogg"));
++                IOUtils.bufferedCopy(new_lock_ogg, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH +
++                        File.separator + "Lock.ogg"));
+             } else if (new_lock_mp3.exists()) {
+-                IOUtils.bufferedCopy(new_lock_mp3, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "Lock.mp3"));
++                IOUtils.bufferedCopy(new_lock_mp3, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH +
++                        File.separator + "Lock.mp3"));
+             }
+             File new_unlock_mp3 = new File(getCacheDir(), "/SoundsCache/ui/Unlock.mp3");
+             File new_unlock_ogg = new File(getCacheDir(), "/SoundsCache/ui/Unlock.ogg");
+             if (new_unlock_ogg.exists()) {
+-                IOUtils.bufferedCopy(new_unlock_ogg, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "Unlock.ogg"));
++                IOUtils.bufferedCopy(new_unlock_ogg, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH
++                        + File.separator + "Unlock.ogg"));
+             } else if (new_unlock_mp3.exists()) {
+-                IOUtils.bufferedCopy(new_unlock_mp3, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "Unlock.mp3"));
++                IOUtils.bufferedCopy(new_unlock_mp3, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH
++                        + File.separator + "Unlock.mp3"));
+             }
+             File new_lowbattery_mp3 = new File(getCacheDir(), "/SoundsCache/ui/LowBattery.mp3");
+             File new_lowbattery_ogg = new File(getCacheDir(), "/SoundsCache/ui/LowBattery.ogg");
+             if (new_lowbattery_ogg.exists()) {
+-                IOUtils.bufferedCopy(new_lowbattery_ogg, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "LowBattery.ogg"));
++                IOUtils.bufferedCopy(new_lowbattery_ogg, new File(IOUtils
++                        .SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "LowBattery.ogg"));
+             } else if (new_lowbattery_mp3.exists()) {
+-                IOUtils.bufferedCopy(new_lowbattery_mp3, new File(IOUtils.SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "LowBattery.mp3"));
++                IOUtils.bufferedCopy(new_lowbattery_mp3, new File(IOUtils
++                        .SYSTEM_THEME_UI_SOUNDS_PATH + File.separator + "LowBattery.mp3"));
+             }
+         }
+         File alarmCache = new File(getCacheDir(), "/SoundsCache/alarms/");
+@@ -486,20 +488,26 @@ public class JobService extends Service {
+             File new_alarm_mp3 = new File(getCacheDir(), "/SoundsCache/alarms/alarm.mp3");
+             File new_alarm_ogg = new File(getCacheDir(), "/SoundsCache/alarms/alarm.ogg");
+             if (new_alarm_ogg.exists()) {
+-                IOUtils.bufferedCopy(new_alarm_ogg, new File(IOUtils.SYSTEM_THEME_ALARM_PATH + File.separator + "alarm.ogg"));
++                IOUtils.bufferedCopy(new_alarm_ogg, new File(IOUtils.SYSTEM_THEME_ALARM_PATH +
++                        File.separator + "alarm.ogg"));
+             } else if (new_alarm_mp3.exists()) {
+-                IOUtils.bufferedCopy(new_alarm_mp3, new File(IOUtils.SYSTEM_THEME_ALARM_PATH + File.separator + "alarm.mp3"));
++                IOUtils.bufferedCopy(new_alarm_mp3, new File(IOUtils.SYSTEM_THEME_ALARM_PATH +
++                        File.separator + "alarm.mp3"));
+             }
+         }
+         File notifCache = new File(getCacheDir(), "/SoundsCache/notifications/");
+         if (notifCache.exists() && notifCache.isDirectory()) {
+             IOUtils.createNotificationDirIfNotExists();
+-            File new_notif_mp3 = new File(getCacheDir(), "/SoundsCache/notifications/notification.mp3");
+-            File new_notif_ogg = new File(getCacheDir(), "/SoundsCache/notifications/notification.ogg");
++            File new_notif_mp3 = new File(getCacheDir(), "/SoundsCache/notifications/notification" +
++                    ".mp3");
++            File new_notif_ogg = new File(getCacheDir(), "/SoundsCache/notifications/notification" +
++                    ".ogg");
+             if (new_notif_ogg.exists()) {
+-                IOUtils.bufferedCopy(new_notif_ogg, new File(IOUtils.SYSTEM_THEME_NOTIFICATION_PATH + File.separator + "notification.ogg"));
++                IOUtils.bufferedCopy(new_notif_ogg, new File(IOUtils
++                        .SYSTEM_THEME_NOTIFICATION_PATH + File.separator + "notification.ogg"));
+             } else if (new_notif_mp3.exists()) {
+-                IOUtils.bufferedCopy(new_notif_mp3, new File(IOUtils.SYSTEM_THEME_NOTIFICATION_PATH + File.separator + "notification.mp3"));
++                IOUtils.bufferedCopy(new_notif_mp3, new File(IOUtils
++                        .SYSTEM_THEME_NOTIFICATION_PATH + File.separator + "notification.mp3"));
+             }
+         }
+         File ringtoneCache = new File(getCacheDir(), "/SoundsCache/ringtones/");
+@@ -508,28 +516,30 @@ public class JobService extends Service {
+             File new_ring_mp3 = new File(getCacheDir(), "/SoundsCache/ringtones/ringtone.mp3");
+             File new_ring_ogg = new File(getCacheDir(), "/SoundsCache/ringtones/ringtone.ogg");
+             if (new_ring_ogg.exists()) {
+-                IOUtils.bufferedCopy(new_ring_ogg, new File(IOUtils.SYSTEM_THEME_RINGTONE_PATH + File.separator + "ringtone.ogg"));
++                IOUtils.bufferedCopy(new_ring_ogg, new File(IOUtils.SYSTEM_THEME_RINGTONE_PATH +
++                        File.separator + "ringtone.ogg"));
+             } else if (new_ring_mp3.exists()) {
+-                IOUtils.bufferedCopy(new_ring_mp3, new File(IOUtils.SYSTEM_THEME_RINGTONE_PATH + File.separator + "ringtone.mp3"));
++                IOUtils.bufferedCopy(new_ring_mp3, new File(IOUtils.SYSTEM_THEME_RINGTONE_PATH +
++                        File.separator + "ringtone.mp3"));
+             }
+         }
+ 
+-        // let system know it's time for a sound change
++        // Let system know it's time for a sound change
+         refreshSounds();
+     }
+ 
+     private void clearSounds(Context ctx) {
+         IOUtils.deleteThemedAudio();
+-        SoundUtils.setDefaultAudible(JobService.this, RingtoneManager.TYPE_ALARM);
+-        SoundUtils.setDefaultAudible(JobService.this, RingtoneManager.TYPE_NOTIFICATION);
+-        SoundUtils.setDefaultAudible(JobService.this, RingtoneManager.TYPE_RINGTONE);
++        SoundUtils.setDefaultAudible(ctx, RingtoneManager.TYPE_ALARM);
++        SoundUtils.setDefaultAudible(ctx, RingtoneManager.TYPE_NOTIFICATION);
++        SoundUtils.setDefaultAudible(ctx, RingtoneManager.TYPE_RINGTONE);
+         SoundUtils.setDefaultUISounds(getContentResolver(), "lock_sound", "Lock.ogg");
+         SoundUtils.setDefaultUISounds(getContentResolver(), "unlock_sound", "Unlock.ogg");
+         SoundUtils.setDefaultUISounds(getContentResolver(), "low_battery_sound",
+                 "LowBattery.ogg");
+     }
+ 
+-    private void refreshSounds () {
++    private void refreshSounds() {
+         File soundsDir = new File(IOUtils.SYSTEM_THEME_AUDIO_PATH);
+         if (soundsDir.exists()) {
+             // Set permissions
+@@ -644,13 +654,15 @@ public class JobService extends Service {
+             }
+         }
+     }
++
+     private void copyBootAnimation(String fileName) {
+         try {
+             clearBootAnimation();
+             File source = new File(fileName);
+             File dest = new File(IOUtils.SYSTEM_THEME_BOOTANIMATION_PATH);
+             IOUtils.bufferedCopy(source, dest);
+-            source.delete();
++            boolean deleted = source.delete();
++            if (!deleted) log("Could not delete source file...");
+             IOUtils.setPermissions(dest,
+                     FileUtils.S_IRWXU | FileUtils.S_IRGRP | FileUtils.S_IROTH);
+         } catch (Exception e) {
+@@ -662,21 +674,25 @@ public class JobService extends Service {
+         try {
+             File f = new File(IOUtils.SYSTEM_THEME_BOOTANIMATION_PATH);
+             if (f.exists()) {
+-                f.delete();
++                boolean deleted = f.delete();
++                if (!deleted) log("Could not delete themed boot animation...");
+             }
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+     }
+ 
++    @SuppressWarnings({"unchecked", "ConfusingArgumentToVarargsMethod"})
+     private void restartUi() {
+         try {
+             ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+             Class ActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
+             Method getDefault = ActivityManagerNative.getDeclaredMethod("getDefault", null);
+             Object amn = getDefault.invoke(null, null);
+-            Method killApplicationProcess = amn.getClass().getDeclaredMethod("killApplicationProcess", String.class, int.class);
+-            stopService(new Intent().setComponent(new ComponentName("com.android.systemui", "com.android.systemui.SystemUIService")));
++            Method killApplicationProcess = amn.getClass().getDeclaredMethod
++                    ("killApplicationProcess", String.class, int.class);
++            stopService(new Intent().setComponent(new ComponentName("com.android.systemui", "com" +
++                    ".android.systemui.SystemUIService")));
+             am.killBackgroundProcesses("com.android.systemui");
+             for (ActivityManager.RunningAppProcessInfo app : am.getRunningAppProcesses()) {
+                 if ("com.android.systemui".equals(app.processName)) {
+@@ -689,15 +705,6 @@ public class JobService extends Service {
+         }
+     }
+ 
+-    private void killPackage(String packageName) {
+-        try {
+-            ActivityManagerNative.getDefault().forceStopPackage(packageName,
+-                    UserHandle.USER_SYSTEM);
+-        } catch (RemoteException e) {
+-            e.printStackTrace();
+-        }
+-    }
+-
+     private Context getSubsContext() {
+         return getAppContext(SUBSTRATUM_PACKAGE);
+     }
+@@ -713,45 +720,38 @@ public class JobService extends Service {
+         return ctx;
+     }
+ 
+-    public static void log(String msg) {
+-        if (DEBUG) {
+-            Log.e(TAG, msg);
+-        }
+-    }
+-
+     private boolean isCallerAuthorized(Intent intent) {
+         PendingIntent token = null;
+         try {
+-            token = (PendingIntent) intent.getParcelableExtra(MASQUERADE_TOKEN);
++            token = intent.getParcelableExtra(MASQUERADE_TOKEN);
+         } catch (Exception e) {
+-            log("Attempt to start serivce without a token, unauthorized");
+-        }
+-        if (token == null) {
+-            return false;
++            log("Attempting to start service without a token - unauthorized!");
+         }
+-        // SECOND: we got a token, validate originating package
+-        // if not in our whitelist, return null
++        if (token == null) return false;
++        // SECOND: We got a token, validate originating package
++        // if not in our white list, return null
+         String callingPackage = token.getCreatorPackage();
+         boolean isValidPackage = false;
+-        for (int i = 0; i < AUTHORIZED_CALLERS.length; i++) {
+-            if (TextUtils.equals(callingPackage, AUTHORIZED_CALLERS[i])) {
+-                log(callingPackage
+-                        + " is an authorized calling package, next validate calling package perms");
++        for (String AUTHORIZED_CALLER : AUTHORIZED_CALLERS) {
++            if (TextUtils.equals(callingPackage, AUTHORIZED_CALLER)) {
++                log("\'" + callingPackage
++                        + "\' is an authorized calling package, validating calling package " +
++                        "permissions...");
+                 isValidPackage = true;
+                 break;
+             }
+         }
+         if (!isValidPackage) {
+-            log(callingPackage + " is not an authorized calling package");
++            log("\'" + callingPackage + "\' is not an authorized calling package.");
+             return false;
+         }
+         return true;
+     }
+ 
+     private class MainHandler extends Handler {
+-        public static final int MSG_JOB_QUEUE_EMPTY = 1;
++        static final int MSG_JOB_QUEUE_EMPTY = 1;
+ 
+-        public MainHandler(Looper looper) {
++        MainHandler(Looper looper) {
+             super(looper);
+         }
+ 
+@@ -771,7 +771,7 @@ public class JobService extends Service {
+         private static final int MESSAGE_CHECK_QUEUE = 1;
+         private static final int MESSAGE_DEQUEUE = 2;
+ 
+-        public JobHandler(Looper looper) {
++        JobHandler(Looper looper) {
+             super(looper);
+         }
+ 
+@@ -783,9 +783,7 @@ public class JobService extends Service {
+                     synchronized (mJobQueue) {
+                         job = mJobQueue.get(0);
+                     }
+-                    if (job != null && !mIsRunning) {
+-                        job.run();
+-                    }
++                    if (job != null && !mIsRunning) job.run();
+                     break;
+                 case MESSAGE_DEQUEUE:
+                     Runnable toRemove = (Runnable) msg.obj;
+@@ -796,7 +794,7 @@ public class JobService extends Service {
+                             this.sendEmptyMessage(MESSAGE_CHECK_QUEUE);
+                         } else {
+                             mIsRunning = false;
+-                            log("Job queue empty! All done");
++                            log("Job queue is empty. All done!");
+                             mMainHandler.sendEmptyMessage(MainHandler.MSG_JOB_QUEUE_EMPTY);
+                         }
+                     }
+@@ -808,23 +806,6 @@ public class JobService extends Service {
+         }
+     }
+ 
+-    private class StopPackageJob implements Runnable {
+-        String mPackage;
+-
+-        public void StopPackageJob(String _package) {
+-            mPackage = _package;
+-        }
+-
+-        @Override
+-        public void run() {
+-            killPackage(mPackage);
+-            log("Killed package " + mPackage);
+-            Message message = mJobHandler.obtainMessage(JobHandler.MESSAGE_DEQUEUE,
+-                    StopPackageJob.this);
+-            mJobHandler.sendMessage(message);
+-        }
+-    }
+-
+     private class UiResetJob implements Runnable {
+         @Override
+         public void run() {
+@@ -841,7 +822,7 @@ public class JobService extends Service {
+         String mPid;
+         String mFileName;
+ 
+-        public FontsJob(String pid, String fileName) {
++        FontsJob(String pid, String fileName) {
+             if (pid == null) {
+                 mClear = true;
+             } else {
+@@ -853,10 +834,10 @@ public class JobService extends Service {
+         @Override
+         public void run() {
+             if (mClear) {
+-                log("Resetting system font");
++                log("Restoring system font...");
+                 clearFonts();
+             } else {
+-                log("Setting theme font");
++                log("Configuring theme font...");
+                 copyFonts(mPid, mFileName);
+             }
+             Intent intent = new Intent(INTENT_STATUS_CHANGED);
+@@ -873,7 +854,7 @@ public class JobService extends Service {
+         String mPid;
+         String mFileName;
+ 
+-        public SoundsJob(String pid, String fileName) {
++        SoundsJob(String pid, String fileName) {
+             if (pid == null) {
+                 mClear = true;
+             } else {
+@@ -885,10 +866,10 @@ public class JobService extends Service {
+         @Override
+         public void run() {
+             if (mClear) {
+-                log("Resetting system sounds");
++                log("Restoring system sounds...");
+                 clearSounds(JobService.this);
+             } else {
+-                log("Setting theme sounds");
++                log("Configuring theme sounds...");
+                 applyThemedSounds(mPid, mFileName);
+             }
+             Intent intent = new Intent(INTENT_STATUS_CHANGED);
+@@ -901,14 +882,14 @@ public class JobService extends Service {
+     }
+ 
+     private class BootAnimationJob implements Runnable {
+-        String mFileName;
+         final boolean mClear;
++        String mFileName;
+ 
+-        public BootAnimationJob(boolean clear) {
+-            mClear = true;
++        BootAnimationJob(boolean clear) {
++            mClear = clear;
+         }
+ 
+-        public BootAnimationJob(String fileName) {
++        BootAnimationJob(String fileName) {
+             mFileName = fileName;
+             mClear = false;
+         }
+@@ -916,10 +897,10 @@ public class JobService extends Service {
+         @Override
+         public void run() {
+             if (mClear) {
+-                log("Resetting system boot animation");
++                log("Restoring system boot animation...");
+                 clearBootAnimation();
+             } else {
+-                log("Setting themed boot animation");
++                log("Configuring themed boot animation...");
+                 copyBootAnimation(mFileName);
+             }
+             Intent intent = new Intent(INTENT_STATUS_CHANGED);
+@@ -934,13 +915,13 @@ public class JobService extends Service {
+     private class Installer implements Runnable {
+         String mPath;
+ 
+-        public Installer(String path) {
++        Installer(String path) {
+             mPath = path;
+         }
+ 
+         @Override
+         public void run() {
+-            log("Installer - installing " + mPath);
++            log("Installer - installing \'" + mPath + "\'...");
+             PackageInstallObserver observer = new PackageInstallObserver(Installer.this);
+             install(mPath, observer);
+         }
+@@ -949,7 +930,7 @@ public class JobService extends Service {
+     private class PackageInstallObserver extends IPackageInstallObserver2.Stub {
+         Object mObject;
+ 
+-        public PackageInstallObserver(Object _object) {
++        PackageInstallObserver(Object _object) {
+             mObject = _object;
+         }
+ 
+@@ -957,8 +938,9 @@ public class JobService extends Service {
+             log("Installer - user action required callback");
+         }
+ 
+-        public void onPackageInstalled(String packageName, int returnCode, String msg, Bundle extras) {
+-            log("Installer - successfully installed " + packageName);
++        public void onPackageInstalled(String packageName, int returnCode, String msg, Bundle
++                extras) {
++            log("Installer - successfully installed \'" + packageName + "\'!");
+             Message message = mJobHandler.obtainMessage(JobHandler.MESSAGE_DEQUEUE, mObject);
+             mJobHandler.sendMessage(message);
+         }
+@@ -967,20 +949,19 @@ public class JobService extends Service {
+     private class Remover implements Runnable {
+         String mPackage;
+ 
+-        public Remover(String _package) {
++        Remover(String _package) {
+             mPackage = _package;
+         }
+ 
+         @Override
+         public void run() {
+-
+             // TODO: Fix isOverlayEnabled function, for now it's causing NPE
+             if (isOverlayEnabled(mPackage)) {
+-                log("Remover - disabling overlay for " + mPackage);
++                log("Remover - disabling overlay for \'" + mPackage + "\'...");
+                 switchOverlay(mPackage, false);
+             }
+ 
+-            log("Remover - uninstalling " + mPackage);
++            log("Remover - uninstalling \'" + mPackage + "\'...");
+             PackageDeleteObserver observer = new PackageDeleteObserver(Remover.this);
+             uninstall(mPackage, observer);
+         }
+@@ -989,12 +970,12 @@ public class JobService extends Service {
+     private class PackageDeleteObserver extends IPackageDeleteObserver.Stub {
+         Object mObject;
+ 
+-        public PackageDeleteObserver(Object _object) {
++        PackageDeleteObserver(Object _object) {
+             mObject = _object;
+         }
+ 
+         public void packageDeleted(String packageName, int returnCode) {
+-            log("Remover - successfully removed " + packageName);
++            log("Remover - successfully removed \'" + packageName + "\'");
+             Message message = mJobHandler.obtainMessage(JobHandler.MESSAGE_DEQUEUE, mObject);
+             mJobHandler.sendMessage(message);
+         }
+@@ -1003,13 +984,13 @@ public class JobService extends Service {
+     private class Enabler implements Runnable {
+         String mPackage;
+ 
+-        public Enabler(String _package) {
++        Enabler(String _package) {
+             mPackage = _package;
+         }
+ 
+         @Override
+         public void run() {
+-            log("Enabler - enabling overlay for " + mPackage);
++            log("Enabler - enabling overlay for \'" + mPackage + "\'...");
+             switchOverlay(mPackage, true);
+             Message message = mJobHandler.obtainMessage(JobHandler.MESSAGE_DEQUEUE,
+                     Enabler.this);
+@@ -1020,13 +1001,13 @@ public class JobService extends Service {
+     private class Disabler implements Runnable {
+         String mPackage;
+ 
+-        public Disabler(String _package) {
++        Disabler(String _package) {
+             mPackage = _package;
+         }
+ 
+         @Override
+         public void run() {
+-            log("Disabler - disabling overlay for " + mPackage);
++            log("Disabler - disabling overlay for \'" + mPackage + "\'...");
+             switchOverlay(mPackage, false);
+             Message message = mJobHandler.obtainMessage(JobHandler.MESSAGE_DEQUEUE,
+                     Disabler.this);
+@@ -1037,18 +1018,18 @@ public class JobService extends Service {
+     private class PriorityJob implements Runnable {
+         List<String> mPackages;
+ 
+-        public PriorityJob(List<String> _packages) {
++        PriorityJob(List<String> _packages) {
+             mPackages = _packages;
+         }
+ 
+         @Override
+         public void run() {
+-            log("PriorityJob - processing priority changes");
++            log("PriorityJob - processing priority changes...");
+             try {
+                 int size = mPackages.size();
+-                for (int i = 0; i < size-1; i++) {
++                for (int i = 0; i < size - 1; i++) {
+                     String parentName = mPackages.get(i);
+-                    String packageName = mPackages.get(i+1);
++                    String packageName = mPackages.get(i + 1);
+                     getOMS().setPriority(packageName, parentName, UserHandle.USER_SYSTEM);
+                 }
+             } catch (RemoteException e) {
+@@ -1064,14 +1045,14 @@ public class JobService extends Service {
+         String mSource;
+         String mDestination;
+ 
+-        public CopyJob(String _source, String _destination) {
++        CopyJob(String _source, String _destination) {
+             mSource = _source;
+             mDestination = _destination;
+         }
+ 
+         @Override
+         public void run() {
+-            log("CopyJob - copying " + mSource + " to " + mDestination);
++            log("CopyJob - copying \'" + mSource + "\' to \'" + mDestination + "\'...");
+             File sourceFile = new File(mSource);
+             if (sourceFile.exists()) {
+                 if (sourceFile.isFile()) {
+@@ -1080,7 +1061,7 @@ public class JobService extends Service {
+                     IOUtils.copyFolder(mSource, mDestination);
+                 }
+             } else {
+-                log("CopyJob - " + mSource + " is not exist! aborting...");
++                log("CopyJob - \'" + mSource + "\' does not exist, aborting...");
+             }
+             Message message = mJobHandler.obtainMessage(JobHandler.MESSAGE_DEQUEUE,
+                     CopyJob.this);
+@@ -1092,14 +1073,14 @@ public class JobService extends Service {
+         String mSource;
+         String mDestination;
+ 
+-        public MoveJob(String _source, String _destination) {
++        MoveJob(String _source, String _destination) {
+             mSource = _source;
+             mDestination = _destination;
+         }
+ 
+         @Override
+         public void run() {
+-            log("MoveJob - moving " + mSource + " to " + mDestination);
++            log("MoveJob - moving \'" + mSource + "\' to \'" + mDestination + "\'...");
+             File sourceFile = new File(mSource);
+             if (sourceFile.exists()) {
+                 if (sourceFile.isFile()) {
+@@ -1109,7 +1090,7 @@ public class JobService extends Service {
+                 }
+                 IOUtils.deleteRecursive(sourceFile);
+             } else {
+-                log("MoveJob - " + mSource + " is not exist! aborting...");
++                log("MoveJob - \'" + mSource + "\' does not exist, aborting...");
+             }
+             Message message = mJobHandler.obtainMessage(JobHandler.MESSAGE_DEQUEUE,
+                     MoveJob.this);
+@@ -1120,18 +1101,18 @@ public class JobService extends Service {
+     private class DeleteJob implements Runnable {
+         String mFileOrDirectory;
+ 
+-        public DeleteJob(String _directory) {
++        DeleteJob(String _directory) {
+             mFileOrDirectory = _directory;
+         }
+ 
+         @Override
+         public void run() {
+-            log("DeleteJob - deleting " + mFileOrDirectory);
++            log("DeleteJob - deleting \'" + mFileOrDirectory + "\'...");
+             File file = new File(mFileOrDirectory);
+             if (file.exists()) {
+                 IOUtils.deleteRecursive(file);
+             } else {
+-                log("DeleteJob - " + mFileOrDirectory + " is already deleted!");
++                log("DeleteJob - \'" + mFileOrDirectory + "\' is already deleted.");
+             }
+             Message message = mJobHandler.obtainMessage(JobHandler.MESSAGE_DEQUEUE,
+                     DeleteJob.this);
+@@ -1144,7 +1125,7 @@ public class JobService extends Service {
+         List<String> mToBeDisabled;
+         List<String> mToBeEnabled;
+ 
+-        public ProfileJob(String _name, List<String> _toBeDisabled, List<String> _toBeEnabled) {
++        ProfileJob(String _name, List<String> _toBeDisabled, List<String> _toBeEnabled) {
+             mProfileName = _name;
+             mToBeDisabled = _toBeDisabled;
+             mToBeEnabled = _toBeEnabled;
+@@ -1152,7 +1133,7 @@ public class JobService extends Service {
+ 
+         @Override
+         public void run() {
+-            boolean restartUi = false;
++            boolean restartUi;
+             log("Applying profile...");
+ 
+             // Need to restart SystemUI?
+@@ -1201,7 +1182,7 @@ public class JobService extends Service {
+ 
+             // Restart SystemUI when needed
+             if (restartUi) {
+-                synchronized(mJobQueue) {
++                synchronized (mJobQueue) {
+                     mJobQueue.add(new UiResetJob());
+                 }
+             }
+@@ -1214,7 +1195,6 @@ public class JobService extends Service {
+ 
+     private class LocaleChanger extends BroadcastReceiver implements Runnable {
+         private boolean mIsRegistered;
+-        private boolean mDoRestore;
+         private Context mContext;
+         private Handler mHandler;
+         private Locale mCurrentLocale;
+@@ -1229,12 +1209,7 @@ public class JobService extends Service {
+             Intent i = new Intent(Intent.ACTION_MAIN);
+             i.addCategory(Intent.CATEGORY_HOME);
+             mContext.startActivity(i);
+-            mHandler.postDelayed(new Runnable() {
+-                @Override
+-                public void run() {
+-                    spoofLocale();
+-                }
+-            }, 500);
++            mHandler.postDelayed(this::spoofLocale, 500);
+         }
+ 
+         private void register() {
+@@ -1253,9 +1228,10 @@ public class JobService extends Service {
+             }
+         }
+ 
++        @SuppressWarnings("deprecation")
+         private void spoofLocale() {
+             Configuration config;
+-            log("LocaleChanger - spoofing locale for configuation change shim");
++            log("LocaleChanger - spoofing locale for configuration change shim...");
+             try {
+                 register();
+                 config = ActivityManagerNative.getDefault().getConfiguration();
+@@ -1269,13 +1245,12 @@ public class JobService extends Service {
+                 ActivityManagerNative.getDefault().updateConfiguration(config);
+             } catch (RemoteException e) {
+                 e.printStackTrace();
+-                return;
+             }
+         }
+ 
+         private void restoreLocale() {
+             Configuration config;
+-            log("LocaleChanger - restoring original locale for configuation change shim");
++            log("LocaleChanger - restoring original locale for configuration change shim...");
+             try {
+                 unregister();
+                 config = ActivityManagerNative.getDefault().getConfiguration();
+@@ -1293,40 +1268,7 @@ public class JobService extends Service {
+ 
+         @Override
+         public void onReceive(Context context, Intent intent) {
+-            mHandler.postDelayed(new Runnable() {
+-                @Override
+-                public void run() {
+-                    restoreLocale();
+-                }
+-            }, 500);
+-        }
+-    }
+-
+-    private static class LocalIntentReceiver {
+-        private final SynchronousQueue<Intent> mResult = new SynchronousQueue<>();
+-
+-        private IIntentSender.Stub mLocalSender = new IIntentSender.Stub() {
+-            @Override
+-            public void send(int code, Intent intent, String resolvedType,
+-                    IIntentReceiver finishedReceiver, String requiredPermission, Bundle options) {
+-                try {
+-                    mResult.offer(intent, 5, TimeUnit.SECONDS);
+-                } catch (InterruptedException e) {
+-                    throw new RuntimeException(e);
+-                }
+-            }
+-        };
+-
+-        public IntentSender getIntentSender() {
+-            return new IntentSender((IIntentSender) mLocalSender);
+-        }
+-
+-        public Intent getResult() {
+-            try {
+-                return mResult.take();
+-            } catch (InterruptedException e) {
+-                throw new RuntimeException(e);
+-            }
++            mHandler.postDelayed(this::restoreLocale, 500);
+         }
+     }
+ }
+diff --git a/app/src/main/java/masquerade/substratum/services/MasqDemo.java b/app/src/main/java/masquerade/substratum/services/MasqDemo.java
+deleted file mode 100644
+index b00d6e0..0000000
+--- a/app/src/main/java/masquerade/substratum/services/MasqDemo.java
++++ /dev/null
+@@ -1,137 +0,0 @@
+-
+-package masquerade.substratum.services;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-import android.app.PendingIntent;
+-import android.content.BroadcastReceiver;
+-import android.content.Context;
+-import android.content.Intent;
+-import android.text.TextUtils;
+-
+-public class MasqDemo {
+-    public static final String MASQUERADE_TOKEN = "masquerade_token";
+-    public static final String PRIMARY_COMMAND_KEY = "primary_command_key";
+-    public static final String JOB_TIME_KEY = "job_time_key";
+-    public static final String INSTALL_LIST_KEY = "install_list";
+-    public static final String UNINSTALL_LIST_KEY = "uninstall_list";
+-    public static final String WITH_RESTART_UI_KEY = "with_restart_ui";
+-    public static final String BOOTANIMATION_PID_KEY = "bootanimation_pid";
+-    public static final String BOOTANIMATION_FILE_NAME = "bootanimation_file_name";
+-    public static final String FONTS_PID = "fonts_pid";
+-    public static final String FONTS_FILENAME = "fonts_filename";
+-    public static final String AUDIO_PID = "audio_pid";
+-    public static final String AUDIO_FILENAME = "audio_filename";
+-    public static final String COMMAND_VALUE_INSTALL = "install";
+-    public static final String COMMAND_VALUE_UNINSTALL = "uninstall";
+-    public static final String COMMAND_VALUE_RESTART_UI = "restart_ui";
+-    public static final String COMMAND_VALUE_CONFIGURATION_SHIM = "configuration_shim";
+-    public static final String COMMAND_VALUE_BOOTANIMATION = "bootanimation";
+-    public static final String COMMAND_VALUE_FONTS = "fonts";
+-    public static final String COMMAND_VALUE_AUDIO = "audio";
+-    public static final String INTENT_STATUS_CHANGED = "masquerade.substratum.STATUS_CHANGED";
+-    public static final String COMMAND_VALUE_JOB_COMPLETE = "job_complete";
+-
+-    class MasqReceiver extends BroadcastReceiver {
+-        @Override
+-        public void onReceive(Context context, Intent intent) {
+-            if (TextUtils.equals(intent.getAction(), INTENT_STATUS_CHANGED)) {
+-                String command = intent.getStringExtra(PRIMARY_COMMAND_KEY);
+-                if (TextUtils.equals(command, COMMAND_VALUE_FONTS)) {
+-                    // update ui, dismiss progress dialog, etc
+-                } else if (TextUtils.equals(command, COMMAND_VALUE_BOOTANIMATION)) {
+-
+-                } else if (TextUtils.equals(command, COMMAND_VALUE_AUDIO)) {
+-
+-                } else if (TextUtils.equals(command, COMMAND_VALUE_JOB_COMPLETE)) {
+-
+-                }
+-            }
+-        }
+-    }
+-
+-    // demo code for building a base intent for JobService commands
+-    public static Intent getMasqIntent(Context ctx) {
+-        Intent intent = new Intent();
+-        intent.setClassName("masquerade.substratum", "masquerade.substratum.services.JobService");
+-        // Credit StackOverflow http://stackoverflow.com/a/28132098
+-        // Use dummy PendingIntent for service to validate caller at onBind
+-        PendingIntent pending = PendingIntent.getActivity(ctx, 0, new Intent(), 0);
+-        intent.putExtra(MASQUERADE_TOKEN, pending);
+-        intent.putExtra(JOB_TIME_KEY, System.currentTimeMillis());
+-        return intent;
+-    }
+-
+-    public static void install(Context context, ArrayList<String> overlay_apks) {
+-        // populate list however
+-        Intent masqIntent = getMasqIntent(context);
+-        masqIntent.putExtra(PRIMARY_COMMAND_KEY, COMMAND_VALUE_INSTALL);
+-        masqIntent.putExtra(INSTALL_LIST_KEY, overlay_apks);
+-        context.startService(masqIntent);
+-    }
+-
+-    public static void uninstall(Context context, ArrayList<String> packages_to_remove) {
+-        Intent masqIntent = getMasqIntent(context);
+-        masqIntent.putExtra(PRIMARY_COMMAND_KEY, COMMAND_VALUE_UNINSTALL);
+-        masqIntent.putExtra(UNINSTALL_LIST_KEY, packages_to_remove);
+-        // only need to set if true, will restart SystemUI when done processing packages
+-        masqIntent.putExtra(WITH_RESTART_UI_KEY, true);
+-        context.startService(masqIntent);
+-    }
+-
+-    public static void restartSystemUI(Context context) {
+-        Intent masqIntent = getMasqIntent(context);
+-        masqIntent.putExtra(PRIMARY_COMMAND_KEY, COMMAND_VALUE_RESTART_UI);
+-        context.startService(masqIntent);
+-    }
+-
+-    public static void configurationChangeShim(Context context) {
+-        Intent masqIntent = getMasqIntent(context);
+-        masqIntent.putExtra(PRIMARY_COMMAND_KEY, COMMAND_VALUE_CONFIGURATION_SHIM);
+-        context.startService(masqIntent);
+-    }
+-    
+-    public static void clearThemedBootAnimation(Context context) {
+-        applyThemedBootAnimation(context, null);
+-    }
+-    
+-    public static void applyThemedBootAnimation(Context context, String fileName) {
+-        Intent masqIntent = getMasqIntent(context);
+-        masqIntent.putExtra(PRIMARY_COMMAND_KEY, COMMAND_VALUE_BOOTANIMATION);
+-        if (fileName != null) {
+-            masqIntent.putExtra(BOOTANIMATION_FILE_NAME, fileName);
+-        } else {
+-            // nothing. to reset to stock, just don't add PID and FILE
+-        }
+-        context.startService(masqIntent);
+-    }
+-    
+-    public static void clearThemedFont(Context context) {
+-        applyThemedFont(context, null, null);
+-    }
+-
+-    public static void applyThemedFont(Context context, String pid, String fileName) {
+-        Intent masqIntent = getMasqIntent(context);
+-        masqIntent.putExtra(PRIMARY_COMMAND_KEY, COMMAND_VALUE_FONTS);
+-        if (pid != null) {
+-            masqIntent.putExtra(FONTS_PID, pid);
+-            masqIntent.putExtra(FONTS_FILENAME, fileName);
+-        }
+-        context.startService(masqIntent);
+-    }
+-
+-    public static void clearThemedSounds(Context context) {
+-        applyThemedSounds(context, null, null);
+-    }
+-
+-    public static void applyThemedSounds(Context context, String pid, String fileName) {
+-        Intent masqIntent = getMasqIntent(context);
+-        masqIntent.putExtra(PRIMARY_COMMAND_KEY, COMMAND_VALUE_AUDIO);
+-        if (pid != null) {
+-            masqIntent.putExtra(AUDIO_PID, pid);
+-            masqIntent.putExtra(AUDIO_FILENAME, fileName);
+-        }
+-        context.startService(masqIntent);
+-    }
+-}
+diff --git a/app/src/main/java/masquerade/substratum/utils/IOUtils.java b/app/src/main/java/masquerade/substratum/utils/IOUtils.java
+index 06b5260..2f697c6 100644
+--- a/app/src/main/java/masquerade/substratum/utils/IOUtils.java
++++ b/app/src/main/java/masquerade/substratum/utils/IOUtils.java
+@@ -1,6 +1,28 @@
++/*
++ * Copyright (c) 2017 Project Substratum
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
++ * Also add information on how to contact you by electronic and paper mail.
++ *
++ */
+ 
+ package masquerade.substratum.utils;
+ 
++import android.os.FileUtils;
++import android.util.Log;
++
+ import java.io.BufferedInputStream;
+ import java.io.BufferedOutputStream;
+ import java.io.File;
+@@ -12,8 +34,6 @@ import java.io.OutputStream;
+ import java.util.zip.ZipEntry;
+ import java.util.zip.ZipInputStream;
+ 
+-import android.os.FileUtils;
+-
+ public class IOUtils {
+     public static final String SYSTEM_THEME_PATH = "/data/system/theme";
+     public static final String SYSTEM_THEME_FONT_PATH = SYSTEM_THEME_PATH + File.separator
+@@ -31,12 +51,12 @@ public class IOUtils {
+     public static final String SYSTEM_THEME_BOOTANIMATION_PATH = SYSTEM_THEME_PATH + File.separator
+             + "bootanimation.zip";
+ 
+-    public static boolean dirExists(String dirPath) {
++    private static boolean dirExists(String dirPath) {
+         final File dir = new File(dirPath);
+         return dir.exists() && dir.isDirectory();
+     }
+ 
+-    public static void createDirIfNotExists(String dirPath) {
++    private static void createDirIfNotExists(String dirPath) {
+         if (!dirExists(dirPath)) {
+             File dir = new File(dirPath);
+             if (dir.mkdir()) {
+@@ -90,7 +110,10 @@ public class IOUtils {
+     }
+ 
+     public static void copyFolder(File source, File dest) {
+-        if (!dest.exists()) dest.mkdirs();
++        if (!dest.exists()) {
++            boolean created = dest.mkdirs();
++            if (!created) Log.e("CopyFolder", "Could not create destination folder...");
++        }
+         File[] files = source.listFiles();
+         for (File file : files) {
+             try {
+@@ -172,7 +195,9 @@ public class IOUtils {
+             for (File child : fileOrDirectory.listFiles())
+                 deleteRecursive(child);
+ 
+-        fileOrDirectory.delete();
++        boolean deleted = fileOrDirectory.delete();
++        if (!deleted) Log.e("DeleteRecursive", "Could not delete file or directory - \'" +
++                fileOrDirectory.getName() + "\'");
+     }
+ 
+     public static void setPermissions(File path, int permissions) {
+diff --git a/app/src/main/java/masquerade/substratum/utils/SoundUtils.java b/app/src/main/java/masquerade/substratum/utils/SoundUtils.java
+index dda38eb..73999ce 100644
+--- a/app/src/main/java/masquerade/substratum/utils/SoundUtils.java
++++ b/app/src/main/java/masquerade/substratum/utils/SoundUtils.java
+@@ -1,9 +1,25 @@
++/*
++ * Copyright (c) 2017 Project Substratum
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
++ * Also add information on how to contact you by electronic and paper mail.
++ *
++ */
+ 
+ package masquerade.substratum.utils;
+ 
+-import java.io.File;
+-import java.util.Arrays;
+-
+ import android.content.ContentResolver;
+ import android.content.ContentValues;
+ import android.content.Context;
+@@ -13,8 +29,11 @@ import android.net.Uri;
+ import android.os.SystemProperties;
+ import android.os.UserHandle;
+ import android.provider.MediaStore;
+-import android.util.Log;
+ import android.provider.Settings;
++import android.util.Log;
++
++import java.io.File;
++import java.util.Arrays;
+ 
+ public class SoundUtils {
+     private static final String SYSTEM_MEDIA_PATH = "/system/media/audio";
+@@ -26,11 +45,12 @@ public class SoundUtils {
+             SYSTEM_MEDIA_PATH + File.separator + "notifications";
+     private static final String MEDIA_CONTENT_URI = "content://media/internal/audio/media";
+ 
+-    public static void updateGlobalSettings(ContentResolver resolver, String uri, String val) {
++    private static void updateGlobalSettings(ContentResolver resolver, String uri, String val) {
+         Settings.Global.putStringForUser(resolver, uri, val, UserHandle.USER_SYSTEM);
+     }
+ 
+-    public static boolean setUISounds(ContentResolver resolver, String sound_name, String location) {
++    public static boolean setUISounds(ContentResolver resolver, String sound_name, String
++            location) {
+         if (allowedUISound(sound_name)) {
+             updateGlobalSettings(resolver, sound_name, location);
+             return true;
+@@ -39,12 +59,12 @@ public class SoundUtils {
+     }
+ 
+     public static void setDefaultUISounds(ContentResolver resolver, String sound_name,
+-            String sound_file) {
++                                          String sound_file) {
+         updateGlobalSettings(resolver, sound_name, "/system/media/audio/ui/" + sound_file);
+     }
+ 
+     // This string array contains all the SystemUI acceptable sound files
+-    public static Boolean allowedUISound(String targetValue) {
++    private static Boolean allowedUISound(String targetValue) {
+         String[] allowed_themable = {
+                 "lock_sound",
+                 "unlock_sound",
+@@ -53,7 +73,7 @@ public class SoundUtils {
+         return Arrays.asList(allowed_themable).contains(targetValue);
+     }
+ 
+-    public static String getDefaultAudiblePath(int type) {
++    private static String getDefaultAudiblePath(int type) {
+         final String name;
+         final String path;
+         switch (type) {
+@@ -76,25 +96,8 @@ public class SoundUtils {
+         return path;
+     }
+ 
+-    public static void clearAudibles(Context context, String audiblePath) {
+-        final File audibleDir = new File(audiblePath);
+-        if (audibleDir.exists() && audibleDir.isDirectory()) {
+-            String[] files = audibleDir.list();
+-            final ContentResolver resolver = context.getContentResolver();
+-            for (String s : files) {
+-                final String filePath = audiblePath + File.separator + s;
+-                Uri uri = MediaStore.Audio.Media.getContentUriForPath(filePath);
+-                resolver.delete(uri, MediaStore.MediaColumns.DATA + "=\""
+-                        + filePath + "\"", null);
+-                boolean deleted = (new File(filePath)).delete();
+-                if (deleted)
+-                    Log.e("SoundsHandler", "Database cleared");
+-            }
+-        }
+-    }
+-
+     public static boolean setAudible(Context context, File ringtone, File ringtoneCache, int type,
+-            String name) {
++                                     String name) {
+         final String path = ringtone.getAbsolutePath();
+         final String mimeType = name.endsWith(".ogg") ? "application/ogg" : "application/mp3";
+         ContentValues values = new ContentValues();
+@@ -111,8 +114,8 @@ public class SoundUtils {
+         Uri uri = MediaStore.Audio.Media.getContentUriForPath(path);
+         Uri newUri = null;
+         Cursor c = context.getContentResolver().query(uri,
+-                new String[] {
+-                    MediaStore.MediaColumns._ID
++                new String[]{
++                        MediaStore.MediaColumns._ID
+                 },
+                 MediaStore.MediaColumns.DATA + "='" + path + "'",
+                 null, null);
+@@ -135,7 +138,7 @@ public class SoundUtils {
+     }
+ 
+     public static boolean setUIAudible(Context context, File localized_ringtone,
+-            File ringtone_file, int type, String name) {
++                                       File ringtone_file, int type, String name) {
+         final String path = ringtone_file.getAbsolutePath();
+ 
+         final String path_clone = "/system/media/audio/ui/" + name + ".ogg";
+@@ -153,8 +156,8 @@ public class SoundUtils {
+         Uri uri = MediaStore.Audio.Media.getContentUriForPath(path);
+         Uri newUri = null;
+         Cursor c = context.getContentResolver().query(uri,
+-                new String[] {
+-                    MediaStore.MediaColumns._ID
++                new String[]{
++                        MediaStore.MediaColumns._ID
+                 },
+                 MediaStore.MediaColumns.DATA + "='" + path_clone + "'",
+                 null, null);
+@@ -187,8 +190,8 @@ public class SoundUtils {
+         if (audiblePath != null) {
+             Uri uri = MediaStore.Audio.Media.getContentUriForPath(audiblePath);
+             Cursor c = context.getContentResolver().query(uri,
+-                    new String[] {
+-                        MediaStore.MediaColumns._ID
++                    new String[]{
++                            MediaStore.MediaColumns._ID
+                     },
+                     MediaStore.MediaColumns.DATA + "='" + audiblePath + "'",
+                     null, null);
+@@ -206,5 +209,4 @@ public class SoundUtils {
+         }
+         return true;
+     }
+-
+ }
+diff --git a/app/src/main/res/mipmap-hdpi/ic_launcher.png b/app/src/main/res/mipmap-hdpi/ic_launcher.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..2588952b8172c791022bc815d725d1157d46d6f3
+GIT binary patch
+literal 2240
+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
+M#>O61f$&cHA7ceLfB*mh
+
+literal 0
+HcmV?d00001
+
+diff --git a/app/src/main/res/mipmap-hdpi/substratum_masquerade.png b/app/src/main/res/mipmap-hdpi/substratum_masquerade.png
+deleted file mode 100755
+index aa94e2c00f99b9f2e2e1889c26955f85fa0932af..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 2246
+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
+U8e-`#i2wiq07*qoM6N<$g6DV#^#A|>
+
+diff --git a/app/src/main/res/mipmap-mdpi/ic_launcher.png b/app/src/main/res/mipmap-mdpi/ic_launcher.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..bd2ae71130d8d3756ebac2cd39d3e29fcd4555b3
+GIT binary patch
+literal 1848
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/app/src/main/res/mipmap-mdpi/substratum_masquerade.png b/app/src/main/res/mipmap-mdpi/substratum_masquerade.png
+deleted file mode 100755
+index bdc8a5d44ccfd5ea26d3dab204fdad8aae4549e9..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 2094
+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
+Y0LvOWjfh)G4*&oF07*qoM6N<$g35*9H2?qr
+
+diff --git a/app/src/main/res/mipmap-xhdpi/ic_launcher.png b/app/src/main/res/mipmap-xhdpi/ic_launcher.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..c56d924e82226247414225514f6c666ec4002598
+GIT binary patch
+literal 2733
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/app/src/main/res/mipmap-xhdpi/substratum_masquerade.png b/app/src/main/res/mipmap-xhdpi/substratum_masquerade.png
+deleted file mode 100755
+index 0f2b92b85724bc63985cfb6962e7b8bffbc71245..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 2734
+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
+
+diff --git a/app/src/main/res/mipmap-xxhdpi/ic_launcher.png b/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..69011b70ae30ed7fd659f01e182e8029baaa1e56
+GIT binary patch
+literal 3874
+zcmb7nX*3&J)OLtAC_-<Q5|PAQV+B<bB&LWdMQ25bxwI5bs1|7}Xo*gQBBr7grEbk7
+zW*tNgHMe4pF->*QYG3#J{=NU+z1BWwt!MAE*R#)g_K%Z9aIzH_l@kR30OEEyE0?{U
+z{+|m2_f~f1!DIkHaEIXFX6+Cdwuk&*Eh;K%YisL&ooaKqseSxfb93{^$VfH*+F`K#
+z@bGXmKGx06ZE$eVTO9+}3{23lK4zYckVGIc%q(4(UUU%4)c+YS{3$MMW@aW$+p)gB
+zp2y=kxTUUH#j@nwyH$Nn@Z}xy7ssI99T1OBs2AG4kgFOvuIRmj@HNF(OsM*ERRTH`
+zJjNA$RuF#c);GAy{wVvW9SWXYCI4}R?}Uo~IE;inSv3wPb*Yfd9P-DN{4AU+C)5Ha
+zl>NGteYk3YYnInLVMKH1$}WU=my%B>oQQUOZfajqt4hKUDp3v<6Y7E03LZ6ZuXURn
+zFQ6VTU|ug2J!_P`x#~gPYJR5pvRW0N8YS-<1QCtTH?=QWf%~HEi^dd))sTy<Bkrd7
+zXIPgiltYP`0~3WWLOT?j*xWU9C@^<^j<U-@;qIdx%B@_hQTSYIw`vpXBs4zT)RvCI
+zJ?d8XH?>XefO-v?U#@~&G{ZB@9EwnOS?y3yltUR?=>kjfY?ZuQUSYGjL!Oy^&i3~9
+z(CE^qnNN0Ss|FOjSWwSi1<y63h(<+^R;WiG!Y34!7JK~8Je>3iPHKYt3?fLa%0AB_
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/app/src/main/res/mipmap-xxhdpi/substratum_masquerade.png b/app/src/main/res/mipmap-xxhdpi/substratum_masquerade.png
+deleted file mode 100755
+index 42ceea8993a7d808ef8de18fa11e13bec5423b14..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 3894
+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
+MX=ZC$Z*ndEzb5@DPXGV_
+
+diff --git a/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png b/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..4448e0b97e8333ae8b1ac5915a22ea9b33303ce4
+GIT binary patch
+literal 4947
+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
+E0A=T)LjV8(
+
+literal 0
+HcmV?d00001
+
+diff --git a/app/src/main/res/mipmap-xxxhdpi/substratum_masquerade.png b/app/src/main/res/mipmap-xxxhdpi/substratum_masquerade.png
+deleted file mode 100755
+index 53658674bdc6209cf4ada657cfa150bc21338d60..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 4966
+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
+Ivi6GmKTIFPX#fBK
+
+diff --git a/app/src/main/res/values/styles.xml b/app/src/main/res/values/styles.xml
+index b960a27..975087e 100644
+--- a/app/src/main/res/values/styles.xml
++++ b/app/src/main/res/values/styles.xml
+@@ -1,4 +1,3 @@
+ <resources>
+-
+     <style name="AppTheme" parent="@android:style/Theme.NoDisplay"/>
+ </resources>
+diff --git a/gradlew b/gradlew
+old mode 100755
+new mode 100644
+diff --git a/gradlew.bat b/gradlew.bat
+index aec9973..8a0b282 100644
+--- a/gradlew.bat
++++ b/gradlew.bat
+@@ -1,90 +1,90 @@
+-@if "%DEBUG%" == "" @echo off
+-@rem ##########################################################################
+-@rem
+-@rem  Gradle startup script for Windows
+-@rem
+-@rem ##########################################################################
+-
+-@rem Set local scope for the variables with windows NT shell
+-if "%OS%"=="Windows_NT" setlocal
+-
+-@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+-set DEFAULT_JVM_OPTS=
+-
+-set DIRNAME=%~dp0
+-if "%DIRNAME%" == "" set DIRNAME=.
+-set APP_BASE_NAME=%~n0
+-set APP_HOME=%DIRNAME%
+-
+-@rem Find java.exe
+-if defined JAVA_HOME goto findJavaFromJavaHome
+-
+-set JAVA_EXE=java.exe
+-%JAVA_EXE% -version >NUL 2>&1
+-if "%ERRORLEVEL%" == "0" goto init
+-
+-echo.
+-echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+-echo.
+-echo Please set the JAVA_HOME variable in your environment to match the
+-echo location of your Java installation.
+-
+-goto fail
+-
+-:findJavaFromJavaHome
+-set JAVA_HOME=%JAVA_HOME:"=%
+-set JAVA_EXE=%JAVA_HOME%/bin/java.exe
+-
+-if exist "%JAVA_EXE%" goto init
+-
+-echo.
+-echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
+-echo.
+-echo Please set the JAVA_HOME variable in your environment to match the
+-echo location of your Java installation.
+-
+-goto fail
+-
+-:init
+-@rem Get command-line arguments, handling Windowz variants
+-
+-if not "%OS%" == "Windows_NT" goto win9xME_args
+-if "%@eval[2+2]" == "4" goto 4NT_args
+-
+-:win9xME_args
+-@rem Slurp the command line arguments.
+-set CMD_LINE_ARGS=
+-set _SKIP=2
+-
+-:win9xME_args_slurp
+-if "x%~1" == "x" goto execute
+-
+-set CMD_LINE_ARGS=%*
+-goto execute
+-
+-:4NT_args
+-@rem Get arguments from the 4NT Shell from JP Software
+-set CMD_LINE_ARGS=%$
+-
+-:execute
+-@rem Setup the command line
+-
+-set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
+-
+-@rem Execute Gradle
+-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %CMD_LINE_ARGS%
+-
+-:end
+-@rem End local scope for the variables with windows NT shell
+-if "%ERRORLEVEL%"=="0" goto mainEnd
+-
+-:fail
+-rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
+-rem the _cmd.exe /c_ return code!
+-if  not "" == "%GRADLE_EXIT_CONSOLE%" exit 1
+-exit /b 1
+-
+-:mainEnd
+-if "%OS%"=="Windows_NT" endlocal
+-
+-:omega
++@if "%DEBUG%" == "" @echo off
++@rem ##########################################################################
++@rem
++@rem  Gradle startup script for Windows
++@rem
++@rem ##########################################################################
++
++@rem Set local scope for the variables with windows NT shell
++if "%OS%"=="Windows_NT" setlocal
++
++@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++set DEFAULT_JVM_OPTS=
++
++set DIRNAME=%~dp0
++if "%DIRNAME%" == "" set DIRNAME=.
++set APP_BASE_NAME=%~n0
++set APP_HOME=%DIRNAME%
++
++@rem Find java.exe
++if defined JAVA_HOME goto findJavaFromJavaHome
++
++set JAVA_EXE=java.exe
++%JAVA_EXE% -version >NUL 2>&1
++if "%ERRORLEVEL%" == "0" goto init
++
++echo.
++echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++echo.
++echo Please set the JAVA_HOME variable in your environment to match the
++echo location of your Java installation.
++
++goto fail
++
++:findJavaFromJavaHome
++set JAVA_HOME=%JAVA_HOME:"=%
++set JAVA_EXE=%JAVA_HOME%/bin/java.exe
++
++if exist "%JAVA_EXE%" goto init
++
++echo.
++echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
++echo.
++echo Please set the JAVA_HOME variable in your environment to match the
++echo location of your Java installation.
++
++goto fail
++
++:init
++@rem Get command-line arguments, handling Windowz variants
++
++if not "%OS%" == "Windows_NT" goto win9xME_args
++if "%@eval[2+2]" == "4" goto 4NT_args
++
++:win9xME_args
++@rem Slurp the command line arguments.
++set CMD_LINE_ARGS=
++set _SKIP=2
++
++:win9xME_args_slurp
++if "x%~1" == "x" goto execute
++
++set CMD_LINE_ARGS=%*
++goto execute
++
++:4NT_args
++@rem Get arguments from the 4NT Shell from JP Software
++set CMD_LINE_ARGS=%$
++
++:execute
++@rem Setup the command line
++
++set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
++
++@rem Execute Gradle
++"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %CMD_LINE_ARGS%
++
++:end
++@rem End local scope for the variables with windows NT shell
++if "%ERRORLEVEL%"=="0" goto mainEnd
++
++:fail
++rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
++rem the _cmd.exe /c_ return code!
++if  not "" == "%GRADLE_EXIT_CONSOLE%" exit 1
++exit /b 1
++
++:mainEnd
++if "%OS%"=="Windows_NT" endlocal
++
++:omega
+-- 
+2.11.1
+

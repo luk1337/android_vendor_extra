@@ -1,7 +1,7 @@
-From 6f4471f0ce013aa2372be0d1740a18003a348a1e Mon Sep 17 00:00:00 2001
+From 96b9021830fde7f2544016d5c51c16a076a49484 Mon Sep 17 00:00:00 2001
 From: mickybart <mickybart@pygoscelis.org>
 Date: Sat, 19 Nov 2016 19:05:05 -0500
-Subject: [PATCH 33/38] OMS: StrictMode and files under /data/system/theme/
+Subject: [PATCH 33/39] OMS: StrictMode and files under /data/system/theme/
 
 Themes are using /data/system/theme/ to push some files like LowBattery.ogg (audio notification)
 When the device battery trigger the low battery state, the sound is not played due

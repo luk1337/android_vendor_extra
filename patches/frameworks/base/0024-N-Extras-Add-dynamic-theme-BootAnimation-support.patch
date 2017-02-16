@@ -1,7 +1,7 @@
-From 91bfe07e4c527b269e263730f650d36f2d699593 Mon Sep 17 00:00:00 2001
+From 5bfb6898a0b37ee4d1835fc31e39d83af78d8ff7 Mon Sep 17 00:00:00 2001
 From: 0xD34D <clark@scheffsblend.com>
 Date: Mon, 9 Jan 2017 07:19:41 +0530
-Subject: [PATCH 24/38] N-Extras: Add dynamic theme BootAnimation support
+Subject: [PATCH 24/39] N-Extras: Add dynamic theme BootAnimation support
 
 Extracted from "Themes: Port to CM13 [1/3]"
 http://review.cyanogenmod.org/#/c/113273/14

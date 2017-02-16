@@ -1,7 +1,7 @@
-From 1563cb90a0c8268564552bdd068410cd56079599 Mon Sep 17 00:00:00 2001
+From 08077a058b0fd201349658f91bcb101e81f7753c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Mon, 22 Jun 2015 09:31:25 +0200
-Subject: [PATCH] OMS-N: Add service 'overlay' to service_contexts
+Subject: [PATCH 1/4] OMS-N: Add service 'overlay' to service_contexts
 
 The 'overlay' service is the Overlay Manager Service, which tracks
 packages and their Runtime Resource Overlay overlay packages.
@@ -55,5 +55,5 @@ index 03a7ef3..3ca8182 100644
  allow system_server system_server_service:service_manager { add find };
  allow system_server surfaceflinger_service:service_manager find;
 -- 
-2.9.3
+2.11.1
 

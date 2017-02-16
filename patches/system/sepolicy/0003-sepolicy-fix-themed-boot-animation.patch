@@ -1,0 +1,28 @@
+From cc9b51faf3c84e06991c75527de291fd6dca5298 Mon Sep 17 00:00:00 2001
+From: bigrushdog <randall.rushing@gmail.com>
+Date: Wed, 4 Jan 2017 10:31:29 -0800
+Subject: [PATCH 3/4] sepolicy: fix themed boot animation
+
+W BootAnimation: type=1400 audit(0.0:42): avc: denied { open } for uid=1003 path="/data/system/theme/bootanimation.zip" dev="mmcblk0p42" ino=1657697 scontext=u:r:bootanim:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=0
+
+W         : Unable to open '/data/system/theme/bootanimation.zip': Permission denied
+
+W zipro   : Error opening archive /data/system/theme/bootanimation.zip: I/O Error
+
+Change-Id: I1440bd967d7a06ee64ea861a2544b54caf909f23
+---
+ bootanim.te | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/bootanim.te b/bootanim.te
+index 3ae9478..2356d81 100644
+--- a/bootanim.te
++++ b/bootanim.te
+@@ -36,3 +36,4 @@ allow bootanim system_file:dir r_dir_perms;
+ # Themed resources (bootanimation)
+ allow bootanim theme_data_file:dir search;
+ allow bootanim theme_data_file:file r_file_perms;
++allow bootanim system_data_file:file open;
+-- 
+2.11.1
+

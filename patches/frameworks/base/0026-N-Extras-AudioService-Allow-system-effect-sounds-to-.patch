@@ -1,7 +1,7 @@
-From 2ae9c134e5eefee70bb1abce584b0db310baa8f5 Mon Sep 17 00:00:00 2001
+From 053a5873c01639b5911dc0218b225a97d41e6517 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Sun, 17 Jul 2016 17:56:40 -0400
-Subject: [PATCH 26/38] N-Extras: AudioService: Allow system effect sounds to
+Subject: [PATCH 26/39] N-Extras: AudioService: Allow system effect sounds to
  be themed
 
 This commit checks whether there is a preexisting file in the themed

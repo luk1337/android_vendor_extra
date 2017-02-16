@@ -1,7 +1,7 @@
-From d3a24aa7becbcc6ce61d0e13a07b87525d0769fd Mon Sep 17 00:00:00 2001
+From 222657694ae34a145284e35dda583805d3851ae2 Mon Sep 17 00:00:00 2001
 From: Jacob McSwain <jacob.a.mcswain@gmail.com>
 Date: Sun, 26 Jun 2016 15:21:52 -0500
-Subject: [PATCH 11/38] OMS7-N: Implement multi-target enable/disable and
+Subject: [PATCH 11/39] OMS7-N: Implement multi-target enable/disable and
  disable-all [11/11]
 
 Just use the enable option like normal, but you can add more arguments
