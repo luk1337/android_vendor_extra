@@ -17,7 +17,7 @@ REPOSITORIES=(
 for repository in "${REPOSITORIES[@]}"; do
     cd "${ROOT}/${repository}"
 
-    git am "${ROOT}/vendor/extra/patches/${repository}"/*
+    git am --keep-cr "${ROOT}/vendor/extra/patches/${repository}"/*
 
     cd "${ROOT}"
 done
