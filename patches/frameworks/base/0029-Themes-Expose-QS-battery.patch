@@ -1,7 +1,7 @@
-From be60352faad7f72bb88d0907ffe5320a3014dd3d Mon Sep 17 00:00:00 2001
+From 61890b8f9ae1a40414ea3ee6ee4dd7efdcf28f91 Mon Sep 17 00:00:00 2001
 From: Abdulwahab Isam <abdoi94.iq@gmail.com>
 Date: Fri, 7 Oct 2016 08:30:11 +0300
-Subject: [PATCH 29/39] Themes: Expose QS battery
+Subject: [PATCH 29/40] Themes: Expose QS battery
 
 This is needed for white themes like Belo. Should function the same with dark themes as well.
 

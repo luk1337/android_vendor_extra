@@ -1,7 +1,7 @@
-From d80560dcf8cf991fdcf82b2bc444132569479ba4 Mon Sep 17 00:00:00 2001
+From 092ab8d4eafca7d831427a7490a8f4e48c31ce07 Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Fri, 6 Jan 2017 21:12:15 +0800
-Subject: [PATCH 32/39] Themes: Expose manifest styles for themes
+Subject: [PATCH 32/40] Themes: Expose manifest styles for themes
 
 Change-Id: Ie3a4fdead4f4fa1c121018b38de1c86a05bbcff2
 ---

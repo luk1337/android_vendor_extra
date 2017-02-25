@@ -1,7 +1,7 @@
-From 178a421cc2a72774eaae4385e358e1787f09c778 Mon Sep 17 00:00:00 2001
+From e431a19dc79664250960c5f2999a1a167e38d9b3 Mon Sep 17 00:00:00 2001
 From: Kuba Schenk <abukcz@gmail.com>
 Date: Thu, 1 Dec 2016 21:48:26 +0100
-Subject: [PATCH 28/39] OMS7-N: ApplicationsState: add filter for Substratum
+Subject: [PATCH 28/40] OMS7-N: ApplicationsState: add filter for Substratum
  icon overlays [1/2]
 
 This commit allows the framework to handle the filtering of the icon overlays found for OMS.

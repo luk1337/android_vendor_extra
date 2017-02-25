@@ -1,7 +1,7 @@
-From 46949d05c49d62ef006ba386cd392476470e4a21 Mon Sep 17 00:00:00 2001
+From bf2044e55915493ff96d3eb22be886cfc0884ca9 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Sat, 27 Aug 2016 10:56:46 -0400
-Subject: [PATCH 19/39] Notifications: Expose a bool to disable dynamic colors
+Subject: [PATCH 19/40] Notifications: Expose a bool to disable dynamic colors
 
 This commit allows a themer to overlay a boolean value in config.xml to
 disable dynamic colors applied to the app title and app icon of each

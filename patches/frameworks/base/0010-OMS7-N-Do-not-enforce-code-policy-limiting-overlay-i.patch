@@ -1,7 +1,7 @@
-From 058ff6ae94fad5dd1e61cdfd33990c543998d3c7 Mon Sep 17 00:00:00 2001
+From 595840d45464a097bb2d83844397f7f129c30814 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Thu, 27 Oct 2016 07:08:00 +0200
-Subject: [PATCH 10/39] OMS7-N: Do not enforce code policy limiting overlay
+Subject: [PATCH 10/40] OMS7-N: Do not enforce code policy limiting overlay
  installation [10/11]
 
 Change-Id: Iea317f3771f25dbfcbf4938e88cace12fd97d7eb
