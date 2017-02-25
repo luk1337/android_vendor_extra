@@ -1,4 +1,4 @@
-From 98380a5481203bb3b1fc87c9858956de2adc740f Mon Sep 17 00:00:00 2001
+From 620674d634933b1b64c66977e05418ddd4aeecc0 Mon Sep 17 00:00:00 2001
 From: Simao Gomes Viana <xdevs23@outlook.com>
 Date: Fri, 25 Nov 2016 20:50:29 +0100
 Subject: [PATCH 17/39] Allow custom alpha for notification shade bg color

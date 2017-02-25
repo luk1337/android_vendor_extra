@@ -1,4 +1,4 @@
-From 5d7e6ea290e2c8c080212193511dfe4989020332 Mon Sep 17 00:00:00 2001
+From fe60d2c99dc5f63cff87a87f43284b4f1d3d59b5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Thu, 2 Jun 2016 09:35:31 +0200
 Subject: [PATCH 03/39] OMS7-N: Integrate OverlayManagerService into framework
@@ -54,7 +54,7 @@ Change-Id: If0b1eaa690c38f9c33f7c8dc981314205a73fa9c
  core/java/android/content/pm/PackageUserState.java |   6 +
  core/jni/android_util_AssetManager.cpp             |  95 ---------------
  include/androidfw/AssetManager.h                   |  14 +--
- libs/androidfw/AssetManager.cpp                    | 111 -----------------
+ libs/androidfw/AssetManager.cpp                    | 112 -----------------
  .../com/android/server/SystemServiceManager.java   |  24 ++--
  .../android/server/am/ActivityManagerService.java  |  51 ++++++++
  .../android/server/om/OverlayManagerService.java   |  61 +++++-----
@@ -62,7 +62,7 @@ Change-Id: If0b1eaa690c38f9c33f7c8dc981314205a73fa9c
  .../com/android/server/pm/PackageSettingBase.java  |   8 +-
  .../core/java/com/android/server/pm/Settings.java  |   4 +-
  services/java/com/android/server/SystemServer.java |   4 +
- 21 files changed, 335 insertions(+), 479 deletions(-)
+ 21 files changed, 335 insertions(+), 480 deletions(-)
 
 diff --git a/cmds/idmap/Android.mk b/cmds/idmap/Android.mk
 index 50ccb07a382..eb6da18ea0a 100644
@@ -826,7 +826,7 @@ index 2d5f4c2f90b..c4991032b73 100644
      private:
          void closeZip(int idx);
 diff --git a/libs/androidfw/AssetManager.cpp b/libs/androidfw/AssetManager.cpp
-index 4c2f94d63ab..b9954573d79 100644
+index c0e8a980c2d..b9954573d79 100644
 --- a/libs/androidfw/AssetManager.cpp
 +++ b/libs/androidfw/AssetManager.cpp
 @@ -214,15 +214,6 @@ bool AssetManager::addAssetPath(
@@ -872,7 +872,7 @@ index 4c2f94d63ab..b9954573d79 100644
                  sharedRes = const_cast<AssetManager*>(this)->
                      mZipSet.setZipResourceTable(ap.path, sharedRes);
              }
-@@ -772,65 +750,6 @@ Asset* AssetManager::openIdmapLocked(const struct asset_path& ap) const
+@@ -772,66 +750,6 @@ Asset* AssetManager::openIdmapLocked(const struct asset_path& ap) const
      return ass;
  }
  
@@ -920,6 +920,7 @@ index 4c2f94d63ab..b9954573d79 100644
 -            const_cast<AssetManager*>(this)->mZipSet.addOverlay(targetPackagePath, oap);
 -
 -            oidmap->close();
+-            delete oidmap;
 -            ALOGD("close idmap=%s pid=%d\n", oap.idmap.string(), getpid());
 -       }
 -
@@ -938,7 +939,7 @@ index 4c2f94d63ab..b9954573d79 100644
  const ResTable& AssetManager::getResources(bool required) const
  {
      const ResTable* rt = getResTable(required);
-@@ -1969,20 +1888,6 @@ bool AssetManager::SharedZip::isUpToDate()
+@@ -1970,20 +1888,6 @@ bool AssetManager::SharedZip::isUpToDate()
      return mModWhen == modWhen;
  }
  
@@ -959,7 +960,7 @@ index 4c2f94d63ab..b9954573d79 100644
  AssetManager::SharedZip::~SharedZip()
  {
      if (kIsDebug) {
-@@ -2124,22 +2029,6 @@ bool AssetManager::ZipSet::isUpToDate()
+@@ -2125,22 +2029,6 @@ bool AssetManager::ZipSet::isUpToDate()
      return true;
  }
  
@@ -1031,10 +1032,10 @@ index 90f507c146b..904c967acdc 100644
       * Starts the specified boot phase for all system services that have been started up to
       * this point.
 diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
-index e31b409598f..2822dc93d2b 100644
+index a3923b94ef9..f4d07aff3e6 100644
 --- a/services/core/java/com/android/server/am/ActivityManagerService.java
 +++ b/services/core/java/com/android/server/am/ActivityManagerService.java
-@@ -19297,6 +19297,57 @@ public final class ActivityManagerService extends ActivityManagerNative
+@@ -19344,6 +19344,57 @@ public final class ActivityManagerService extends ActivityManagerNative
      }
  
      /**

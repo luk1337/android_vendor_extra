@@ -1,4 +1,4 @@
-From 222657694ae34a145284e35dda583805d3851ae2 Mon Sep 17 00:00:00 2001
+From 6f9205eb853edb1207387f70740422d1a2c77ec6 Mon Sep 17 00:00:00 2001
 From: Jacob McSwain <jacob.a.mcswain@gmail.com>
 Date: Sun, 26 Jun 2016 15:21:52 -0500
 Subject: [PATCH 11/39] OMS7-N: Implement multi-target enable/disable and

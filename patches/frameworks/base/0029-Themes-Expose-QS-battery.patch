@@ -1,4 +1,4 @@
-From edb54e92df68678b2d3b7178c2e23b1f890972da Mon Sep 17 00:00:00 2001
+From be60352faad7f72bb88d0907ffe5320a3014dd3d Mon Sep 17 00:00:00 2001
 From: Abdulwahab Isam <abdoi94.iq@gmail.com>
 Date: Fri, 7 Oct 2016 08:30:11 +0300
 Subject: [PATCH 29/39] Themes: Expose QS battery

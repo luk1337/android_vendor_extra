@@ -1,4 +1,4 @@
-From 8dc3129826885706e51627f70113794e3f040ed0 Mon Sep 17 00:00:00 2001
+From 5a6ebcc56f3a8058eaba8db9f50da231a72f6e0d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Tue, 15 Dec 2015 16:08:31 +0100
 Subject: [PATCH 01/39] OMS7-N: Support tagging resources as OK to overlay
@@ -97,7 +97,7 @@ index 12a6b0f9a4e..6094a576d75 100644
              String8* pTargetPath, String8* pOverlayPath);
  
 diff --git a/libs/androidfw/AssetManager.cpp b/libs/androidfw/AssetManager.cpp
-index 7d1424ef687..4c2f94d63ab 100644
+index 5b36a43abdc..c0e8a980c2d 100644
 --- a/libs/androidfw/AssetManager.cpp
 +++ b/libs/androidfw/AssetManager.cpp
 @@ -252,7 +252,7 @@ bool AssetManager::addOverlayPath(const String8& packagePath, int32_t* cookie)

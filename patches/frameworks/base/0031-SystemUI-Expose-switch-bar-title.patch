@@ -1,4 +1,4 @@
-From 49d41589da4ae6d7229cde9fa3bf7c9679788e45 Mon Sep 17 00:00:00 2001
+From 92c569669b916a82eb8b7983514e49cb5d2b6281 Mon Sep 17 00:00:00 2001
 From: daveyannihilation <daveyannihilation@hotmail.com>
 Date: Sun, 1 Jan 2017 01:47:53 -0700
 Subject: [PATCH 31/39] SystemUI: Expose switch bar title

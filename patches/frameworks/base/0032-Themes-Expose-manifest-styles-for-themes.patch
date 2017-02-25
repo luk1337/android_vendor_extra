@@ -1,4 +1,4 @@
-From 9eeec9c55f7509b89963a5fe36c3d274d871ab60 Mon Sep 17 00:00:00 2001
+From d80560dcf8cf991fdcf82b2bc444132569479ba4 Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Fri, 6 Jan 2017 21:12:15 +0800
 Subject: [PATCH 32/39] Themes: Expose manifest styles for themes

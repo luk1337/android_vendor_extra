@@ -1,4 +1,4 @@
-From 7c68e1ec39a7031020eaaadebdb0aee86f48cec1 Mon Sep 17 00:00:00 2001
+From 2d6fcbfe3de3fef2a22112ad440a23064f06c5e6 Mon Sep 17 00:00:00 2001
 From: Alex Cruz <mazdarider23@gmail.com>
 Date: Sat, 4 Feb 2017 14:13:26 +0100
 Subject: [PATCH 37/39] Set external QS tiles tint mode to SRC_ATOP

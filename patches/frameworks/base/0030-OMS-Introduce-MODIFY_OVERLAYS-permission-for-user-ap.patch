@@ -1,4 +1,4 @@
-From 3f3902d3bae9bc8cb3c304580ea69936cb0edd9c Mon Sep 17 00:00:00 2001
+From 1675e81a9c5532f111fd5fb1d00d795d9b0f1b76 Mon Sep 17 00:00:00 2001
 From: bigrushdog <randall.rushing@gmail.com>
 Date: Mon, 19 Dec 2016 04:33:31 -0800
 Subject: [PATCH 30/39] OMS: Introduce MODIFY_OVERLAYS permission for user apps

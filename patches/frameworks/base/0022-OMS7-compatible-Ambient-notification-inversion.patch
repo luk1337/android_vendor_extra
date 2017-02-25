@@ -1,4 +1,4 @@
-From 45f68624cd0345615aeffda1158d402ac7c5acac Mon Sep 17 00:00:00 2001
+From 639ec4b53d5e45a3af2570b1358b66b2b532a404 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Mon, 14 Nov 2016 14:44:17 +0200
 Subject: [PATCH 22/39] OMS7 compatible 'Ambient notification inversion'

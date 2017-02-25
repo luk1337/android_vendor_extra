@@ -1,4 +1,4 @@
-From 9c44db7a6126968c051a1fcfeeef7d3604b7b29c Mon Sep 17 00:00:00 2001
+From 3960a5b5d023fb9dbe06e468050ef34ebda41989 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Sun, 19 Jun 2016 10:37:13 -0400
 Subject: [PATCH 09/39] OMS7-N: Persistence on boot through

@@ -1,4 +1,4 @@
-From 96b9021830fde7f2544016d5c51c16a076a49484 Mon Sep 17 00:00:00 2001
+From 0a70fdf65bc1b133dba034705797b7ad7e454b8b Mon Sep 17 00:00:00 2001
 From: mickybart <mickybart@pygoscelis.org>
 Date: Sat, 19 Nov 2016 19:05:05 -0500
 Subject: [PATCH 33/39] OMS: StrictMode and files under /data/system/theme/
