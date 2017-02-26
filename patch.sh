@@ -5,7 +5,6 @@ REPOSITORIES=(
     'packages/apps/Settings'
     'packages/apps/ExactCalculator'
     'packages/apps/PhoneCommon'
-    'packages/apps/masquerade'
     'build'
     'system/core'
     'system/sepolicy'
