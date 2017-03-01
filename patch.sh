@@ -1,15 +1,16 @@
 ROOT="${PWD}"
 REPOSITORIES=(
-    'packages/apps/ContactsCommon'
+    'build'
+    'frameworks/base'
+    'frameworks/native'
     'packages/apps/Contacts'
-    'packages/apps/Settings'
+    'packages/apps/ContactsCommon'
+    'packages/apps/Dialer'
     'packages/apps/ExactCalculator'
     'packages/apps/PhoneCommon'
-    'build'
+    'packages/apps/Settings'
     'system/core'
     'system/sepolicy'
-    'frameworks/native'
-    'frameworks/base'
     'vendor/cm'
 )
 

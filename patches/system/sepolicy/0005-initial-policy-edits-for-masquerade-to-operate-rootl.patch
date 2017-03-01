@@ -1,0 +1,130 @@
+From 6835036b16a0400b5b38d2c35a7517e2e24af2a1 Mon Sep 17 00:00:00 2001
+From: Surge1223 <surge1223@gmail.com>
+Date: Sat, 18 Feb 2017 08:46:15 -0600
+Subject: [PATCH 5/7] initial policy edits for masquerade to operate rootless
+
+Change-Id: Iddfc408f206033772b9d49d335ca94e63b5e5210
+---
+ app.te           |  2 +-
+ domain.te        |  2 ++
+ masquerade.te    | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ seapp_contexts   |  1 +
+ untrusted_app.te |  3 +++
+ 5 files changed, 57 insertions(+), 1 deletion(-)
+ create mode 100644 masquerade.te
+
+diff --git a/app.te b/app.te
+index 3a2878d..661f67f 100644
+--- a/app.te
++++ b/app.te
+@@ -374,7 +374,7 @@ neverallow appdomain exec_type:file
+ # This is the default type for anything under /data not otherwise
+ # specified in file_contexts.  Define a different type for portions
+ # that should be writable by apps.
+-neverallow appdomain system_data_file:dir_file_class_set
++neverallow { appdomain -masquerade_app } system_data_file:dir_file_class_set
+     { create write setattr relabelfrom relabelto append unlink link rename };
+ 
+ # Write to various other parts of /data.
+diff --git a/domain.te b/domain.te
+index a74833c..b18bfa7 100644
+--- a/domain.te
++++ b/domain.te
+@@ -381,6 +381,7 @@ neverallow {
+   -init # TODO: limit init to relabelfrom for files
+   -zygote
+   -installd
++  -masquerade_app
+   -postinstall_dexopt
+   -cppreopts
+   -dex2oat
+@@ -487,6 +488,7 @@ neverallow {
+   -system_server
+   -system_app
+   -init
++  -masquerade_app
+   -installd # for relabelfrom and unlink, check for this in explicit neverallow
+ } system_data_file:file no_w_file_perms;
+ # do not grant anything greater than r_file_perms and relabelfrom unlink
+diff --git a/masquerade.te b/masquerade.te
+new file mode 100644
+index 0000000..433448a
+--- /dev/null
++++ b/masquerade.te
+@@ -0,0 +1,50 @@
++#
++# Masquerade needs additional permissions when not running with system_server
++# masquerade.substratum.
++#
++#
++type masquerade_app, domain;
++
++# Add masquerade to domains
++net_domain(masquerade_app)
++app_domain(masquerade_app)
++binder_service(masquerade_app)
++
++# Modify system dalvik-cache
++allow masquerade_app dalvikcache_data_file:file {  getattr open read  };
++allow masquerade_app dalvikcache_data_file:dir { getattr search  };
++
++# Read and write /data/data subdirectory.
++allow masquerade_app system_app_data_file:dir create_dir_perms;
++allow masquerade_app system_app_data_file:{ file lnk_file } create_file_perms;
++
++# /data/resource-cache
++allow masquerade_app resourcecache_data_file:file r_file_perms;
++allow masquerade_app resourcecache_data_file:dir r_dir_perms;
++
++# Read wallpaper file.
++allow masquerade_app wallpaper_file:file r_file_perms;
++
++# Read icon file.
++allow masquerade_app icon_file:file r_file_perms;
++
++# Set bootanimation
++allow masquerade_app bootanim:process { getsched setsched };
++
++# Backup of wallpaper imagery uses temporary hard links to avoid data churn
++allow masquerade_app { system_data_file wallpaper_file }:file link;
++
++# Manage ringtones.
++allow masquerade_app ringtone_file:dir { create_dir_perms relabelto };
++allow masquerade_app ringtone_file:file create_file_perms;
++
++# Manage overlays
++allow masquerade_app overlay_service:service_manager find;
++
++# System file accesses.
++allow masquerade_app system_file:dir r_dir_perms;
++allow masquerade_app system_file:dir rmdir;
++allow masquerade_app kernel:system module_request;
++allow masquerade_app dalvikcache_data_file:file { setattr write };
++allow masquerade_app system_data_file:dir { add_name create rmdir remove_name setattr write };
++allow masquerade_app system_data_file:file { create getattr setattr unlink write };
+diff --git a/seapp_contexts b/seapp_contexts
+index 5d5ad75..85303d0 100644
+--- a/seapp_contexts
++++ b/seapp_contexts
+@@ -97,3 +97,4 @@ user=_app seinfo=platform domain=platform_app type=app_data_file levelFrom=user
+ user=_app isAutoPlayApp=true domain=autoplay_app type=autoplay_data_file levelFrom=all
+ user=_app isPrivApp=true domain=priv_app type=app_data_file levelFrom=user
+ user=_app domain=untrusted_app type=app_data_file levelFrom=user
++user=system isPrivApp=true domain=masquerade_app seinfo=platform name=masquerade.substratum type=system_app_data_file
+diff --git a/untrusted_app.te b/untrusted_app.te
+index b9a72ed..c2a5320 100644
+--- a/untrusted_app.te
++++ b/untrusted_app.te
+@@ -110,6 +110,9 @@ allow untrusted_app sysfs_hwrandom:file r_file_perms;
+ allow untrusted_app preloads_data_file:dir r_dir_perms;
+ allow untrusted_app preloads_data_file:file r_file_perms;
+ 
++# Allow AOPT to call module_request
++allow untrusted_app kernel:system module_request;
++
+ ###
+ ### neverallow rules
+ ###
+-- 
+2.9.3
+

@@ -1,0 +1,192 @@
+From 857ed4080b52eae82ad51c038894d3df009bbd1c Mon Sep 17 00:00:00 2001
+From: Surge1223 <surge1223@gmail.com>
+Date: Tue, 21 Feb 2017 12:28:05 -0600
+Subject: [PATCH 6/7] sepolicy: rename masquerade domain and allow JobService
+ in system_server
+
+This attempts to address the issue of JobService being unable to process
+overlays when selinux is set to enforcing.
+
+I ActivityManager: Start proc 7323:masquerade.substratum/1000 for service
+masquerade.substratum/.services.JobService
+I ActivityManager: Setting hasTopUi=true for pid=1473
+D PhoneStatusBar: disable: < expand ICONS* alerts SYSTEM_INFO* back home recent clock search quick_settings
+E SELinux : avc:  denied  { find } for service=activity pid=7323 uid=1000
+scontext=u:r:masquerade_app:s0tcontext=u:object_r:activity_service:s0 tclass=service_manager permissive=0
+D AndroidRuntime: Shutting down VM
+E AndroidRuntime: FATAL EXCEPTION: main
+E AndroidRuntime: PID: 7323
+
+Change-Id: Ia274f14a2fdb77970b3142f4587036502943882c
+---
+ app.te           |  2 +-
+ domain.te        |  4 ++--
+ masquerade.te    | 49 +++++++++++++++++++++++++------------------------
+ seapp_contexts   |  2 +-
+ service.te       |  1 +
+ service_contexts |  1 +
+ system_server.te |  1 +
+ 7 files changed, 32 insertions(+), 28 deletions(-)
+
+diff --git a/app.te b/app.te
+index 661f67f..e6180e3 100644
+--- a/app.te
++++ b/app.te
+@@ -374,7 +374,7 @@ neverallow appdomain exec_type:file
+ # This is the default type for anything under /data not otherwise
+ # specified in file_contexts.  Define a different type for portions
+ # that should be writable by apps.
+-neverallow { appdomain -masquerade_app } system_data_file:dir_file_class_set
++neverallow { appdomain -masquerade } system_data_file:dir_file_class_set
+     { create write setattr relabelfrom relabelto append unlink link rename };
+ 
+ # Write to various other parts of /data.
+diff --git a/domain.te b/domain.te
+index b18bfa7..5bc5fcb 100644
+--- a/domain.te
++++ b/domain.te
+@@ -381,7 +381,7 @@ neverallow {
+   -init # TODO: limit init to relabelfrom for files
+   -zygote
+   -installd
+-  -masquerade_app
++  -masquerade
+   -postinstall_dexopt
+   -cppreopts
+   -dex2oat
+@@ -488,7 +488,7 @@ neverallow {
+   -system_server
+   -system_app
+   -init
+-  -masquerade_app
++  -masquerade
+   -installd # for relabelfrom and unlink, check for this in explicit neverallow
+ } system_data_file:file no_w_file_perms;
+ # do not grant anything greater than r_file_perms and relabelfrom unlink
+diff --git a/masquerade.te b/masquerade.te
+index 433448a..949699c 100644
+--- a/masquerade.te
++++ b/masquerade.te
+@@ -3,48 +3,49 @@
+ # masquerade.substratum.
+ #
+ #
+-type masquerade_app, domain;
++type masquerade, domain;
+ 
+ # Add masquerade to domains
+-net_domain(masquerade_app)
+-app_domain(masquerade_app)
+-binder_service(masquerade_app)
++net_domain(masquerade)
++app_domain(masquerade)
++binder_service(masquerade)
+ 
+ # Modify system dalvik-cache
+-allow masquerade_app dalvikcache_data_file:file {  getattr open read  };
+-allow masquerade_app dalvikcache_data_file:dir { getattr search  };
++allow masquerade dalvikcache_data_file:file {  getattr open read  };
++allow masquerade dalvikcache_data_file:dir { getattr search  };
+ 
+ # Read and write /data/data subdirectory.
+-allow masquerade_app system_app_data_file:dir create_dir_perms;
+-allow masquerade_app system_app_data_file:{ file lnk_file } create_file_perms;
++allow masquerade system_app_data_file:dir create_dir_perms;
++allow masquerade system_app_data_file:{ file lnk_file } create_file_perms;
+ 
+ # /data/resource-cache
+-allow masquerade_app resourcecache_data_file:file r_file_perms;
+-allow masquerade_app resourcecache_data_file:dir r_dir_perms;
++allow masquerade resourcecache_data_file:file r_file_perms;
++allow masquerade resourcecache_data_file:dir r_dir_perms;
+ 
+ # Read wallpaper file.
+-allow masquerade_app wallpaper_file:file r_file_perms;
++allow masquerade wallpaper_file:file r_file_perms;
+ 
+ # Read icon file.
+-allow masquerade_app icon_file:file r_file_perms;
++allow masquerade icon_file:file r_file_perms;
+ 
+ # Set bootanimation
+-allow masquerade_app bootanim:process { getsched setsched };
++allow masquerade bootanim:process { getsched setsched };
+ 
+ # Backup of wallpaper imagery uses temporary hard links to avoid data churn
+-allow masquerade_app { system_data_file wallpaper_file }:file link;
++allow masquerade { system_data_file wallpaper_file }:file link;
+ 
+ # Manage ringtones.
+-allow masquerade_app ringtone_file:dir { create_dir_perms relabelto };
+-allow masquerade_app ringtone_file:file create_file_perms;
++allow masquerade ringtone_file:dir { create_dir_perms relabelto };
++allow masquerade ringtone_file:file create_file_perms;
+ 
+-# Manage overlays
+-allow masquerade_app overlay_service:service_manager find;
++# Manage overlays and start JobService
++allow masquerade overlay_service:service_manager find;
++allow masquerade activity_service:service_manager find;
+ 
+ # System file accesses.
+-allow masquerade_app system_file:dir r_dir_perms;
+-allow masquerade_app system_file:dir rmdir;
+-allow masquerade_app kernel:system module_request;
+-allow masquerade_app dalvikcache_data_file:file { setattr write };
+-allow masquerade_app system_data_file:dir { add_name create rmdir remove_name setattr write };
+-allow masquerade_app system_data_file:file { create getattr setattr unlink write };
++allow masquerade system_file:dir r_dir_perms;
++allow masquerade system_file:dir rmdir;
++allow masquerade kernel:system module_request;
++allow masquerade dalvikcache_data_file:file { setattr write };
++allow masquerade system_data_file:dir { add_name create rmdir remove_name setattr write };
++allow masquerade system_data_file:file { create getattr setattr unlink write read };
+diff --git a/seapp_contexts b/seapp_contexts
+index 85303d0..bbf8b78 100644
+--- a/seapp_contexts
++++ b/seapp_contexts
+@@ -97,4 +97,4 @@ user=_app seinfo=platform domain=platform_app type=app_data_file levelFrom=user
+ user=_app isAutoPlayApp=true domain=autoplay_app type=autoplay_data_file levelFrom=all
+ user=_app isPrivApp=true domain=priv_app type=app_data_file levelFrom=user
+ user=_app domain=untrusted_app type=app_data_file levelFrom=user
+-user=system isPrivApp=true domain=masquerade_app seinfo=platform name=masquerade.substratum type=system_app_data_file
++user=system isPrivApp=true domain=masquerade seinfo=platform name=masquerade.substratum type=system_app_data_file
+diff --git a/service.te b/service.te
+index 6f9ab3f..efa08e7 100644
+--- a/service.te
++++ b/service.te
+@@ -68,6 +68,7 @@ type jobscheduler_service, app_api_service, system_server_service, service_manag
+ type launcherapps_service, app_api_service, system_server_service, service_manager_type;
+ type location_service, app_api_service, system_server_service, service_manager_type;
+ type lock_settings_service, system_api_service, system_server_service, service_manager_type;
++type masquerade_service, app_api_service, system_server_service, service_manager_type;
+ type media_projection_service, app_api_service, system_server_service, service_manager_type;
+ type media_router_service, app_api_service, system_server_service, service_manager_type;
+ type media_session_service, app_api_service, system_server_service, service_manager_type;
+diff --git a/service_contexts b/service_contexts
+index b7d7473..b831312 100644
+--- a/service_contexts
++++ b/service_contexts
+@@ -65,6 +65,7 @@ jobscheduler                              u:object_r:jobscheduler_service:s0
+ launcherapps                              u:object_r:launcherapps_service:s0
+ location                                  u:object_r:location_service:s0
+ lock_settings                             u:object_r:lock_settings_service:s0
++masquerade                                u:object_r:masquerade_service:s0
+ media.audio_flinger                       u:object_r:audioserver_service:s0
+ media.audio_policy                        u:object_r:audioserver_service:s0
+ media.camera                              u:object_r:cameraserver_service:s0
+diff --git a/system_server.te b/system_server.te
+index 3ca8182..5e2a3a8 100644
+--- a/system_server.te
++++ b/system_server.te
+@@ -435,6 +435,7 @@ allow system_server batteryproperties_service:service_manager find;
+ allow system_server keystore_service:service_manager find;
+ allow system_server gatekeeper_service:service_manager find;
+ allow system_server fingerprintd_service:service_manager find;
++allow system_server masquerade_service:service_manager find;
+ allow system_server mediaserver_service:service_manager find;
+ allow system_server mediaextractor_service:service_manager find;
+ allow system_server mediacodec_service:service_manager find;
+-- 
+2.9.3
+

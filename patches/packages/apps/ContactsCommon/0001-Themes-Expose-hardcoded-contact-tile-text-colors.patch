@@ -1,7 +1,7 @@
-From 1f53add2077b2573b7d6b4d761b48f8505bb3701 Mon Sep 17 00:00:00 2001
+From 34f415cf87f857d4ce1426c60c784dcb417aa227 Mon Sep 17 00:00:00 2001
 From: bgill55 <bricam55@gmail.com>
 Date: Sat, 24 Jan 2015 18:12:39 -0700
-Subject: [PATCH] Themes: Expose hardcoded contact tile text colors
+Subject: [PATCH 1/2] Themes: Expose hardcoded contact tile text colors
 
 Naming conventions in line with @daveyannihilation's commit
 https://github.com/daveyannihilation/Theme-Ready-Google-Contacts/commit/dedf7925f52bec3896b138fa3d9f3754218abb2d
