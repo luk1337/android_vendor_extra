@@ -1,7 +1,7 @@
-From 8d4db41ae5b12205de0b8a29a324e261f2f54e68 Mon Sep 17 00:00:00 2001
+From 9430d79c84c8af7f7ce974b10cf649148e2922d4 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sun, 8 Jan 2017 00:18:47 +0100
-Subject: [PATCH 12/15] Expose dashboard category padding bottom
+Subject: [PATCH 12/20] Expose dashboard category padding bottom
 
 Change-Id: I5a0d3266bbe96dbe6a136f78ed84cb1ee0a6a19b
 ---
@@ -11,7 +11,7 @@ Change-Id: I5a0d3266bbe96dbe6a136f78ed84cb1ee0a6a19b
  create mode 100644 res/values/projekt_dimens.xml
 
 diff --git a/res/layout/dashboard_category.xml b/res/layout/dashboard_category.xml
-index 7836644806..86dac35d47 100644
+index 7836644..86dac35 100644
 --- a/res/layout/dashboard_category.xml
 +++ b/res/layout/dashboard_category.xml
 @@ -19,7 +19,7 @@
@@ -25,7 +25,7 @@ index 7836644806..86dac35d47 100644
      <TextView android:id="@android:id/title"
 diff --git a/res/values/projekt_dimens.xml b/res/values/projekt_dimens.xml
 new file mode 100644
-index 0000000000..a5aae4e99d
+index 0000000..a5aae4e
 --- /dev/null
 +++ b/res/values/projekt_dimens.xml
 @@ -0,0 +1,16 @@
@@ -46,5 +46,5 @@ index 0000000000..a5aae4e99d
 +    <dimen name="dashboard_category_padding_bottom">8dip</dimen>
 +</resources>
 -- 
-2.11.1
+2.9.3
 

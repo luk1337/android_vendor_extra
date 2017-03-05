@@ -1,7 +1,7 @@
-From ecddd70ad7cff4fcd49d492dec4cc1fb290e0749 Mon Sep 17 00:00:00 2001
+From c811f30de1b47ef4e5675d526b2ee328dd1dc55d Mon Sep 17 00:00:00 2001
 From: Alex Cruz <mazdarider23@gmail.com>
 Date: Sat, 4 Feb 2017 14:13:26 +0100
-Subject: [PATCH 37/41] Set external QS tiles tint mode to SRC_ATOP
+Subject: [PATCH 37/44] Set external QS tiles tint mode to SRC_ATOP
 
 While the external qs tile tint color was exposed, we had the same problem
 we had with the external icons in Settings which is if a themer set the color

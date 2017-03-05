@@ -1,0 +1,36 @@
+From 3ce22cd049cde21d7790c58b255b9d072e116625 Mon Sep 17 00:00:00 2001
+From: Bryan Owens <djbryan3540@gmail.com>
+Date: Fri, 8 Apr 2016 19:41:40 -0500
+Subject: [PATCH] PackageInstaller: Add tint mode to icons
+
+This allows custom icons can show in permissions settings
+
+Change-Id: I8fa2360d1340cb825938f4c820d99c98d3037baa
+Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
+---
+ src/com/android/packageinstaller/permission/utils/Utils.java | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/com/android/packageinstaller/permission/utils/Utils.java b/src/com/android/packageinstaller/permission/utils/Utils.java
+index 22663e1..628846a 100644
+--- a/src/com/android/packageinstaller/permission/utils/Utils.java
++++ b/src/com/android/packageinstaller/permission/utils/Utils.java
+@@ -25,6 +25,7 @@ import android.content.pm.ResolveInfo;
+ import android.content.res.Resources;
+ import android.content.res.Resources.Theme;
+ import android.graphics.drawable.Drawable;
++import android.graphics.PorterDuff;
+ import android.util.ArraySet;
+ import android.util.Log;
+ import android.util.TypedValue;
+@@ -112,6 +113,7 @@ public final class Utils {
+         theme.resolveAttribute(attr, typedValue, true);
+         icon = icon.mutate();
+         icon.setTint(context.getColor(typedValue.resourceId));
++        icon.setTintMode(PorterDuff.Mode.SRC_ATOP);
+         return icon;
+     }
+ 
+-- 
+2.9.3
+

@@ -1,7 +1,7 @@
-From 946409ac329ca598e53f2f3811cadd340be32abe Mon Sep 17 00:00:00 2001
+From 590daaff47c0b305695176e6e74c339af85634c3 Mon Sep 17 00:00:00 2001
 From: daveyannihilation <daveyannihilation@hotmail.com>
 Date: Fri, 25 Nov 2016 15:20:04 -0700
-Subject: [PATCH 04/15] Settings: Expose gesture settings switchbar
+Subject: [PATCH 04/20] Settings: Expose gesture settings switchbar
 
 In Settings > Gestures, there is a hardcoded white background above each switch. Link to a colors.xml value instead.
 
@@ -15,7 +15,7 @@ Change-Id: I9857c10ee4e54d27ca1287c80a7d8e420adc9a61
  2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/res/layout/gesture_preference.xml b/res/layout/gesture_preference.xml
-index ccbc42ad25..9fcd14f3fc 100644
+index ccbc42a..9fcd14f 100644
 --- a/res/layout/gesture_preference.xml
 +++ b/res/layout/gesture_preference.xml
 @@ -31,7 +31,7 @@
@@ -28,7 +28,7 @@ index ccbc42ad25..9fcd14f3fc 100644
          <TextView
              android:id="@android:id/title"
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index fb0d99eee3..00252332ba 100644
+index fb0d99e..00252332 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -29,4 +29,7 @@
@@ -40,5 +40,5 @@ index fb0d99eee3..00252332ba 100644
 +
  </resources>
 -- 
-2.11.1
+2.9.3
 

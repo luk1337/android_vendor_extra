@@ -1,7 +1,7 @@
-From 40bf760e7bee4b0d0d649408e1adfc850dc2b73a Mon Sep 17 00:00:00 2001
+From 5c488c2096386c1e87addd0b95d6541a4524fc3a Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Mon, 5 Dec 2016 19:00:04 +0700
-Subject: [PATCH 23/41] SystemUI: Use own drawables for QS expand icon
+Subject: [PATCH 23/44] SystemUI: Use own drawables for QS expand icon
 
 This was using the volume panel drawables used also on volume panel.
 So with this commit themers can give different icon for either QS

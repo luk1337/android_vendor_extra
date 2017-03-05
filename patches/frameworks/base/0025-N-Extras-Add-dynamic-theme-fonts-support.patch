@@ -1,7 +1,7 @@
-From d5323804320c6588d6d83560c1d403d89dbb3bf5 Mon Sep 17 00:00:00 2001
+From 397cd6d8b76e2b84dc80d142066d143d61d8a4f4 Mon Sep 17 00:00:00 2001
 From: 0xD34D <clark@scheffsblend.com>
 Date: Wed, 22 Jun 2016 23:54:23 +0300
-Subject: [PATCH 25/41] N-Extras: Add dynamic theme fonts support
+Subject: [PATCH 25/44] N-Extras: Add dynamic theme fonts support
 
 Due to the nature of the removal of assetSeq in OMS7+, we now use the
 more controllable font scale updating code to update the fonts on

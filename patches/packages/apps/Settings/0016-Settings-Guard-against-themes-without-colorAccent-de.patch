@@ -1,0 +1,48 @@
+From 904cfc107939f7576ee5f89335b11649f18a17e7 Mon Sep 17 00:00:00 2001
+From: Clark Scheff <clark@scheffsblend.com>
+Date: Mon, 27 Feb 2017 00:55:37 +0100
+Subject: [PATCH 16/20] Settings: Guard against themes without colorAccent
+ defined
+
+If an applied theme omits the colorAccent attribute in their style
+AppOpsSummary will crash because typedValue.resourceId is 0.
+
+Check if typedValue.resourceId is 0 and if so use switch_accent_color
+for tab indicator color.
+
+Change-Id: I2754a88a50277abb1b685183c0fb2e5b606eb451
+---
+ res/values/projekt_colors.xml                            | 3 +++
+ src/com/android/settings/applications/AppOpsSummary.java | 4 +++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
+index e0d3ab1..a619c50 100644
+--- a/res/values/projekt_colors.xml
++++ b/res/values/projekt_colors.xml
+@@ -53,4 +53,7 @@
+     <color name="bluetooth_pairing_caption">@*android:color/secondary_text_material_light</color>
+     <color name="bluetooth_pairing_code_message">@*android:color/secondary_text_material_light</color>
+     <color name="bluetooth_phonebook_sharing_message_confirm_pin">@*android:color/secondary_text_material_light</color>
++
++    <!-- App ops -->
++    <color name="switch_accent_color">@*android:color/accent_device_default_light</color>
+ </resources>
+diff --git a/src/com/android/settings/applications/AppOpsSummary.java b/src/com/android/settings/applications/AppOpsSummary.java
+index a86be73..cd534cd 100644
+--- a/src/com/android/settings/applications/AppOpsSummary.java
++++ b/src/com/android/settings/applications/AppOpsSummary.java
+@@ -161,7 +161,9 @@ public class AppOpsSummary extends InstrumentedFragment {
+         Resources.Theme theme = tabs.getContext().getTheme();
+         TypedValue typedValue = new TypedValue();
+         theme.resolveAttribute(android.R.attr.colorAccent, typedValue, true);
+-        final int colorAccent = getContext().getColor(typedValue.resourceId);
++        final int colorAccent = typedValue.resourceId != 0
++                ? getContext().getColor(typedValue.resourceId)
++                : getContext().getColor(R.color.switch_accent_color);
+         tabs.setTabIndicatorColor(colorAccent);
+ 
+         // We have to do this now because PreferenceFrameLayout looks at it
+-- 
+2.9.3
+

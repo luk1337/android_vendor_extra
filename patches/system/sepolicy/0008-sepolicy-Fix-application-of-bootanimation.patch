@@ -1,0 +1,37 @@
+From 8644e2d8e88630abf338767b2dd9608b1d68ca1b Mon Sep 17 00:00:00 2001
+From: Miccia <bono.michele94@gmail.com>
+Date: Mon, 27 Feb 2017 12:36:21 +0100
+Subject: [PATCH 8/9] sepolicy: Fix application of bootanimation
+
+Change-Id: I7365d28fecf18b4d1aa42b2210e023b202dd97a5
+---
+ masquerade.te    | 5 +++++
+ system_server.te | 2 ++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/masquerade.te b/masquerade.te
+index 2f17030..0cbbdb2 100644
+--- a/masquerade.te
++++ b/masquerade.te
+@@ -61,3 +61,8 @@ allow masquerade property_socket:sock_file write;
+ allow masquerade system_prop:property_service set;
+ allow masquerade connectivity_service:service_manager find;
+ allow masquerade display_service:service_manager find;
++
++allow masquerade media_rw_data_file:dir { search write };
++allow masquerade media_rw_data_file:file { open unlink };
++allow masquerade network_management_service:service_manager find;
++allow masquerade media_rw_data_file:dir remove_name;
+diff --git a/system_server.te b/system_server.te
+index 5e2a3a8..c544803 100644
+--- a/system_server.te
++++ b/system_server.te
+@@ -580,3 +580,5 @@ neverallow system_server { dev_type -frp_block_device }:blk_file no_rw_file_perm
+ neverallow system_server self:process execmem;
+ neverallow system_server ashmem_device:chr_file execute;
+ neverallow system_server system_server_tmpfs:file execute;
++
++allow system_server theme_data_file:dir search;
+-- 
+2.9.3
+

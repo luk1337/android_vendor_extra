@@ -1,7 +1,7 @@
-From fb8b604d7d4d86cf960001f71dc21429915148e4 Mon Sep 17 00:00:00 2001
+From a739cf95edde6b4b63caf7bec08ad22236e88674 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sun, 18 Sep 2016 10:12:05 +0700
-Subject: [PATCH 01/15] Settings: Expose dashboard category and tile color
+Subject: [PATCH 01/20] Settings: Expose dashboard category and tile color
 
 Change-Id: Ia9c83eb9b8360923ed52e03641b4179681a80330
 ---
@@ -17,7 +17,7 @@ Change-Id: Ia9c83eb9b8360923ed52e03641b4179681a80330
 
 diff --git a/res/drawable/dashboard_category_title_bg.xml b/res/drawable/dashboard_category_title_bg.xml
 new file mode 100644
-index 0000000000..0e9604d838
+index 0000000..0e9604d
 --- /dev/null
 +++ b/res/drawable/dashboard_category_title_bg.xml
 @@ -0,0 +1,21 @@
@@ -44,7 +44,7 @@ index 0000000000..0e9604d838
 +</shape>
 diff --git a/res/drawable/dashboard_tile_bg.xml b/res/drawable/dashboard_tile_bg.xml
 new file mode 100644
-index 0000000000..61d113d645
+index 0000000..61d113d
 --- /dev/null
 +++ b/res/drawable/dashboard_tile_bg.xml
 @@ -0,0 +1,21 @@
@@ -70,7 +70,7 @@ index 0000000000..61d113d645
 +   <solid android:color="@color/selectable_card_background" />
 +</shape>
 diff --git a/res/drawable/selectable_card.xml b/res/drawable/selectable_card.xml
-index df9ddb1367..74018b214b 100644
+index df9ddb1..74018b2 100644
 --- a/res/drawable/selectable_card.xml
 +++ b/res/drawable/selectable_card.xml
 @@ -18,5 +18,5 @@
@@ -83,7 +83,7 @@ index df9ddb1367..74018b214b 100644
 +    <item android:drawable="@drawable/dashboard_tile_bg"/>
 +</ripple>
 diff --git a/res/layout/dashboard_category.xml b/res/layout/dashboard_category.xml
-index 2e5dd5ce06..7836644806 100644
+index 2e5dd5c..7836644 100644
 --- a/res/layout/dashboard_category.xml
 +++ b/res/layout/dashboard_category.xml
 @@ -20,7 +20,7 @@
@@ -97,7 +97,7 @@ index 2e5dd5ce06..7836644806 100644
          android:layout_width="match_parent"
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
 new file mode 100644
-index 0000000000..60419bd1f7
+index 0000000..60419bd
 --- /dev/null
 +++ b/res/values/projekt_colors.xml
 @@ -0,0 +1,21 @@
@@ -123,5 +123,5 @@ index 0000000000..60419bd1f7
 +    <color name="selectable_card_background">@color/card_background</color>
 +</resources>
 -- 
-2.11.1
+2.9.3
 

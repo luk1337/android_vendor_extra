@@ -1,0 +1,31 @@
+From 7eac9d03405f62fab88d54b448c177a2f114149c Mon Sep 17 00:00:00 2001
+From: George G <kreach3r@users.noreply.github.com>
+Date: Sat, 25 Feb 2017 17:32:18 +0200
+Subject: [PATCH 43/44] base: Force authorize all calling packages by
+ Masquerade (2/3)
+
+Change-Id: Iaf354c4d891acf9f5e19767223e4f9860a07338f
+---
+ core/java/android/provider/Settings.java | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
+index 7fe6034..4d3e6c9 100644
+--- a/core/java/android/provider/Settings.java
++++ b/core/java/android/provider/Settings.java
+@@ -6572,6 +6572,12 @@ public final class Settings {
+         public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
+ 
+         /**
++         * Force authorize Substratum (or equivalent) frontend calling packages by Masquerade
++         * @hide
++         */
++        public static final String FORCE_AUTHORIZE_SUBSTRATUM_PACKAGES = "force_authorize_substratum_packages";
++
++        /**
+          * This are the settings to be backed up.
+          *
+          * NOTE: Settings are backed up and restored in the order they appear
+-- 
+2.9.3
+

@@ -1,7 +1,7 @@
-From 38bcbdd04a15f416a8840e23d3d168684f940607 Mon Sep 17 00:00:00 2001
+From 725d540d6f14c2a45017f24bb618596ee19cf024 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Fri, 9 Dec 2016 02:19:20 +0100
-Subject: [PATCH 09/15] Exclude overlays from the app counter
+Subject: [PATCH 09/20] Exclude overlays from the app counter
 
 This exclude overlays from the app counter that shows
 in manage app summary.
@@ -16,7 +16,7 @@ Change-Id: I8cd591dc89eb87057e8c2ae3b2cca2c76c34534b
  2 files changed, 7 insertions(+)
 
 diff --git a/src/com/android/settings/applications/AppCounter.java b/src/com/android/settings/applications/AppCounter.java
-index fb8d5809e7..852358dca3 100644
+index fb8d580..852358d 100644
 --- a/src/com/android/settings/applications/AppCounter.java
 +++ b/src/com/android/settings/applications/AppCounter.java
 @@ -47,6 +47,7 @@ public abstract class AppCounter extends AsyncTask<Void, Void, Integer> {
@@ -28,7 +28,7 @@ index fb8d5809e7..852358dca3 100644
                                  user.id);
                  for (ApplicationInfo info : list.getList()) {
 diff --git a/src/com/android/settings/applications/ManageApplications.java b/src/com/android/settings/applications/ManageApplications.java
-index 5d3b353766..ed617814b3 100644
+index 5d3b353..ed61781 100644
 --- a/src/com/android/settings/applications/ManageApplications.java
 +++ b/src/com/android/settings/applications/ManageApplications.java
 @@ -1297,6 +1297,12 @@ public class ManageApplications extends InstrumentedFragment
@@ -45,5 +45,5 @@ index 5d3b353766..ed617814b3 100644
                          }
                          Intent launchIntent = new Intent(Intent.ACTION_MAIN, null)
 -- 
-2.11.1
+2.9.3
 

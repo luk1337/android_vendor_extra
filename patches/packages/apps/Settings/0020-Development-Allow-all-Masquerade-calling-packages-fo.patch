@@ -1,0 +1,113 @@
+From c8e8c8ce738542fd65e9f081d5202f32279c8b61 Mon Sep 17 00:00:00 2001
+From: George G <kreach3r@users.noreply.github.com>
+Date: Sat, 25 Feb 2017 18:24:06 +0200
+Subject: [PATCH 20/20] Development: Allow all Masquerade calling packages for
+ debugging (3/3)
+
+It is also only allowed for Owner accounts.
+
+Change-Id: I4d8ca60ead6fe058e7bc2ef8b7613e77457b3f27
+---
+ res/values/projekt_strings.xml                    |  4 ++++
+ res/xml/development_prefs.xml                     |  5 +++++
+ src/com/android/settings/DevelopmentSettings.java | 20 ++++++++++++++++++++
+ 3 files changed, 29 insertions(+)
+
+diff --git a/res/values/projekt_strings.xml b/res/values/projekt_strings.xml
+index 4c45544..0d339e2 100644
+--- a/res/values/projekt_strings.xml
++++ b/res/values/projekt_strings.xml
+@@ -25,4 +25,8 @@
+    <string name="menu_show_substratum_icons">Show icon overlays</string>
+    <string name="menu_hide_substratum_icons">Hide icon overlays</string>
+ 
++   <!-- Force authorize substratum packages -->
++   <string name="force_authorize_substratum_packages_title">Force authorize every theme app</string>
++   <string name="force_authorize_substratum_packages_summary">Allow theme apps from unknown sources</string>
++
+ </resources>
+diff --git a/res/xml/development_prefs.xml b/res/xml/development_prefs.xml
+index 1e7ed4a..d654829 100644
+--- a/res/xml/development_prefs.xml
++++ b/res/xml/development_prefs.xml
+@@ -210,6 +210,11 @@
+             android:entries="@array/select_logpersist_titles"
+             android:entryValues="@array/select_logpersist_values" />
+ 
++        <SwitchPreference
++            android:key="force_authorize_substratum_packages"
++            android:title="@string/force_authorize_substratum_packages_title"
++            android:summary="@string/force_authorize_substratum_packages_summary" />
++
+     </PreferenceCategory>
+ 
+     <PreferenceCategory android:key="debug_networking_category"
+diff --git a/src/com/android/settings/DevelopmentSettings.java b/src/com/android/settings/DevelopmentSettings.java
+index 02e2a75..1941c66 100644
+--- a/src/com/android/settings/DevelopmentSettings.java
++++ b/src/com/android/settings/DevelopmentSettings.java
+@@ -235,6 +235,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
+ 
+     private static final String DEVELOPMENT_TOOLS = "development_tools";
+ 
++    private static final String FORCE_AUTHORIZE_SUBSTRATUM_PACKAGES = "force_authorize_substratum_packages";
++
+     private static final int RESULT_DEBUG_APP = 1000;
+     private static final int RESULT_MOCK_LOCATION_APP = 1001;
+ 
+@@ -261,6 +263,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
+     private boolean mHaveDebugSettings;
+     private boolean mDontPokeProperties;
+ 
++    private SwitchPreference mForceAuthorizeSubstratumPackages;
++
+     private SwitchPreference mEnableAdb;
+     private SwitchPreference mAdbOverNetwork;
+     private Preference mClearAdbKeys;
+@@ -427,6 +431,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
+         mForceAllowOnExternal = findAndInitSwitchPref(FORCE_ALLOW_ON_EXTERNAL_KEY);
+         mPassword = (PreferenceScreen) findPreference(LOCAL_BACKUP_PASSWORD);
+         mAllPrefs.add(mPassword);
++        mForceAuthorizeSubstratumPackages = findAndInitSwitchPref(FORCE_AUTHORIZE_SUBSTRATUM_PACKAGES);
+ 
+         if (!mUm.isAdminUser()) {
+             disableForUser(mEnableAdb);
+@@ -434,6 +439,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
+             disableForUser(mEnableTerminal);
+             disableForUser(mPassword);
+             disableForUser(mUpdateRecoveryPreference);
++            disableForUser(mForceAuthorizeSubstratumPackages);
+         }
+ 
+         mDebugAppPref = findPreference(DEBUG_APP_KEY);
+@@ -814,6 +820,18 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
+         updateRootAccessOptions();
+         updateAdbOverNetwork();
+         updateUpdateRecoveryOptions();
++        updateForceAuthorizeSubstratumPackagesOptions();
++    }
++
++    private void writeForceAuthorizeSubstratumPackagesOptions() {
++        Settings.Secure.putInt(getActivity().getContentResolver(),
++                Settings.Secure.FORCE_AUTHORIZE_SUBSTRATUM_PACKAGES,
++                mForceAuthorizeSubstratumPackages.isChecked() ? 1 : 0);
++    }
++
++    private void updateForceAuthorizeSubstratumPackagesOptions() {
++        mForceAuthorizeSubstratumPackages.setChecked(Settings.Secure.getInt(getActivity().getContentResolver(),
++                Settings.Secure.FORCE_AUTHORIZE_SUBSTRATUM_PACKAGES, 0) != 0);
+     }
+ 
+     private void updateAdbOverNetwork() {
+@@ -2256,6 +2274,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
+             writeUSBAudioOptions();
+         } else if (preference == mForceResizable) {
+             writeForceResizableOptions();
++        } else if (preference == mForceAuthorizeSubstratumPackages) {
++            writeForceAuthorizeSubstratumPackagesOptions();
+         } else if (INACTIVE_APPS_KEY.equals(preference.getKey())) {
+             startInactiveAppsFragment();
+         } else if (BACKGROUND_CHECK_KEY.equals(preference.getKey())) {
+-- 
+2.9.3
+

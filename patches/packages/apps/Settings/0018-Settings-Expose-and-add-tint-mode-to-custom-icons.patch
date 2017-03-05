@@ -1,0 +1,73 @@
+From 393ecf10f319d909ded17aa8ecf3202e73e3733c Mon Sep 17 00:00:00 2001
+From: Randall Rushing <randall.rushing@gmail.com>
+Date: Tue, 5 Apr 2016 11:24:26 -0500
+Subject: [PATCH 18/20] Settings: Expose and add tint mode to custom icons
+
+This allows themers to add custom icons and have them still show in
+power usage detail
+
+adding to this original commit: http://review.cyanogenmod.org/#/c/136136/
+
+Change-Id: Id38035d8eaa4c3bd004fe747a5df3899646e5cdc
+Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
+---
+ res/values/projekt_colors.xml                            | 5 ++---
+ src/com/android/settings/fuelgauge/PowerUsageDetail.java | 7 +++++--
+ 2 files changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
+index a619c50..a93ca3c 100644
+--- a/res/values/projekt_colors.xml
++++ b/res/values/projekt_colors.xml
+@@ -43,17 +43,16 @@
+     <color name="linear_color_bar_left">@*android:color/accent_device_default_light</color>
+     <color name="linear_color_bar_middle">@*android:color/accent_device_default_light</color>
+     <color name="linear_color_bar_right">#ffced7db</color>
+-
+     <!-- External Icon Tint -->
+     <color name="external_tile_icon_tint_color">?android:attr/colorAccent</color>
+     <!-- Settings switchbar background -->
+     <color name="switchbar_background_color">?android:attr/colorSecondary</color>
+-
+     <!-- Bluetooth pairing pin confirm dialog -->
+     <color name="bluetooth_pairing_caption">@*android:color/secondary_text_material_light</color>
+     <color name="bluetooth_pairing_code_message">@*android:color/secondary_text_material_light</color>
+     <color name="bluetooth_phonebook_sharing_message_confirm_pin">@*android:color/secondary_text_material_light</color>
+-
+     <!-- App ops -->
+     <color name="switch_accent_color">@*android:color/accent_device_default_light</color>
++    <!-- Power Usage Hard colors-->
++    <color name="power_usage_ab_icon_tint">@android:color/white</color>
+ </resources>
+diff --git a/src/com/android/settings/fuelgauge/PowerUsageDetail.java b/src/com/android/settings/fuelgauge/PowerUsageDetail.java
+index f091f66..eae0ca1 100644
+--- a/src/com/android/settings/fuelgauge/PowerUsageDetail.java
++++ b/src/com/android/settings/fuelgauge/PowerUsageDetail.java
+@@ -29,6 +29,7 @@ import android.content.pm.PackageInfo;
+ import android.content.pm.PackageManager;
+ import android.content.pm.PackageManager.NameNotFoundException;
+ import android.graphics.drawable.Drawable;
++import android.graphics.PorterDuff;
+ import android.net.Uri;
+ import android.os.BatteryStats;
+ import android.os.Bundle;
+@@ -481,12 +482,14 @@ public class PowerUsageDetail extends PowerUsageBase implements Button.OnClickLi
+         if (appIcon == null) {
+             appIcon = getActivity().getPackageManager().getDefaultActivityIcon();
+         }
+-
++        if (appIcon != null) {
++            appIcon.setTintMode(PorterDuff.Mode.SRC_ATOP);
++        }
+         if (pkg == null && mPackages != null) {
+             pkg = mPackages[0];
+         }
+         AppHeader.createAppHeader(this, appIcon, title, pkg, uid,
+-                mDrainType != DrainType.APP ? android.R.color.white : 0);
++                mDrainType != DrainType.APP ? R.color.power_usage_ab_icon_tint : 0);
+     }
+ 
+     public void onClick(View v) {
+-- 
+2.9.3
+

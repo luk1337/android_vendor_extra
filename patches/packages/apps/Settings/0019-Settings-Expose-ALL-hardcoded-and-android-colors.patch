@@ -1,0 +1,420 @@
+From da47e91252026c33587940c9146be8c97dc1db63 Mon Sep 17 00:00:00 2001
+From: Bryan Owens <djbryan3540@gmail.com>
+Date: Mon, 27 Feb 2017 22:24:09 -0600
+Subject: [PATCH 19/20] Settings: Expose "ALL" hardcoded and @android colors
+
+Change-Id: Iac46ea78387881e2237c3b9fb302c84987fe94f3
+Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
+---
+ res/layout-sw600dp/nfc_payment_how_it_works.xml        | 12 ++++++------
+ res/layout/app_header.xml                              |  2 +-
+ res/layout/crypt_keeper_emergency_button.xml           |  2 +-
+ res/layout/crypt_keeper_status.xml                     |  4 ++--
+ res/layout/data_usage_chart.xml                        |  4 ++--
+ res/layout/filter_spinner_item.xml                     |  2 +-
+ res/layout/master_clear_disallowed_screen.xml          |  4 ++--
+ res/layout/multi_sim_dialog.xml                        |  6 +++---
+ res/layout/network_reset_disallowed_screen.xml         |  4 ++--
+ res/layout/nfc_payment_how_it_works.xml                | 12 ++++++------
+ res/layout/permission_settings.xml                     |  2 +-
+ res/layout/preference_importance_slider.xml            |  2 +-
+ res/layout/settings_color_picker_item.xml              |  2 +-
+ res/layout/storage_internal_format.xml                 |  2 +-
+ res/layout/storage_wizard_navigation.xml               |  2 +-
+ res/values/projekt_colors.xml                          | 18 ++++++++++++++++++
+ .../android/settings/deviceinfo/StorageSettings.java   |  2 ++
+ .../settings/deviceinfo/StorageVolumePreference.java   |  2 ++
+ 18 files changed, 53 insertions(+), 31 deletions(-)
+
+diff --git a/res/layout-sw600dp/nfc_payment_how_it_works.xml b/res/layout-sw600dp/nfc_payment_how_it_works.xml
+index 3bee160..5d71e1a 100644
+--- a/res/layout-sw600dp/nfc_payment_how_it_works.xml
++++ b/res/layout-sw600dp/nfc_payment_how_it_works.xml
+@@ -3,7 +3,7 @@
+     android:id="@+id/trusted_devices_prompt_layout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="#FF80CBC4" >
++    android:background="@color/nfc_how_it_works_main_background" >
+ 
+     <RelativeLayout
+         android:layout_width="match_parent"
+@@ -12,7 +12,7 @@
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="336dp"
+-            android:background="#FFB2DFDB" >
++            android:background="@color/nfc_how_it_works_background" >
+         </LinearLayout>
+ 
+         <LinearLayout
+@@ -37,7 +37,7 @@
+               android:layout_width="420dp"
+               android:layout_height="wrap_content"
+               android:text="@string/nfc_how_it_works_title"
+-              android:textColor="#FF263238"
++              android:textColor="@color/nfc_how_it_works_title_text_color"
+               android:textSize="24sp" />
+ 
+           <TextView
+@@ -47,14 +47,14 @@
+               android:paddingTop="10dp"
+               android:paddingBottom="18dp"
+               android:text="@string/nfc_how_it_works_content"
+-              android:textColor="#FF263238"
++              android:textColor="@color/nfc_how_it_works_content_text_color"
+               android:textSize="20sp" />
+         </LinearLayout>
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="48dp"
+             android:layout_alignParentBottom="true"
+-            android:background="#FFB2DFDB" >
++            android:background="@color/nfc_how_it_works_footer_background" >
+           <Button
+               android:id="@+id/nfc_how_it_works_button"
+               android:background="?android:attr/selectableItemBackground"
+@@ -64,7 +64,7 @@
+               android:layout_marginRight="20dp"
+               android:text="@string/nfc_how_it_works_got_it"
+               android:textSize="14sp"
+-              android:textColor="#263238"
++              android:textColor="@color/nfc_how_it_works_got_it_text_color"
+               style="?android:attr/borderlessButtonStyle" />
+         </RelativeLayout>
+     </RelativeLayout>
+diff --git a/res/layout/app_header.xml b/res/layout/app_header.xml
+index 2d8a099..bbce943 100644
+--- a/res/layout/app_header.xml
++++ b/res/layout/app_header.xml
+@@ -36,7 +36,7 @@
+         android:layout_alignWithParentIfMissing="true"
+         android:layout_centerVertical="true"
+         android:textAppearance="@style/TextAppearance.Switch"
+-        android:textColor="@android:color/white"
++        android:textColor="@color/text_color_white"
+         android:textAlignment="viewStart" />
+ 
+     <ImageView
+diff --git a/res/layout/crypt_keeper_emergency_button.xml b/res/layout/crypt_keeper_emergency_button.xml
+index 0b6f810..cf35315 100644
+--- a/res/layout/crypt_keeper_emergency_button.xml
++++ b/res/layout/crypt_keeper_emergency_button.xml
+@@ -33,7 +33,7 @@
+         android:layout_gravity="center_horizontal"
+         android:textSize="14sp"
+         android:fontFamily="sans-serif"
+-        android:textColor="#FFFFFF"
++        android:textColor="@color/emergency_call_button_text_color"
+         style="?android:attr/borderlessButtonStyle" />
+ 
+ </LinearLayout>
+diff --git a/res/layout/crypt_keeper_status.xml b/res/layout/crypt_keeper_status.xml
+index bddff1a..fd9f82e 100644
+--- a/res/layout/crypt_keeper_status.xml
++++ b/res/layout/crypt_keeper_status.xml
+@@ -35,7 +35,7 @@
+         android:layout_marginEnd="8dip"
+         android:textSize="16sp"
+         android:fontFamily="sans-serif"
+-        android:textColor="@android:color/white"
++        android:textColor="@color/text_color_white"
+         android:text="@string/enter_password"
+         android:layout_gravity="center_horizontal"
+         android:gravity="center_horizontal" />
+@@ -52,7 +52,7 @@
+         android:marqueeRepeatLimit ="marquee_forever"
+         android:textSize="16sp"
+         android:fontFamily="sans-serif"
+-        android:textColor="#B3FFFFFF"
++        android:textColor="@color/owner_info_text_color"
+         android:gravity="center_horizontal" />
+ 
+ </LinearLayout>
+diff --git a/res/layout/data_usage_chart.xml b/res/layout/data_usage_chart.xml
+index c87a006..324d09f 100644
+--- a/res/layout/data_usage_chart.xml
++++ b/res/layout/data_usage_chart.xml
+@@ -44,7 +44,7 @@
+         android:layout_gravity="start|bottom"
+         settings:strokeColor="#00000000"
+         settings:fillColor="?android:attr/colorAccent"
+-        settings:fillColorSecondary="#ff80cbc4"
++        settings:fillColorSecondary="@color/data_usage_chart_series_fill_Color_Secondary"
+         settings:safeRegion="3dp" />
+ 
+     <com.android.settings.widget.ChartNetworkSeriesView
+@@ -102,7 +102,7 @@
+         settings:neighborMargin="5dip"
+         settings:labelSize="60dip"
+         settings:labelTemplate="@string/data_usage_sweep_limit"
+-        settings:labelColor="#fff4511e"
++        settings:labelColor="@color/data_usage_sweep_limit_label_Color"
+         settings:safeRegion="4dp" />
+ 
+ </com.android.settings.widget.ChartDataUsageView>
+diff --git a/res/layout/filter_spinner_item.xml b/res/layout/filter_spinner_item.xml
+index e83dd80..6b7bdb8 100644
+--- a/res/layout/filter_spinner_item.xml
++++ b/res/layout/filter_spinner_item.xml
+@@ -23,5 +23,5 @@
+     android:layout_height="wrap_content"
+     android:ellipsize="marquee"
+     android:textAppearance="@style/TextAppearance.Switch"
+-    android:textColor="@android:color/white"
++    android:textColor="@color/text_color_white"
+     android:textAlignment="inherit"/>
+diff --git a/res/layout/master_clear_disallowed_screen.xml b/res/layout/master_clear_disallowed_screen.xml
+index 80326ca..ce14f46 100644
+--- a/res/layout/master_clear_disallowed_screen.xml
++++ b/res/layout/master_clear_disallowed_screen.xml
+@@ -26,8 +26,8 @@
+                 android:layout_height="match_parent"
+                 android:drawSelectorOnTop="false"
+                 android:scrollbarStyle="insideOverlay"
+-                android:background="@android:color/white"
+-                android:cacheColorHint="@android:color/white"
++                android:background="@color/background_color_white"
++                android:cacheColorHint="@color/background_color_white"
+                 android:fadingEdgeLength="16dip" />
+ 
+         <TextView android:id="@android:id/empty"
+diff --git a/res/layout/multi_sim_dialog.xml b/res/layout/multi_sim_dialog.xml
+index d0e7df8..02643ac 100644
+--- a/res/layout/multi_sim_dialog.xml
++++ b/res/layout/multi_sim_dialog.xml
+@@ -44,7 +44,7 @@
+                     android:hint="@string/sim_name_hint"
+                     android:inputType="textNoSuggestions"
+                     android:maxLength="@integer/sim_name_length"
+-                    android:textColor="@android:color/black"
++                    android:textColor="@color/text_color_black"
+                     style="?android:attr/textAppearanceMedium" />
+ 
+         </LinearLayout>
+@@ -82,7 +82,7 @@
+                     android:text="@string/sim_editor_carrier" />
+ 
+             <TextView android:id="@+id/carrier"
+-                    android:textColor="@android:color/black"
++                    android:textColor="@color/text_color_black"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:paddingStart="@dimen/sim_content_padding"
+@@ -110,7 +110,7 @@
+                     android:paddingBottom="@dimen/sim_dialog_margin_bottom"
+                     android:paddingStart="@dimen/sim_content_padding"
+                     android:singleLine="true"
+-                    android:textColor="@android:color/black"
++                    android:textColor="@color/text_color_black"
+                     style="?android:attr/textAppearanceMedium" />
+ 
+         </LinearLayout>
+diff --git a/res/layout/network_reset_disallowed_screen.xml b/res/layout/network_reset_disallowed_screen.xml
+index 04f6fc2..e72708b 100644
+--- a/res/layout/network_reset_disallowed_screen.xml
++++ b/res/layout/network_reset_disallowed_screen.xml
+@@ -26,8 +26,8 @@
+                 android:layout_height="match_parent"
+                 android:drawSelectorOnTop="false"
+                 android:scrollbarStyle="insideOverlay"
+-                android:background="@android:color/white"
+-                android:cacheColorHint="@android:color/white"
++                android:background="@color/background_color_white"
++                android:cacheColorHint="@color/background_color_white"
+                 android:fadingEdgeLength="16dip" />
+ 
+         <TextView android:id="@android:id/empty"
+diff --git a/res/layout/nfc_payment_how_it_works.xml b/res/layout/nfc_payment_how_it_works.xml
+index 565a16b..a870e5b 100644
+--- a/res/layout/nfc_payment_how_it_works.xml
++++ b/res/layout/nfc_payment_how_it_works.xml
+@@ -3,7 +3,7 @@
+     android:id="@+id/trusted_devices_prompt_layout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="#FF80CBC4" >
++    android:background="@color/nfc_how_it_works_main_background" >
+ 
+     <RelativeLayout
+         android:layout_width="match_parent"
+@@ -12,7 +12,7 @@
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="200dp"
+-            android:background="#FFB2DFDB" >
++            android:background="@color/nfc_how_it_works_background" >
+         </LinearLayout>
+ 
+         <LinearLayout
+@@ -38,7 +38,7 @@
+               android:text="@string/nfc_how_it_works_title"
+               android:paddingLeft="16dp"
+               android:paddingRight="16dp"
+-              android:textColor="#FF263238"
++              android:textColor="@color/nfc_how_it_works_title_text_color"
+               android:textSize="24sp" />
+ 
+           <TextView
+@@ -50,14 +50,14 @@
+               android:paddingLeft="16dp"
+               android:paddingRight="16dp"
+               android:text="@string/nfc_how_it_works_content"
+-              android:textColor="#FF263238"
++              android:textColor="@color/nfc_how_it_works_content_text_color"
+               android:textSize="16sp" />
+         </LinearLayout>
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="48dp"
+             android:layout_alignParentBottom="true"
+-            android:background="#FFB2DFDB" >
++            android:background="@color/nfc_how_it_works_footer_background" >
+           <Button
+               android:id="@+id/nfc_how_it_works_button"
+               android:background="?android:attr/selectableItemBackground"
+@@ -67,7 +67,7 @@
+               android:layout_marginRight="20dp"
+               android:text="@string/nfc_how_it_works_got_it"
+               android:textSize="14sp"
+-              android:textColor="#263238"
++              android:textColor="@color/nfc_how_it_works_got_it_text_color"
+               style="?android:attr/borderlessButtonStyle" />
+         </RelativeLayout>
+     </RelativeLayout>
+diff --git a/res/layout/permission_settings.xml b/res/layout/permission_settings.xml
+index f08b9d6..2067c02 100644
+--- a/res/layout/permission_settings.xml
++++ b/res/layout/permission_settings.xml
+@@ -43,7 +43,7 @@
+                 android:text="@string/permissions_label" />
+             <TextView android:id="@+id/security_settings_billing_desc"
+                 android:text="@string/security_settings_billing_desc"
+-                android:textColor="#ffffb060"
++                android:textColor="@color/security_settings_billing_desc_text_color"
+                 android:textAppearance="?android:attr/textAppearanceSmall"
+                 android:paddingTop="6dip"
+                 android:paddingBottom="6dip"
+diff --git a/res/layout/preference_importance_slider.xml b/res/layout/preference_importance_slider.xml
+index 3861807..7e340f9 100644
+--- a/res/layout/preference_importance_slider.xml
++++ b/res/layout/preference_importance_slider.xml
+@@ -61,7 +61,7 @@
+                 android:thumbTint="?android:attr/colorAccent"
+                 android:progressTint="?android:attr/colorAccent"
+                 style="@android:style/Widget.Material.SeekBar.Discrete"
+-                android:tickMarkTint="@android:color/black" />
++                android:tickMarkTint="@color/importance_secondary_slider_tickMarkTint_color" />
+ 
+     </FrameLayout>
+ 
+diff --git a/res/layout/settings_color_picker_item.xml b/res/layout/settings_color_picker_item.xml
+index c171950..d8fc8c1 100644
+--- a/res/layout/settings_color_picker_item.xml
++++ b/res/layout/settings_color_picker_item.xml
+@@ -41,7 +41,7 @@
+         android:paddingBottom="8dp"
+         android:paddingRight="8dp"
+         android:paddingLeft="8dp"
+-        android:textColor="@android:color/black"
++        android:textColor="@color/text_color_black"
+         style="?android:attr/textAppearanceMedium" />
+ 
+ </LinearLayout>
+\ No newline at end of file
+diff --git a/res/layout/storage_internal_format.xml b/res/layout/storage_internal_format.xml
+index 8aec28f..c90ed28 100644
+--- a/res/layout/storage_internal_format.xml
++++ b/res/layout/storage_internal_format.xml
+@@ -46,7 +46,7 @@
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="@string/storage_menu_format"
+-            android:textColor="@android:color/white"
++            android:textColor="@color/text_color_white"
+             android:backgroundTint="@color/storage_wizard_button_red" />
+     </FrameLayout>
+ 
+diff --git a/res/layout/storage_wizard_navigation.xml b/res/layout/storage_wizard_navigation.xml
+index 94f9baf..191d4f2 100644
+--- a/res/layout/storage_wizard_navigation.xml
++++ b/res/layout/storage_wizard_navigation.xml
+@@ -46,7 +46,7 @@
+         android:layout_marginBottom="16dp"
+         android:layout_marginEnd="16dp"
+         android:text="@string/wizard_next"
+-        android:textColor="@android:color/white"
++        android:textColor="@color/text_color_white"
+         android:backgroundTint="@color/storage_wizard_button" />
+ 
+ </LinearLayout>
+diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
+index a93ca3c..eb37be3 100644
+--- a/res/values/projekt_colors.xml
++++ b/res/values/projekt_colors.xml
+@@ -55,4 +55,22 @@
+     <color name="switch_accent_color">@*android:color/accent_device_default_light</color>
+     <!-- Power Usage Hard colors-->
+     <color name="power_usage_ab_icon_tint">@android:color/white</color>
++    <!-- NFC hard colors -->
++    <color name="nfc_how_it_works_main_background">#FF80CBC4</color>
++    <color name="nfc_how_it_works_background">#FFB2DFDB</color>
++    <color name="nfc_how_it_works_title_text_color">#FF263238</color>
++    <color name="nfc_how_it_works_content_text_color">#FF263238</color>
++    <color name="nfc_how_it_works_footer_background">#FFB2DFDB</color>
++    <color name="nfc_how_it_works_got_it_text_color">#263238</color>
++    <!-- Permission Settings Hard colors-->
++    <color name="security_settings_billing_desc_text_color">#ffffb060</color>
++    <!-- Misc Hard colors-->
++    <color name="importance_secondary_slider_tickMarkTint_color">@android:color/black</color>
++    <color name="emergency_call_button_text_color">#ffffff</color>
++    <color name="owner_info_text_color">#B3FFFFFF</color>
++    <color name="data_usage_chart_series_fill_Color_Secondary">#ff80cbc4</color>
++    <color name="data_usage_sweep_limit_label_Color">#fff4511e</color>
++    <color name="text_color_black">@android:color/black</color>
++    <color name="text_color_white">@android:color/white</color>
++    <color name="background_color_white">@android:color/white</color>
+ </resources>
+diff --git a/src/com/android/settings/deviceinfo/StorageSettings.java b/src/com/android/settings/deviceinfo/StorageSettings.java
+index 57fd13b..6ab7a85 100755
+--- a/src/com/android/settings/deviceinfo/StorageSettings.java
++++ b/src/com/android/settings/deviceinfo/StorageSettings.java
+@@ -27,6 +27,7 @@ import android.content.Intent;
+ import android.content.res.Resources ;
+ import android.graphics.Color;
+ import android.graphics.drawable.Drawable;
++import android.graphics.PorterDuff;
+ import android.os.AsyncTask;
+ import android.os.Bundle;
+ import android.os.UserHandle;
+@@ -204,6 +205,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
+                 final Drawable icon = context.getDrawable(R.drawable.ic_sim_sd);
+                 icon.mutate();
+                 icon.setTint(getColorPublic(getResources()));
++                icon.setTintMode(PorterDuff.Mode.SRC_ATOP);
+ 
+                 final Preference pref = new Preference(context);
+                 pref.setKey(rec.getFsUuid());
+diff --git a/src/com/android/settings/deviceinfo/StorageVolumePreference.java b/src/com/android/settings/deviceinfo/StorageVolumePreference.java
+index 8a2780a..a6c227c 100644
+--- a/src/com/android/settings/deviceinfo/StorageVolumePreference.java
++++ b/src/com/android/settings/deviceinfo/StorageVolumePreference.java
+@@ -20,6 +20,7 @@ import android.content.Context;
+ import android.content.res.ColorStateList;
+ import android.graphics.Color;
+ import android.graphics.drawable.Drawable;
++import android.graphics.PorterDuff;
+ import android.os.storage.StorageManager;
+ import android.os.storage.VolumeInfo;
+ import android.support.v7.preference.Preference;
+@@ -100,6 +101,7 @@ public class StorageVolumePreference extends Preference {
+ 
+         icon.mutate();
+         icon.setTint(mColor);
++        icon.setTintMode(PorterDuff.Mode.SRC_ATOP);
+         setIcon(icon);
+ 
+         if (volume.getType() == VolumeInfo.TYPE_PUBLIC
+-- 
+2.9.3
+

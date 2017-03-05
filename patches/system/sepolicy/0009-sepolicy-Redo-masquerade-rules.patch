@@ -1,0 +1,144 @@
+From ea4fd1f19e8c37427e0b350faad177e8ccba1689 Mon Sep 17 00:00:00 2001
+From: LuK1337 <priv.luk@gmail.com>
+Date: Wed, 1 Mar 2017 23:11:49 +0100
+Subject: [PATCH 9/9] sepolicy: Redo masquerade rules
+
+* Use macros
+* Label custom properties
+* Reorder rules alphabetically
+
+Change-Id: I6ea45271d64dfbe373104e8f6637b95150fa0dbb
+---
+ masquerade.te     | 41 ++++++++++++++++++-----------------------
+ property.te       |  1 +
+ property_contexts |  1 +
+ system_server.te  |  8 ++++++--
+ 4 files changed, 26 insertions(+), 25 deletions(-)
+
+diff --git a/masquerade.te b/masquerade.te
+index 0cbbdb2..6fbc5e1 100644
+--- a/masquerade.te
++++ b/masquerade.te
+@@ -11,16 +11,15 @@ app_domain(masquerade)
+ binder_service(masquerade)
+ 
+ # Modify system dalvik-cache
+-allow masquerade dalvikcache_data_file:file {  getattr open read  };
+-allow masquerade dalvikcache_data_file:dir { getattr search  };
++allow masquerade dalvikcache_data_file:dir r_dir_perms;
++allow masquerade dalvikcache_data_file:file rw_file_perms;
+ 
+ # Read and write /data/data subdirectory.
+ allow masquerade system_app_data_file:dir create_dir_perms;
+ allow masquerade system_app_data_file:{ file lnk_file } create_file_perms;
+ 
+ # /data/resource-cache
+-allow masquerade resourcecache_data_file:file r_file_perms;
+-allow masquerade resourcecache_data_file:dir r_dir_perms;
++r_dir_file(masquerade, resourcecache_data_file)
+ 
+ # Read wallpaper file.
+ allow masquerade wallpaper_file:file r_file_perms;
+@@ -38,31 +37,27 @@ allow masquerade { system_data_file wallpaper_file }:file link;
+ allow masquerade ringtone_file:dir { create_dir_perms relabelto };
+ allow masquerade ringtone_file:file create_file_perms;
+ 
+-# Manage overlays and start JobService
+-allow masquerade overlay_service:service_manager find;
+-allow masquerade activity_service:service_manager find;
+-
+ # System file accesses.
+-allow masquerade system_file:dir r_dir_perms;
+-allow masquerade system_file:dir rmdir;
+ allow masquerade kernel:system module_request;
+-allow masquerade dalvikcache_data_file:file { setattr write };
+-allow masquerade system_data_file:dir { add_name create rmdir remove_name setattr write };
+-allow masquerade system_data_file:file { create getattr setattr unlink write read };
++allow masquerade system_data_file:dir create_dir_perms;
++allow masquerade system_data_file:file create_file_perms;
++allow masquerade system_file:dir { r_dir_perms rmdir };
+ 
+ # Allow handling of theme assets
+-allow masquerade theme_data_file:dir { add_name create remove_name setattr write rmdir };
+-allow masquerade theme_data_file:file { create setattr write unlink };
++allow masquerade theme_data_file:dir create_dir_perms;
++allow masquerade theme_data_file:file create_file_perms;
+ 
+ # Modify system properties
+-allow masquerade init:unix_stream_socket connectto;
+-allow masquerade mount_service:service_manager find;
+-allow masquerade property_socket:sock_file write;
+-allow masquerade system_prop:property_service set;
++set_prop(masquerade, theme_prop)
++
++# Edit files in /sdcard
++allow masquerade media_rw_data_file:dir rw_dir_perms;
++allow masquerade media_rw_data_file:file rw_file_perms;
++
++# Services
++allow masquerade activity_service:service_manager find;
+ allow masquerade connectivity_service:service_manager find;
+ allow masquerade display_service:service_manager find;
+-
+-allow masquerade media_rw_data_file:dir { search write };
+-allow masquerade media_rw_data_file:file { open unlink };
++allow masquerade mount_service:service_manager find;
+ allow masquerade network_management_service:service_manager find;
+-allow masquerade media_rw_data_file:dir remove_name;
++allow masquerade overlay_service:service_manager find;
+diff --git a/property.te b/property.te
+index af7013f..44f15bb 100644
+--- a/property.te
++++ b/property.te
+@@ -38,5 +38,6 @@ type dalvik_prop, property_type, core_property_type;
+ type config_prop, property_type, core_property_type;
+ type device_logging_prop, property_type;
+ type safemode_prop, property_type;
++type theme_prop, property_type;
+ 
+ allow property_type tmpfs:filesystem associate;
+diff --git a/property_contexts b/property_contexts
+index 4368a98..0280e7a 100644
+--- a/property_contexts
++++ b/property_contexts
+@@ -23,6 +23,7 @@ ro.hw.                  u:object_r:system_prop:s0
+ sys.                    u:object_r:system_prop:s0
+ sys.cppreopt            u:object_r:cppreopt_prop:s0
+ sys.powerctl            u:object_r:powerctl_prop:s0
++sys.refresh_theme       u:object_r:theme_prop:s0
+ sys.usb.ffs.            u:object_r:ffs_prop:s0
+ service.                u:object_r:system_prop:s0
+ wlan.                   u:object_r:system_prop:s0
+diff --git a/system_server.te b/system_server.te
+index c544803..5262a79 100644
+--- a/system_server.te
++++ b/system_server.te
+@@ -351,6 +351,9 @@ set_prop(system_server, ctl_bugreport_prop)
+ # cppreopt property
+ set_prop(system_server, cppreopt_prop)
+ 
++# theme property
++get_prop(system_server, theme_prop)
++
+ # Create a socket for receiving info from wpa.
+ type_transition system_server wifi_data_file:sock_file system_wpa_socket;
+ type_transition system_server wpa_socket:sock_file system_wpa_socket;
+@@ -529,6 +532,9 @@ allow system_server media_rw_data_file:dir search;
+ # Allow invoking tools like "timeout"
+ allow system_server toolbox_exec:file rx_file_perms;
+ 
++# Allow `search` in theme_data_file directory
++allow system_server theme_data_file:dir search;
++
+ # Postinstall
+ #
+ # For OTA dexopt, allow calls coming from postinstall.
+@@ -580,5 +586,3 @@ neverallow system_server { dev_type -frp_block_device }:blk_file no_rw_file_perm
+ neverallow system_server self:process execmem;
+ neverallow system_server ashmem_device:chr_file execute;
+ neverallow system_server system_server_tmpfs:file execute;
+-
+-allow system_server theme_data_file:dir search;
+-- 
+2.9.3
+
