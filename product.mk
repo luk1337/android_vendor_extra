@@ -1,4 +1,4 @@
-# Masquerade
+# ThemeInterfacer
 PRODUCT_PACKAGES += \
-    masquerade \
+    ThemeInterfacer \
     projekt.substratum.theme.xml
