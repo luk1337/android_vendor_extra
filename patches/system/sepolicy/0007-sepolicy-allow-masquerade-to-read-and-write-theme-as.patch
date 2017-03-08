@@ -1,7 +1,8 @@
-From 08ce7639e5995fda422c3b3f3f0548a240077967 Mon Sep 17 00:00:00 2001
+From d265922f6a29e129ac222e323707dc0bd195d312 Mon Sep 17 00:00:00 2001
 From: Surge1223 <surge1223@gmail.com>
 Date: Wed, 22 Feb 2017 20:45:04 -0600
-Subject: [PATCH 7/9] sepolicy: allow masquerade to read and write theme assets
+Subject: [PATCH 07/10] sepolicy: allow masquerade to read and write theme
+ assets
 
 Fix for masquerade to handle theme assets including fonts and bootanimation, also
 takes into account when /data/system/theme doesnt exist
@@ -35,5 +36,5 @@ index 949699c..2f17030 100644
 +allow masquerade connectivity_service:service_manager find;
 +allow masquerade display_service:service_manager find;
 -- 
-2.9.3
+2.11.1
 

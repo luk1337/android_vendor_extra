@@ -1,7 +1,7 @@
-From da2fe9e937c56243d86fffa553be7c99e1fa3876 Mon Sep 17 00:00:00 2001
+From 45afc298e2f4bb658ac810c3aa3672d1ebee5571 Mon Sep 17 00:00:00 2001
 From: Surge1223 <surge1223@gmail.com>
 Date: Tue, 21 Feb 2017 12:28:05 -0600
-Subject: [PATCH 6/9] sepolicy: rename masquerade domain and allow JobService
+Subject: [PATCH 06/10] sepolicy: rename masquerade domain and allow JobService
  in system_server
 
 This attempts to address the issue of JobService being unable to process
@@ -188,5 +188,5 @@ index 3ca8182..5e2a3a8 100644
  allow system_server mediaextractor_service:service_manager find;
  allow system_server mediacodec_service:service_manager find;
 -- 
-2.9.3
+2.11.1
 

@@ -1,7 +1,7 @@
-From ea4fd1f19e8c37427e0b350faad177e8ccba1689 Mon Sep 17 00:00:00 2001
+From c75924e4334f4ac14a4bf7bce15cc2a93b191998 Mon Sep 17 00:00:00 2001
 From: LuK1337 <priv.luk@gmail.com>
 Date: Wed, 1 Mar 2017 23:11:49 +0100
-Subject: [PATCH 9/9] sepolicy: Redo masquerade rules
+Subject: [PATCH 09/10] sepolicy: Redo masquerade rules
 
 * Use macros
 * Label custom properties
@@ -140,5 +140,5 @@ index c544803..5262a79 100644
 -
 -allow system_server theme_data_file:dir search;
 -- 
-2.9.3
+2.11.1
 

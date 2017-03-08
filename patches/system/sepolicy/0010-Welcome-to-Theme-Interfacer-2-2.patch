@@ -1,0 +1,257 @@
+From acece0611d57e0467c65af1fdbabe1ad7d793b4d Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sat, 4 Mar 2017 19:20:10 -0700
+Subject: [PATCH 10/10] Welcome to Theme Interfacer! [2/2]
+
+Change-Id: I4a28c8840957d385338529540e081eabd3135cc1
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ app.te           |  2 +-
+ domain.te        |  4 ++--
+ interfacer.te    | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ masquerade.te    | 63 --------------------------------------------------------
+ seapp_contexts   |  2 +-
+ service.te       |  2 +-
+ service_contexts |  2 +-
+ system_server.te |  2 +-
+ 8 files changed, 70 insertions(+), 70 deletions(-)
+ create mode 100644 interfacer.te
+ delete mode 100644 masquerade.te
+
+diff --git a/app.te b/app.te
+index e6180e3..93fe3a4 100644
+--- a/app.te
++++ b/app.te
+@@ -374,7 +374,7 @@ neverallow appdomain exec_type:file
+ # This is the default type for anything under /data not otherwise
+ # specified in file_contexts.  Define a different type for portions
+ # that should be writable by apps.
+-neverallow { appdomain -masquerade } system_data_file:dir_file_class_set
++neverallow { appdomain -interfacer } system_data_file:dir_file_class_set
+     { create write setattr relabelfrom relabelto append unlink link rename };
+ 
+ # Write to various other parts of /data.
+diff --git a/domain.te b/domain.te
+index 5bc5fcb..634f3bf 100644
+--- a/domain.te
++++ b/domain.te
+@@ -381,7 +381,7 @@ neverallow {
+   -init # TODO: limit init to relabelfrom for files
+   -zygote
+   -installd
+-  -masquerade
++  -interfacer
+   -postinstall_dexopt
+   -cppreopts
+   -dex2oat
+@@ -488,7 +488,7 @@ neverallow {
+   -system_server
+   -system_app
+   -init
+-  -masquerade
++  -interfacer
+   -installd # for relabelfrom and unlink, check for this in explicit neverallow
+ } system_data_file:file no_w_file_perms;
+ # do not grant anything greater than r_file_perms and relabelfrom unlink
+diff --git a/interfacer.te b/interfacer.te
+new file mode 100644
+index 0000000..45dcd6b
+--- /dev/null
++++ b/interfacer.te
+@@ -0,0 +1,63 @@
++#
++# Theme Interfacer needs additional permissions when not running with system_server
++# projekt.interfacer.
++#
++#
++type interfacer, domain;
++
++# Add Theme Interfacer to domains
++net_domain(interfacer)
++app_domain(interfacer)
++binder_service(interfacer)
++
++# Modify system dalvik-cache
++allow interfacer dalvikcache_data_file:dir r_dir_perms;
++allow interfacer dalvikcache_data_file:file rw_file_perms;
++
++# Read and write /data/data subdirectory.
++allow interfacer system_app_data_file:dir create_dir_perms;
++allow interfacer system_app_data_file:{ file lnk_file } create_file_perms;
++
++# /data/resource-cache
++r_dir_file(interfacer, resourcecache_data_file)
++
++# Read wallpaper file.
++allow interfacer wallpaper_file:file r_file_perms;
++
++# Read icon file.
++allow interfacer icon_file:file r_file_perms;
++
++# Set bootanimation
++allow interfacer bootanim:process { getsched setsched };
++
++# Backup of wallpaper imagery uses temporary hard links to avoid data churn
++allow interfacer { system_data_file wallpaper_file }:file link;
++
++# Manage ringtones.
++allow interfacer ringtone_file:dir { create_dir_perms relabelto };
++allow interfacer ringtone_file:file create_file_perms;
++
++# System file accesses.
++allow interfacer kernel:system module_request;
++allow interfacer system_data_file:dir create_dir_perms;
++allow interfacer system_data_file:file create_file_perms;
++allow interfacer system_file:dir { r_dir_perms rmdir };
++
++# Allow handling of theme assets
++allow interfacer theme_data_file:dir create_dir_perms;
++allow interfacer theme_data_file:file create_file_perms;
++
++# Modify system properties
++set_prop(interfacer, theme_prop)
++
++# Edit files in /sdcard
++allow interfacer media_rw_data_file:dir rw_dir_perms;
++allow interfacer media_rw_data_file:file rw_file_perms;
++
++# Services
++allow interfacer activity_service:service_manager find;
++allow interfacer connectivity_service:service_manager find;
++allow interfacer display_service:service_manager find;
++allow interfacer mount_service:service_manager find;
++allow interfacer network_management_service:service_manager find;
++allow interfacer overlay_service:service_manager find;
+diff --git a/masquerade.te b/masquerade.te
+deleted file mode 100644
+index 6fbc5e1..0000000
+--- a/masquerade.te
++++ /dev/null
+@@ -1,63 +0,0 @@
+-#
+-# Masquerade needs additional permissions when not running with system_server
+-# masquerade.substratum.
+-#
+-#
+-type masquerade, domain;
+-
+-# Add masquerade to domains
+-net_domain(masquerade)
+-app_domain(masquerade)
+-binder_service(masquerade)
+-
+-# Modify system dalvik-cache
+-allow masquerade dalvikcache_data_file:dir r_dir_perms;
+-allow masquerade dalvikcache_data_file:file rw_file_perms;
+-
+-# Read and write /data/data subdirectory.
+-allow masquerade system_app_data_file:dir create_dir_perms;
+-allow masquerade system_app_data_file:{ file lnk_file } create_file_perms;
+-
+-# /data/resource-cache
+-r_dir_file(masquerade, resourcecache_data_file)
+-
+-# Read wallpaper file.
+-allow masquerade wallpaper_file:file r_file_perms;
+-
+-# Read icon file.
+-allow masquerade icon_file:file r_file_perms;
+-
+-# Set bootanimation
+-allow masquerade bootanim:process { getsched setsched };
+-
+-# Backup of wallpaper imagery uses temporary hard links to avoid data churn
+-allow masquerade { system_data_file wallpaper_file }:file link;
+-
+-# Manage ringtones.
+-allow masquerade ringtone_file:dir { create_dir_perms relabelto };
+-allow masquerade ringtone_file:file create_file_perms;
+-
+-# System file accesses.
+-allow masquerade kernel:system module_request;
+-allow masquerade system_data_file:dir create_dir_perms;
+-allow masquerade system_data_file:file create_file_perms;
+-allow masquerade system_file:dir { r_dir_perms rmdir };
+-
+-# Allow handling of theme assets
+-allow masquerade theme_data_file:dir create_dir_perms;
+-allow masquerade theme_data_file:file create_file_perms;
+-
+-# Modify system properties
+-set_prop(masquerade, theme_prop)
+-
+-# Edit files in /sdcard
+-allow masquerade media_rw_data_file:dir rw_dir_perms;
+-allow masquerade media_rw_data_file:file rw_file_perms;
+-
+-# Services
+-allow masquerade activity_service:service_manager find;
+-allow masquerade connectivity_service:service_manager find;
+-allow masquerade display_service:service_manager find;
+-allow masquerade mount_service:service_manager find;
+-allow masquerade network_management_service:service_manager find;
+-allow masquerade overlay_service:service_manager find;
+diff --git a/seapp_contexts b/seapp_contexts
+index bbf8b78..5dc518d 100644
+--- a/seapp_contexts
++++ b/seapp_contexts
+@@ -97,4 +97,4 @@ user=_app seinfo=platform domain=platform_app type=app_data_file levelFrom=user
+ user=_app isAutoPlayApp=true domain=autoplay_app type=autoplay_data_file levelFrom=all
+ user=_app isPrivApp=true domain=priv_app type=app_data_file levelFrom=user
+ user=_app domain=untrusted_app type=app_data_file levelFrom=user
+-user=system isPrivApp=true domain=masquerade seinfo=platform name=masquerade.substratum type=system_app_data_file
++user=system isPrivApp=true domain=interfacer seinfo=platform name=projekt.interfacer type=system_app_data_file
+diff --git a/service.te b/service.te
+index efa08e7..5818897 100644
+--- a/service.te
++++ b/service.te
+@@ -63,12 +63,12 @@ type hardware_properties_service, app_api_service, system_server_service, servic
+ type hdmi_control_service, system_api_service, system_server_service, service_manager_type;
+ type input_method_service, app_api_service, system_server_service, service_manager_type;
+ type input_service, app_api_service, system_server_service, service_manager_type;
++type interfacer_service, app_api_service, system_server_service, service_manager_type;
+ type imms_service, app_api_service, system_server_service, service_manager_type;
+ type jobscheduler_service, app_api_service, system_server_service, service_manager_type;
+ type launcherapps_service, app_api_service, system_server_service, service_manager_type;
+ type location_service, app_api_service, system_server_service, service_manager_type;
+ type lock_settings_service, system_api_service, system_server_service, service_manager_type;
+-type masquerade_service, app_api_service, system_server_service, service_manager_type;
+ type media_projection_service, app_api_service, system_server_service, service_manager_type;
+ type media_router_service, app_api_service, system_server_service, service_manager_type;
+ type media_session_service, app_api_service, system_server_service, service_manager_type;
+diff --git a/service_contexts b/service_contexts
+index b831312..c38c017 100644
+--- a/service_contexts
++++ b/service_contexts
+@@ -57,6 +57,7 @@ iphonesubinfo2                            u:object_r:radio_service:s0
+ iphonesubinfo                             u:object_r:radio_service:s0
+ ims                                       u:object_r:radio_service:s0
+ imms                                      u:object_r:imms_service:s0
++interfacer                                u:object_r:interfacer_service:s0
+ isms_msim                                 u:object_r:radio_service:s0
+ isms2                                     u:object_r:radio_service:s0
+ isms                                      u:object_r:radio_service:s0
+@@ -65,7 +66,6 @@ jobscheduler                              u:object_r:jobscheduler_service:s0
+ launcherapps                              u:object_r:launcherapps_service:s0
+ location                                  u:object_r:location_service:s0
+ lock_settings                             u:object_r:lock_settings_service:s0
+-masquerade                                u:object_r:masquerade_service:s0
+ media.audio_flinger                       u:object_r:audioserver_service:s0
+ media.audio_policy                        u:object_r:audioserver_service:s0
+ media.camera                              u:object_r:cameraserver_service:s0
+diff --git a/system_server.te b/system_server.te
+index 5262a79..a30a09e 100644
+--- a/system_server.te
++++ b/system_server.te
+@@ -438,7 +438,7 @@ allow system_server batteryproperties_service:service_manager find;
+ allow system_server keystore_service:service_manager find;
+ allow system_server gatekeeper_service:service_manager find;
+ allow system_server fingerprintd_service:service_manager find;
+-allow system_server masquerade_service:service_manager find;
++allow system_server interfacer_service:service_manager find;
+ allow system_server mediaserver_service:service_manager find;
+ allow system_server mediaextractor_service:service_manager find;
+ allow system_server mediacodec_service:service_manager find;
+-- 
+2.11.1
+
