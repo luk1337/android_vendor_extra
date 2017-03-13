@@ -1,7 +1,7 @@
-From c811f30de1b47ef4e5675d526b2ee328dd1dc55d Mon Sep 17 00:00:00 2001
+From 02fa0447251f8893e3d0e788a8c908f2412754d4 Mon Sep 17 00:00:00 2001
 From: Alex Cruz <mazdarider23@gmail.com>
 Date: Sat, 4 Feb 2017 14:13:26 +0100
-Subject: [PATCH 37/44] Set external QS tiles tint mode to SRC_ATOP
+Subject: [PATCH 37/45] Set external QS tiles tint mode to SRC_ATOP
 
 While the external qs tile tint color was exposed, we had the same problem
 we had with the external icons in Settings which is if a themer set the color
@@ -19,7 +19,7 @@ Change-Id: I6d577573dd494d61a3e87abebd919b02a481db56
  1 file changed, 2 insertions(+)
 
 diff --git a/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java b/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java
-index 6fabc61..dbdb614 100644
+index 6fabc6101ca..dbdb614c8e1 100644
 --- a/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java
 +++ b/packages/SystemUI/src/com/android/systemui/qs/customize/TileQueryHelper.java
 @@ -23,6 +23,7 @@ import android.content.Context;
@@ -39,5 +39,5 @@ index 6fabc61..dbdb614 100644
                  addTile(spec, icon, label != null ? label.toString() : "null", appLabel, mContext);
              }
 -- 
-2.9.3
+2.11.1
 

@@ -1,7 +1,7 @@
-From 1111f1d28dabdebbf5359c1656e397c43f5dd9f1 Mon Sep 17 00:00:00 2001
+From 7762d5adeeac6222094c0d809687255bee399318 Mon Sep 17 00:00:00 2001
 From: SpiritCroc <spiritcroc@gmail.com>
 Date: Sun, 5 Feb 2017 12:00:54 +0100
-Subject: [PATCH 39/44] Notification tint: add optional findContrastColor
+Subject: [PATCH 39/45] Notification tint: add optional findContrastColor
  algorithm for dark backgrounds
 
 Overlay config_useDarkBgNotificationIconTextTinting to enable dark bg tinting
@@ -14,7 +14,7 @@ Change-Id: I80cb01caf185c8fcd012ba409eacfa91e887c511
  3 files changed, 68 insertions(+), 2 deletions(-)
 
 diff --git a/core/java/com/android/internal/util/NotificationColorUtil.java b/core/java/com/android/internal/util/NotificationColorUtil.java
-index 4748e6f..bbc9a24 100644
+index 4748e6fb19f..bbc9a24b1ed 100644
 --- a/core/java/com/android/internal/util/NotificationColorUtil.java
 +++ b/core/java/com/android/internal/util/NotificationColorUtil.java
 @@ -37,6 +37,8 @@ import android.text.style.TextAppearanceSpan;
@@ -117,7 +117,7 @@ index 4748e6f..bbc9a24 100644
          if (color != resolvedColor) {
              if (DEBUG){
 diff --git a/core/res/res/values/projekt_config.xml b/core/res/res/values/projekt_config.xml
-index 5234959..8cf5666 100644
+index 5234959fc9e..8cf5666a7e4 100644
 --- a/core/res/res/values/projekt_config.xml
 +++ b/core/res/res/values/projekt_config.xml
 @@ -27,4 +27,8 @@
@@ -130,7 +130,7 @@ index 5234959..8cf5666 100644
 +
  </resources>
 diff --git a/core/res/res/values/projekt_symbols.xml b/core/res/res/values/projekt_symbols.xml
-index 16a5728..faa71e0 100644
+index 16a5728e6c9..faa71e064e6 100644
 --- a/core/res/res/values/projekt_symbols.xml
 +++ b/core/res/res/values/projekt_symbols.xml
 @@ -19,6 +19,7 @@
@@ -142,5 +142,5 @@ index 16a5728..faa71e0 100644
    <java-symbol type="color" name="sender_text_color" />
  
 -- 
-2.9.3
+2.11.1
 

@@ -1,7 +1,7 @@
-From 3dcf1c44b81a2fb51a3da26470cd946303d27261 Mon Sep 17 00:00:00 2001
+From 45cf60053ab74bf9d59c7a0c2d62696dd0478ef0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Tue, 15 Dec 2015 16:08:31 +0100
-Subject: [PATCH 01/44] OMS7-N: Support tagging resources as OK to overlay
+Subject: [PATCH 01/45] OMS7-N: Support tagging resources as OK to overlay
  [1/11]
 
 This will allow applications to have a resource xml defining what
@@ -33,7 +33,7 @@ Change-Id: I08d11de845c1679017798ea1636ef4c36f820d8e
  7 files changed, 164 insertions(+), 15 deletions(-)
 
 diff --git a/cmds/idmap/create.cpp b/cmds/idmap/create.cpp
-index c13d318..8656b0e 100644
+index c13d318f744..8656b0e0e5f 100644
 --- a/cmds/idmap/create.cpp
 +++ b/cmds/idmap/create.cpp
 @@ -106,7 +106,7 @@ fail:
@@ -46,7 +46,7 @@ index c13d318..8656b0e 100644
              return true;
          }
 diff --git a/cmds/idmap/inspect.cpp b/cmds/idmap/inspect.cpp
-index f6afc85..924090f 100644
+index f6afc859430..924090fbb9d 100644
 --- a/cmds/idmap/inspect.cpp
 +++ b/cmds/idmap/inspect.cpp
 @@ -192,6 +192,12 @@ namespace {
@@ -63,7 +63,7 @@ index f6afc85..924090f 100644
  
          err = buf.nextUint32(&i);
 diff --git a/include/androidfw/ResourceTypes.h b/include/androidfw/ResourceTypes.h
-index 12a6b0f..6094a57 100644
+index 12a6b0f9a4e..6094a576d75 100644
 --- a/include/androidfw/ResourceTypes.h
 +++ b/include/androidfw/ResourceTypes.h
 @@ -1382,7 +1382,11 @@ struct ResTable_entry
@@ -97,7 +97,7 @@ index 12a6b0f..6094a57 100644
              String8* pTargetPath, String8* pOverlayPath);
  
 diff --git a/libs/androidfw/AssetManager.cpp b/libs/androidfw/AssetManager.cpp
-index 5b36a43..c0e8a98 100644
+index 5b36a43abdc..c0e8a980c2d 100644
 --- a/libs/androidfw/AssetManager.cpp
 +++ b/libs/androidfw/AssetManager.cpp
 @@ -252,7 +252,7 @@ bool AssetManager::addOverlayPath(const String8& packagePath, int32_t* cookie)
@@ -110,7 +110,7 @@ index 5b36a43..c0e8a98 100644
          delete idmap;
          return false;
 diff --git a/libs/androidfw/ResourceTypes.cpp b/libs/androidfw/ResourceTypes.cpp
-index e8c6fcf..022f19e 100644
+index e8c6fcf03a5..022f19efe86 100644
 --- a/libs/androidfw/ResourceTypes.cpp
 +++ b/libs/androidfw/ResourceTypes.cpp
 @@ -59,7 +59,7 @@ namespace android {
@@ -197,7 +197,7 @@ index e8c6fcf..022f19e 100644
  
                      if (inclValues) {
 diff --git a/tools/aapt/ResourceTable.cpp b/tools/aapt/ResourceTable.cpp
-index a1b1879..b2d0480 100644
+index a1b1879e745..b2d04802bf1 100644
 --- a/tools/aapt/ResourceTable.cpp
 +++ b/tools/aapt/ResourceTable.cpp
 @@ -800,6 +800,7 @@ status_t compileResourceFile(Bundle* bundle,
@@ -367,7 +367,7 @@ index a1b1879..b2d0480 100644
      : mName(name), mPackageId(packageId),
        mTypeStringsMapping(0xffffffff),
 diff --git a/tools/aapt/ResourceTable.h b/tools/aapt/ResourceTable.h
-index 54d56cf..7e9b044 100644
+index 54d56cfc26f..7e9b04429cc 100644
 --- a/tools/aapt/ResourceTable.h
 +++ b/tools/aapt/ResourceTable.h
 @@ -139,6 +139,11 @@ public:
@@ -470,5 +470,5 @@ index 54d56cf..7e9b044 100644
          Vector<sp<ConfigList> > mOrderedConfigs;
          SortedVector<String16> mCanAddEntries;
 -- 
-2.9.3
+2.11.1
 

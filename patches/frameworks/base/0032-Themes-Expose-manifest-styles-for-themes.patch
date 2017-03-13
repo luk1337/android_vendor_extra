@@ -1,7 +1,7 @@
-From 5d0bab85243ef8c14d99b88879925745c906af83 Mon Sep 17 00:00:00 2001
+From b1cbf5224969aaf156e24c5e56ef1cb5d7a541dc Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Fri, 6 Jan 2017 21:12:15 +0800
-Subject: [PATCH 32/44] Themes: Expose manifest styles for themes
+Subject: [PATCH 32/45] Themes: Expose manifest styles for themes
 
 Change-Id: Ie3a4fdead4f4fa1c121018b38de1c86a05bbcff2
 ---
@@ -11,7 +11,7 @@ Change-Id: Ie3a4fdead4f4fa1c121018b38de1c86a05bbcff2
  create mode 100644 core/res/res/values/projekt_styles.xml
 
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index 3ceb17b..36df6ea 100644
+index 3ceb17ba568..36df6eac13e 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
 @@ -3214,7 +3214,7 @@
@@ -101,7 +101,7 @@ index 3ceb17b..36df6ea 100644
          </activity>
 diff --git a/core/res/res/values/projekt_styles.xml b/core/res/res/values/projekt_styles.xml
 new file mode 100644
-index 0000000..e5fe635
+index 00000000000..e5fe635818a
 --- /dev/null
 +++ b/core/res/res/values/projekt_styles.xml
 @@ -0,0 +1,41 @@
@@ -147,5 +147,5 @@ index 0000000..e5fe635
 +
 +</resources>
 -- 
-2.9.3
+2.11.1
 

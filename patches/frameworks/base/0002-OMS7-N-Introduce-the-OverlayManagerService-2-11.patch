@@ -1,7 +1,7 @@
-From 9f51624bfb2dbc78f791ef9ea1a9d81c6c4b68f3 Mon Sep 17 00:00:00 2001
+From 32041002c96bbeb5dcffa3beef7114c597abffae Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Tue, 15 Dec 2015 16:40:23 +0100
-Subject: [PATCH 02/44] OMS7-N: Introduce the OverlayManagerService [2/11]
+Subject: [PATCH 02/45] OMS7-N: Introduce the OverlayManagerService [2/11]
 
 Add a new system service to manage Runtime Resource Overlays. This will
 offload the PackageManagerService and allow administration of overlay
@@ -84,7 +84,7 @@ Change-Id: Icc3c7daa25345d20bc5014b865024422eab72f5b
  create mode 100644 services/core/java/com/android/server/om/OverlayManagerShellCommand.java
 
 diff --git a/Android.mk b/Android.mk
-index bdb4555..df42780 100644
+index bdb45550fa1..df427801fa7 100644
 --- a/Android.mk
 +++ b/Android.mk
 @@ -137,6 +137,7 @@ LOCAL_SRC_FILES += \
@@ -96,7 +96,7 @@ index bdb4555..df42780 100644
  	core/java/android/content/pm/IOnAppsChangedListener.aidl \
  	core/java/android/content/pm/IOtaDexopt.aidl \
 diff --git a/core/java/android/content/Context.java b/core/java/android/content/Context.java
-index 3a2f471..1ca44e0 100644
+index 3a2f471e96e..1ca44e0f633 100644
 --- a/core/java/android/content/Context.java
 +++ b/core/java/android/content/Context.java
 @@ -3656,6 +3656,16 @@ public abstract class Context {
@@ -117,7 +117,7 @@ index 3a2f471..1ca44e0 100644
       * process and user ID running in the system.
       *
 diff --git a/core/java/android/content/Intent.java b/core/java/android/content/Intent.java
-index 861aae5..1afae79 100644
+index 861aae5a879..1afae798bcf 100644
 --- a/core/java/android/content/Intent.java
 +++ b/core/java/android/content/Intent.java
 @@ -3092,6 +3092,40 @@ public class Intent implements Parcelable, Cloneable {
@@ -163,7 +163,7 @@ index 861aae5..1afae79 100644
       * {@link DocumentsProvider} instances installed on the device, letting the
 diff --git a/core/java/android/content/om/IOverlayManager.aidl b/core/java/android/content/om/IOverlayManager.aidl
 new file mode 100644
-index 0000000..4f5d960
+index 00000000000..4f5d96038d1
 --- /dev/null
 +++ b/core/java/android/content/om/IOverlayManager.aidl
 @@ -0,0 +1,129 @@
@@ -298,7 +298,7 @@ index 0000000..4f5d960
 +}
 diff --git a/core/java/android/content/om/OverlayInfo.aidl b/core/java/android/content/om/OverlayInfo.aidl
 new file mode 100644
-index 0000000..e7d413d
+index 00000000000..e7d413d0775
 --- /dev/null
 +++ b/core/java/android/content/om/OverlayInfo.aidl
 @@ -0,0 +1,19 @@
@@ -323,7 +323,7 @@ index 0000000..e7d413d
 +parcelable OverlayInfo;
 diff --git a/core/java/android/content/om/OverlayInfo.java b/core/java/android/content/om/OverlayInfo.java
 new file mode 100644
-index 0000000..a25cf0c
+index 00000000000..a25cf0c008c
 --- /dev/null
 +++ b/core/java/android/content/om/OverlayInfo.java
 @@ -0,0 +1,290 @@
@@ -618,7 +618,7 @@ index 0000000..a25cf0c
 +    }
 +}
 diff --git a/core/java/android/content/pm/PackageManagerInternal.java b/core/java/android/content/pm/PackageManagerInternal.java
-index f5bcf64..bdbdd1e 100644
+index f5bcf64417a..bdbdd1ebcf9 100644
 --- a/core/java/android/content/pm/PackageManagerInternal.java
 +++ b/core/java/android/content/pm/PackageManagerInternal.java
 @@ -168,4 +168,28 @@ public abstract class PackageManagerInternal {
@@ -651,7 +651,7 @@ index f5bcf64..bdbdd1e 100644
 +    public abstract void setResourceDirs(int userId, String packageName, String[] resourceDirs);
  }
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index 2c76dee..6a5bd39 100644
+index 2c76dee9754..6a5bd3946db 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
 @@ -84,6 +84,10 @@
@@ -667,7 +667,7 @@ index 2c76dee..6a5bd39 100644
      <protected-broadcast android:name="android.os.action.POWER_SAVE_MODE_CHANGED" />
 diff --git a/services/core/java/com/android/server/om/IdmapManager.java b/services/core/java/com/android/server/om/IdmapManager.java
 new file mode 100644
-index 0000000..e2a3775
+index 00000000000..e2a37750ef3
 --- /dev/null
 +++ b/services/core/java/com/android/server/om/IdmapManager.java
 @@ -0,0 +1,116 @@
@@ -789,7 +789,7 @@ index 0000000..e2a3775
 +}
 diff --git a/services/core/java/com/android/server/om/OverlayManagerService.java b/services/core/java/com/android/server/om/OverlayManagerService.java
 new file mode 100644
-index 0000000..ec148dd
+index 00000000000..ec148dd9fa7
 --- /dev/null
 +++ b/services/core/java/com/android/server/om/OverlayManagerService.java
 @@ -0,0 +1,901 @@
@@ -1696,7 +1696,7 @@ index 0000000..ec148dd
 +}
 diff --git a/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java b/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
 new file mode 100644
-index 0000000..2a0d88b
+index 00000000000..2a0d88b416d
 --- /dev/null
 +++ b/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
 @@ -0,0 +1,478 @@
@@ -2180,7 +2180,7 @@ index 0000000..2a0d88b
 +}
 diff --git a/services/core/java/com/android/server/om/OverlayManagerSettings.java b/services/core/java/com/android/server/om/OverlayManagerSettings.java
 new file mode 100644
-index 0000000..af0bb64
+index 00000000000..af0bb64bd67
 --- /dev/null
 +++ b/services/core/java/com/android/server/om/OverlayManagerSettings.java
 @@ -0,0 +1,656 @@
@@ -2842,7 +2842,7 @@ index 0000000..af0bb64
 +}
 diff --git a/services/core/java/com/android/server/om/OverlayManagerShellCommand.java b/services/core/java/com/android/server/om/OverlayManagerShellCommand.java
 new file mode 100644
-index 0000000..d6f5373
+index 00000000000..d6f53737913
 --- /dev/null
 +++ b/services/core/java/com/android/server/om/OverlayManagerShellCommand.java
 @@ -0,0 +1,179 @@
@@ -3026,7 +3026,7 @@ index 0000000..d6f5373
 +    }
 +}
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 5a06bb3..cfc5a0e 100644
+index 5a06bb341cd..cfc5a0edd5c 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
 @@ -21450,6 +21450,47 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
@@ -3078,5 +3078,5 @@ index 5a06bb3..cfc5a0e 100644
  
      @Override
 -- 
-2.9.3
+2.11.1
 

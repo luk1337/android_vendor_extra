@@ -1,7 +1,7 @@
-From 1a224d9b41b2046fb7eaa26c57c75b9ba11574c9 Mon Sep 17 00:00:00 2001
+From ed383d26424a1787cbd06629d0b71a6858eb970d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Mon, 25 Apr 2016 16:29:22 +0200
-Subject: [PATCH 04/44] OMS7-N: Set EXTRA_REPLACING correctly in
+Subject: [PATCH 04/45] OMS7-N: Set EXTRA_REPLACING correctly in
  ACTION_PACKAGE_ADDED [4/11]
 
 When broadcasting ACTION_PACKAGE_ADDED the recipients of the Intent are
@@ -35,7 +35,7 @@ Change-Id: Icf869013d5d652de4bf0f6df4529b7a68d35a25c
  1 file changed, 1 insertion(+)
 
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 8954923..3abcdbb 100644
+index 89549231806..3abcdbb19d2 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
 @@ -1715,6 +1715,7 @@ public class PackageManagerService extends IPackageManager.Stub {
@@ -47,5 +47,5 @@ index 8954923..3abcdbb 100644
                  }
                  sendPackageBroadcast(Intent.ACTION_PACKAGE_ADDED, packageName,
 -- 
-2.9.3
+2.11.1
 

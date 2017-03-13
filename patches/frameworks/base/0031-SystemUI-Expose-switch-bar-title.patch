@@ -1,7 +1,7 @@
-From 78d15ca661f48f1d811fc760a4d90dd74179240b Mon Sep 17 00:00:00 2001
+From ab15da5ba451f9812fc074479bd1d045c9c8afcc Mon Sep 17 00:00:00 2001
 From: daveyannihilation <daveyannihilation@hotmail.com>
 Date: Sun, 1 Jan 2017 01:47:53 -0700
-Subject: [PATCH 31/44] SystemUI: Expose switch bar title
+Subject: [PATCH 31/45] SystemUI: Expose switch bar title
 
 This is needed for the power notifications switchbar in SystemUI Tuner, amongst other things.
 
@@ -13,7 +13,7 @@ Change-Id: I86f04840c2be46519509556b8d0061cefe26f631
  create mode 100644 packages/SystemUI/res/values/projekt_styles.xml
 
 diff --git a/packages/SystemUI/res/layout/switch_bar.xml b/packages/SystemUI/res/layout/switch_bar.xml
-index 41cdb78..344c5aa 100644
+index 41cdb78392a..344c5aa0531 100644
 --- a/packages/SystemUI/res/layout/switch_bar.xml
 +++ b/packages/SystemUI/res/layout/switch_bar.xml
 @@ -33,8 +33,7 @@
@@ -28,7 +28,7 @@ index 41cdb78..344c5aa 100644
  
 diff --git a/packages/SystemUI/res/values/projekt_styles.xml b/packages/SystemUI/res/values/projekt_styles.xml
 new file mode 100644
-index 0000000..f49834b
+index 00000000000..f49834bc202
 --- /dev/null
 +++ b/packages/SystemUI/res/values/projekt_styles.xml
 @@ -0,0 +1,24 @@
@@ -57,5 +57,5 @@ index 0000000..f49834b
 +</resources>
 +
 -- 
-2.9.3
+2.11.1
 

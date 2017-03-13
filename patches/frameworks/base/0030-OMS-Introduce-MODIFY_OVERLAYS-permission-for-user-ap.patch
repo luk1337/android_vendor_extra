@@ -1,7 +1,7 @@
-From e4837e24107e06a75dcd06981aa3e04bfa6948fa Mon Sep 17 00:00:00 2001
+From 30aa3f06924819530a7074d17f7be91c419c24da Mon Sep 17 00:00:00 2001
 From: bigrushdog <randall.rushing@gmail.com>
 Date: Mon, 19 Dec 2016 04:33:31 -0800
-Subject: [PATCH 30/44] OMS: Introduce MODIFY_OVERLAYS permission for user apps
+Subject: [PATCH 30/45] OMS: Introduce MODIFY_OVERLAYS permission for user apps
 
 This permission will grant the app read and write permissions
 to access OverlayManagerService. If caller does not posess
@@ -16,7 +16,7 @@ Change-Id: Ib6b10b516577f338aee31e759bfd16278f902c20
  3 files changed, 29 insertions(+), 8 deletions(-)
 
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index 6a5bd39..3ceb17b 100644
+index 6a5bd3946db..3ceb17ba568 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
 @@ -3162,6 +3162,12 @@
@@ -33,7 +33,7 @@ index 6a5bd39..3ceb17b 100644
                   android:persistent="true"
                   android:hasCode="false"
 diff --git a/core/res/res/values/strings.xml b/core/res/res/values/strings.xml
-index 1823629..d0923cc 100755
+index 1823629341c..d0923ccf6dc 100755
 --- a/core/res/res/values/strings.xml
 +++ b/core/res/res/values/strings.xml
 @@ -1411,6 +1411,11 @@
@@ -49,7 +49,7 @@ index 1823629..d0923cc 100755
  
      <!-- Title of policy access to limiting the user's password choices -->
 diff --git a/services/core/java/com/android/server/om/OverlayManagerService.java b/services/core/java/com/android/server/om/OverlayManagerService.java
-index deb9046..e205ce1 100644
+index deb9046a2d4..e205ce1d030 100644
 --- a/services/core/java/com/android/server/om/OverlayManagerService.java
 +++ b/services/core/java/com/android/server/om/OverlayManagerService.java
 @@ -36,6 +36,7 @@ import android.content.om.IOverlayManager;
@@ -116,5 +116,5 @@ index deb9046..e205ce1 100644
          }
  
 -- 
-2.9.3
+2.11.1
 

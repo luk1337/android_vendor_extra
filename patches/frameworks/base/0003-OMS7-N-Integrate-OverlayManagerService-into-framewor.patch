@@ -1,7 +1,7 @@
-From 88f2665cf9a811c5261aed2c200f05f5d36e1680 Mon Sep 17 00:00:00 2001
+From 2ad001347cfee56ced3c7515d42db82181ba2db8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Thu, 2 Jun 2016 09:35:31 +0200
-Subject: [PATCH 03/44] OMS7-N: Integrate OverlayManagerService into framework
+Subject: [PATCH 03/45] OMS7-N: Integrate OverlayManagerService into framework
  [3/11]
 
 Hand over ownership of overlays to OverlayManagerService.
@@ -65,7 +65,7 @@ Change-Id: If0b1eaa690c38f9c33f7c8dc981314205a73fa9c
  21 files changed, 335 insertions(+), 480 deletions(-)
 
 diff --git a/cmds/idmap/Android.mk b/cmds/idmap/Android.mk
-index 50ccb07..eb6da18 100644
+index 50ccb07a382..eb6da18ea0a 100644
 --- a/cmds/idmap/Android.mk
 +++ b/cmds/idmap/Android.mk
 @@ -15,7 +15,7 @@
@@ -78,7 +78,7 @@ index 50ccb07..eb6da18 100644
  LOCAL_SHARED_LIBRARIES := liblog libutils libandroidfw
  
 diff --git a/cmds/idmap/idmap.cpp b/cmds/idmap/idmap.cpp
-index 3ab1915..d388977 100644
+index 3ab19155362..d388977e8e2 100644
 --- a/cmds/idmap/idmap.cpp
 +++ b/cmds/idmap/idmap.cpp
 @@ -13,8 +13,6 @@ SYNOPSIS \n\
@@ -172,7 +172,7 @@ index 3ab1915..d388977 100644
          return maybe_inspect(argv[2]);
      }
 diff --git a/cmds/idmap/idmap.h b/cmds/idmap/idmap.h
-index 8d4210b..5914de9 100644
+index 8d4210bcb44..5914de96a99 100644
 --- a/cmds/idmap/idmap.h
 +++ b/cmds/idmap/idmap.h
 @@ -25,12 +25,6 @@ int idmap_create_path(const char *target_apk_path, const char *overlay_apk_path,
@@ -189,7 +189,7 @@ index 8d4210b..5914de9 100644
  
  #endif // _IDMAP_H_
 diff --git a/core/java/android/app/ActivityManagerNative.java b/core/java/android/app/ActivityManagerNative.java
-index 50479c8..389f342 100644
+index 50479c8e951..389f3422fb5 100644
 --- a/core/java/android/app/ActivityManagerNative.java
 +++ b/core/java/android/app/ActivityManagerNative.java
 @@ -16,6 +16,7 @@
@@ -244,7 +244,7 @@ index 50479c8..389f342 100644
              throws RemoteException {
          Parcel data = Parcel.obtain();
 diff --git a/core/java/android/app/ActivityThread.java b/core/java/android/app/ActivityThread.java
-index 2d22f26..55fc25d 100644
+index 2d22f26069f..55fc25de68b 100644
 --- a/core/java/android/app/ActivityThread.java
 +++ b/core/java/android/app/ActivityThread.java
 @@ -897,6 +897,14 @@ public final class ActivityThread {
@@ -328,7 +328,7 @@ index 2d22f26..55fc25d 100644
          if (configDiff != 0) {
              // Ask text layout engine to free its caches if there is a locale change
 diff --git a/core/java/android/app/ApplicationThreadNative.java b/core/java/android/app/ApplicationThreadNative.java
-index 05d9d7e..47b05ee 100644
+index 05d9d7e412f..47b05eee470 100644
 --- a/core/java/android/app/ApplicationThreadNative.java
 +++ b/core/java/android/app/ApplicationThreadNative.java
 @@ -16,6 +16,7 @@
@@ -374,7 +374,7 @@ index 05d9d7e..47b05ee 100644
          Parcel data = Parcel.obtain();
          data.writeInterfaceToken(IApplicationThread.descriptor);
 diff --git a/core/java/android/app/IActivityManager.java b/core/java/android/app/IActivityManager.java
-index 5a4470b..c7522b9 100644
+index 5a4470b2ecd..c7522b9fc55 100644
 --- a/core/java/android/app/IActivityManager.java
 +++ b/core/java/android/app/IActivityManager.java
 @@ -266,6 +266,7 @@ public interface IActivityManager extends IInterface {
@@ -392,7 +392,7 @@ index 5a4470b..c7522b9 100644
 +    int UPDATE_ASSETS_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION + 381;
  }
 diff --git a/core/java/android/app/IApplicationThread.java b/core/java/android/app/IApplicationThread.java
-index 3fa88ae..fcc97e3 100644
+index 3fa88ae674a..fcc97e3d719 100644
 --- a/core/java/android/app/IApplicationThread.java
 +++ b/core/java/android/app/IApplicationThread.java
 @@ -104,6 +104,7 @@ public interface IApplicationThread extends IInterface {
@@ -410,7 +410,7 @@ index 3fa88ae..fcc97e3 100644
 +    int SCHEDULE_ASSETS_CHANGED_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+61;
  }
 diff --git a/core/java/android/app/ResourcesManager.java b/core/java/android/app/ResourcesManager.java
-index 4916c1c..8cbca31 100644
+index 4916c1c1f5c..8cbca31a66c 100644
 --- a/core/java/android/app/ResourcesManager.java
 +++ b/core/java/android/app/ResourcesManager.java
 @@ -29,6 +29,7 @@ import android.content.res.ResourcesImpl;
@@ -566,7 +566,7 @@ index 4916c1c..8cbca31 100644
      }
  }
 diff --git a/core/java/android/content/pm/PackageParser.java b/core/java/android/content/pm/PackageParser.java
-index f2e3333..8d42d2c 100644
+index f2e3333b67d..8d42d2c590c 100644
 --- a/core/java/android/content/pm/PackageParser.java
 +++ b/core/java/android/content/pm/PackageParser.java
 @@ -668,10 +668,9 @@ public class PackageParser {
@@ -626,7 +626,7 @@ index f2e3333..8d42d2c 100644
              ai.protect = state.protectedComponents.size() > 0;
          }
 diff --git a/core/java/android/content/pm/PackageUserState.java b/core/java/android/content/pm/PackageUserState.java
-index e64e4c4..4b276fb 100644
+index e64e4c4cc5e..4b276fb786f 100644
 --- a/core/java/android/content/pm/PackageUserState.java
 +++ b/core/java/android/content/pm/PackageUserState.java
 @@ -31,6 +31,8 @@ import android.util.ArraySet;
@@ -657,7 +657,7 @@ index e64e4c4..4b276fb 100644
                  ? new ArraySet<String>(o.protectedComponents) : null;
          visibleComponents = o.visibleComponents != null
 diff --git a/core/jni/android_util_AssetManager.cpp b/core/jni/android_util_AssetManager.cpp
-index 1a7294f..6c5a88f 100644
+index 1a7294f1424..6c5a88fa827 100644
 --- a/core/jni/android_util_AssetManager.cpp
 +++ b/core/jni/android_util_AssetManager.cpp
 @@ -129,85 +129,6 @@ jint copyValue(JNIEnv* env, jobject outValue, const ResTable* table,
@@ -770,7 +770,7 @@ index 1a7294f..6c5a88f 100644
      if (am == NULL) {
          jniThrowException(env, "java/lang/OutOfMemoryError", "");
 diff --git a/include/androidfw/AssetManager.h b/include/androidfw/AssetManager.h
-index 2d5f4c2..c499103 100644
+index 2d5f4c2f90b..c4991032b73 100644
 --- a/include/androidfw/AssetManager.h
 +++ b/include/androidfw/AssetManager.h
 @@ -238,12 +238,10 @@ public:
@@ -826,7 +826,7 @@ index 2d5f4c2..c499103 100644
      private:
          void closeZip(int idx);
 diff --git a/libs/androidfw/AssetManager.cpp b/libs/androidfw/AssetManager.cpp
-index c0e8a98..b995457 100644
+index c0e8a980c2d..b9954573d79 100644
 --- a/libs/androidfw/AssetManager.cpp
 +++ b/libs/androidfw/AssetManager.cpp
 @@ -214,15 +214,6 @@ bool AssetManager::addAssetPath(
@@ -984,7 +984,7 @@ index c0e8a98..b995457 100644
   * Compute the zip file's index.
   *
 diff --git a/services/core/java/com/android/server/SystemServiceManager.java b/services/core/java/com/android/server/SystemServiceManager.java
-index 90f507c..904c967 100644
+index 90f507c146b..904c967acdc 100644
 --- a/services/core/java/com/android/server/SystemServiceManager.java
 +++ b/services/core/java/com/android/server/SystemServiceManager.java
 @@ -16,6 +16,7 @@
@@ -1032,7 +1032,7 @@ index 90f507c..904c967 100644
       * Starts the specified boot phase for all system services that have been started up to
       * this point.
 diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
-index a3923b9..f4d07af 100644
+index a3923b94ef9..f4d07aff3e6 100644
 --- a/services/core/java/com/android/server/am/ActivityManagerService.java
 +++ b/services/core/java/com/android/server/am/ActivityManagerService.java
 @@ -19344,6 +19344,57 @@ public final class ActivityManagerService extends ActivityManagerNative
@@ -1094,7 +1094,7 @@ index a3923b9..f4d07af 100644
       * crash, etc dialogs.  The idea is that if there is no affordence to
       * press the on-screen buttons, or the user experience would be more
 diff --git a/services/core/java/com/android/server/om/OverlayManagerService.java b/services/core/java/com/android/server/om/OverlayManagerService.java
-index ec148dd..761ef52 100644
+index ec148dd9fa7..761ef5240ec 100644
 --- a/services/core/java/com/android/server/om/OverlayManagerService.java
 +++ b/services/core/java/com/android/server/om/OverlayManagerService.java
 @@ -676,37 +676,36 @@ public final class OverlayManagerService extends SystemService {
@@ -1166,7 +1166,7 @@ index ec148dd..761ef52 100644
  
      private void schedulePersistSettings() {
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index cfc5a0e..8954923 100644
+index cfc5a0edd5c..89549231806 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
 @@ -400,17 +400,16 @@ public class PackageManagerService extends IPackageManager.Stub {
@@ -1385,7 +1385,7 @@ index cfc5a0e..8954923 100644
      }
  
 diff --git a/services/core/java/com/android/server/pm/PackageSettingBase.java b/services/core/java/com/android/server/pm/PackageSettingBase.java
-index 75427a8..18c79cd 100644
+index 75427a8b75a..18c79cdda69 100644
 --- a/services/core/java/com/android/server/pm/PackageSettingBase.java
 +++ b/services/core/java/com/android/server/pm/PackageSettingBase.java
 @@ -21,6 +21,7 @@ import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED
@@ -1425,7 +1425,7 @@ index 75427a8..18c79cd 100644
          PackageUserState state = modifyUserStateComponents(userId, false, true);
          boolean changed = state.disabledComponents != null
 diff --git a/services/core/java/com/android/server/pm/Settings.java b/services/core/java/com/android/server/pm/Settings.java
-index 285b5bb..2b36e0e 100755
+index 285b5bbf3ec..2b36e0e0e4d 100755
 --- a/services/core/java/com/android/server/pm/Settings.java
 +++ b/services/core/java/com/android/server/pm/Settings.java
 @@ -813,6 +813,7 @@ final class Settings {
@@ -1454,7 +1454,7 @@ index 285b5bb..2b36e0e 100755
                  } else if (tagName.equals("preferred-activities")) {
                      readPreferredActivitiesLPw(parser, userId);
 diff --git a/services/java/com/android/server/SystemServer.java b/services/java/com/android/server/SystemServer.java
-index 6f21417..ab425c0 100644
+index 6f2141708ed..ab425c05e95 100644
 --- a/services/java/com/android/server/SystemServer.java
 +++ b/services/java/com/android/server/SystemServer.java
 @@ -85,6 +85,7 @@ import com.android.server.media.projection.MediaProjectionManagerService;
@@ -1476,5 +1476,5 @@ index 6f21417..ab425c0 100644
          // service, and permissions service, therefore we start it after them.
          startSensorService();
 -- 
-2.9.3
+2.11.1
 

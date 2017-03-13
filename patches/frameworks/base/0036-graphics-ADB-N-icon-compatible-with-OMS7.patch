@@ -1,7 +1,7 @@
-From 7681b7b8ad224b947c65274af013e039edb5dc0a Mon Sep 17 00:00:00 2001
+From 54b140d68403ccf2d7c6055a8ee83021b00b8941 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Thu, 2 Feb 2017 01:52:27 +0200
-Subject: [PATCH 36/44] graphics: ADB "N" icon compatible with OMS7
+Subject: [PATCH 36/45] graphics: ADB "N" icon compatible with OMS7
 
 It's the same problem as the booleans again. This time, it affected the adb "N" icon in the statusbar.
 This commit should fix this.
@@ -28,7 +28,7 @@ Change-Id: Ibab2ce1571360a9e03043d1bf3144c89e54e1947
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/graphics/java/android/graphics/drawable/Icon.java b/graphics/java/android/graphics/drawable/Icon.java
-index 2b950d3..fb26bee 100644
+index 2b950d3d5c5..fb26bee68fa 100644
 --- a/graphics/java/android/graphics/drawable/Icon.java
 +++ b/graphics/java/android/graphics/drawable/Icon.java
 @@ -294,7 +294,7 @@ public final class Icon implements Parcelable {
@@ -41,5 +41,5 @@ index 2b950d3..fb26bee 100644
                          final PackageManager pm = context.getPackageManager();
                          try {
 -- 
-2.9.3
+2.11.1
 

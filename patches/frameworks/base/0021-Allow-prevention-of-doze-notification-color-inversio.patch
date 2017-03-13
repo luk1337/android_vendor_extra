@@ -1,7 +1,7 @@
-From 8d44b632200a6ea720ec51eff9ba9dfad45eef07 Mon Sep 17 00:00:00 2001
+From edd465d7af676b267a995312f615bf76d7cc4661 Mon Sep 17 00:00:00 2001
 From: Daniel Koman <dankoman30@gmail.com>
 Date: Fri, 17 Apr 2015 11:56:28 -0600
-Subject: [PATCH 21/44] Allow prevention of doze notification color inversion
+Subject: [PATCH 21/45] Allow prevention of doze notification color inversion
 
 Removed empty newline at the end -- KreAch3R
 Removed slims files for aosp roms -- Bgill55
@@ -14,7 +14,7 @@ Change-Id: I2d361c34904f3d168894b8b1741456319fd68456
  3 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/core/res/res/values/projekt_config.xml b/core/res/res/values/projekt_config.xml
-index f6eb90a..5234959 100644
+index f6eb90a49eb..5234959fc9e 100644
 --- a/core/res/res/values/projekt_config.xml
 +++ b/core/res/res/values/projekt_config.xml
 @@ -22,4 +22,9 @@
@@ -28,7 +28,7 @@ index f6eb90a..5234959 100644
 +
  </resources>
 diff --git a/core/res/res/values/projekt_symbols.xml b/core/res/res/values/projekt_symbols.xml
-index f597a5f..16a5728 100644
+index f597a5f3f7b..16a5728e6c9 100644
 --- a/core/res/res/values/projekt_symbols.xml
 +++ b/core/res/res/values/projekt_symbols.xml
 @@ -22,4 +22,7 @@
@@ -40,7 +40,7 @@ index f597a5f..16a5728 100644
 +
  </resources>
 diff --git a/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java b/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java
-index 2c96e31..65fd115 100644
+index 2c96e31d9f5..65fd1158b95 100644
 --- a/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java
 +++ b/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java
 @@ -20,6 +20,7 @@ import android.animation.Animator;
@@ -62,5 +62,5 @@ index 2c96e31..65fd115 100644
              for (int i = 0; i < mTargets.size(); i++) {
                  mTargets.get(i).setLayerType(View.LAYER_TYPE_HARDWARE, mDarkPaint);
 -- 
-2.9.3
+2.11.1
 

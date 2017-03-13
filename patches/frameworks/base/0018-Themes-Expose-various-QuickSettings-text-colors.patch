@@ -1,7 +1,7 @@
-From 4a835c1782a74f73bf44be58aa5e6269badbbe4d Mon Sep 17 00:00:00 2001
+From e8f79d55a9f209da2be2cd2c6eeeb5c040c0105b Mon Sep 17 00:00:00 2001
 From: "Niklas Schnettler (Sh4dowSoul)" <niklas.schnettler@gmail.com>
 Date: Wed, 5 Oct 2016 18:07:43 +0200
-Subject: [PATCH 18/44] Themes: Expose various QuickSettings text colors
+Subject: [PATCH 18/45] Themes: Expose various QuickSettings text colors
 
 Change-Id: Iaea71ca83afbc3d8cc6faea6afac16cabb46cfff
 ---
@@ -11,7 +11,7 @@ Change-Id: Iaea71ca83afbc3d8cc6faea6afac16cabb46cfff
  3 files changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/packages/SystemUI/res/layout/qs_customize_panel_content.xml b/packages/SystemUI/res/layout/qs_customize_panel_content.xml
-index 04d0e65..9c23250 100644
+index 04d0e6524ea..9c232502651 100644
 --- a/packages/SystemUI/res/layout/qs_customize_panel_content.xml
 +++ b/packages/SystemUI/res/layout/qs_customize_panel_content.xml
 @@ -23,7 +23,8 @@
@@ -25,7 +25,7 @@ index 04d0e65..9c23250 100644
      <android.support.v7.widget.RecyclerView
          android:id="@android:id/list"
 diff --git a/packages/SystemUI/res/layout/status_bar_alarm_group.xml b/packages/SystemUI/res/layout/status_bar_alarm_group.xml
-index 1b47d4b..dca8afb 100644
+index 1b47d4b5a19..dca8afb8cb8 100644
 --- a/packages/SystemUI/res/layout/status_bar_alarm_group.xml
 +++ b/packages/SystemUI/res/layout/status_bar_alarm_group.xml
 @@ -73,7 +73,7 @@
@@ -38,7 +38,7 @@ index 1b47d4b..dca8afb 100644
          android:gravity="top"
          android:background="?android:attr/selectableItemBackgroundBorderless"
 diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
-index 42f4a15..0f89199 100644
+index 42f4a1568df..0f891994c9d 100644
 --- a/packages/SystemUI/res/values/projekt_colors.xml
 +++ b/packages/SystemUI/res/values/projekt_colors.xml
 @@ -20,4 +20,8 @@
@@ -51,5 +51,5 @@ index 42f4a15..0f89199 100644
 +    <color name="qs_edit_toolbar_text_color">#FFFFFF</color>
  </resources>
 -- 
-2.9.3
+2.11.1
 

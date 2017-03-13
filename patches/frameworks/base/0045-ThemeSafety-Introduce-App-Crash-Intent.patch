@@ -1,0 +1,35 @@
+From 17c4131f89992453b741130a0f6baec1280b622c Mon Sep 17 00:00:00 2001
+From: Ivan Iskandar <iiiiskandar14@gmail.com>
+Date: Thu, 9 Mar 2017 13:28:22 +0100
+Subject: [PATCH 45/45] ThemeSafety: Introduce App Crash Intent
+
+The intent received by substratum and it will disable all enabled
+overlays.
+
+Change-Id: Ifabd57c2ea71ca93ecc2959ce09ccde3e91782dd
+---
+ services/core/java/com/android/server/am/AppErrors.java | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/services/core/java/com/android/server/am/AppErrors.java b/services/core/java/com/android/server/am/AppErrors.java
+index 0e2fa23f95f..1ff1cdc0081 100644
+--- a/services/core/java/com/android/server/am/AppErrors.java
++++ b/services/core/java/com/android/server/am/AppErrors.java
+@@ -365,6 +365,14 @@ class AppErrors {
+             task = data.task;
+             msg.obj = data;
+             mService.mUiHandler.sendMessage(msg);
++
++            // Send broadcast intent to alert Substratum
++            Intent intent = new Intent("projekt.substratum.APP_CRASHED");
++            intent.putExtra("projekt.substratum.EXTRA_PACKAGE_NAME", r.info.packageName);
++            intent.putExtra("projekt.substratum.EXTRA_CRASH_REPEATING", data.repeating);
++            intent.putExtra("projekt.substratum.EXTRA_EXCEPTION_CLASS_NAME",
++                            crashInfo.exceptionClassName);
++            mContext.sendBroadcast(intent);
+         }
+ 
+         int res = result.get();
+-- 
+2.11.1
+

@@ -1,7 +1,7 @@
-From 943c3e2f786f07343334f605722d900cde029843 Mon Sep 17 00:00:00 2001
+From b78103f1cc4026e0a3abd3c797353e27a0338c3d Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Mon, 4 Jul 2016 06:25:15 +0300
-Subject: [PATCH 27/44] OMS7-N: ApplicationsState: add filter for Substratum
+Subject: [PATCH 27/45] OMS7-N: ApplicationsState: add filter for Substratum
  overlays [1/2]
 
 This commit allows the framework to handle the filtering of the
@@ -13,7 +13,7 @@ Change-Id: I7646115e8f73494d726728fac58cc47aafd69d5d
  1 file changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/packages/SettingsLib/src/com/android/settingslib/applications/ApplicationsState.java b/packages/SettingsLib/src/com/android/settingslib/applications/ApplicationsState.java
-index f0ec107..6fecd40 100644
+index f0ec1078650..6fecd4044ca 100644
 --- a/packages/SettingsLib/src/com/android/settingslib/applications/ApplicationsState.java
 +++ b/packages/SettingsLib/src/com/android/settingslib/applications/ApplicationsState.java
 @@ -137,9 +137,11 @@ public class ApplicationsState {
@@ -49,5 +49,5 @@ index f0ec107..6fecd40 100644
          private int mCurrentUser;
  
 -- 
-2.9.3
+2.11.1
 

@@ -1,7 +1,7 @@
-From 7b49025a167342f122f5c0a20b88a12073946929 Mon Sep 17 00:00:00 2001
+From 1616425f04bb64f6f4ea04bb357cba684c088897 Mon Sep 17 00:00:00 2001
 From: Branden M <wasabi.dev@gmail.com>
 Date: Wed, 1 Feb 2017 22:22:45 -0600
-Subject: [PATCH 38/44] Themes: Expose Keyguard affordance circle background
+Subject: [PATCH 38/45] Themes: Expose Keyguard affordance circle background
 
 Change-Id: Id4a078cdbc944fa0c0736103045a0382d49ecb80
 ---
@@ -10,7 +10,7 @@ Change-Id: Id4a078cdbc944fa0c0736103045a0382d49ecb80
  2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
-index e31d124..e8f8e50 100644
+index e31d1244ac8..e8f8e502845 100644
 --- a/packages/SystemUI/res/values/projekt_colors.xml
 +++ b/packages/SystemUI/res/values/projekt_colors.xml
 @@ -32,4 +32,6 @@
@@ -21,7 +21,7 @@ index e31d124..e8f8e50 100644
 +    <color name="keyguard_affordance_circle_background">@android:color/white</color>
  </resources>
 diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/KeyguardAffordanceView.java b/packages/SystemUI/src/com/android/systemui/statusbar/KeyguardAffordanceView.java
-index b94df1d..3d661b7 100644
+index b94df1d5819..3d661b781b8 100644
 --- a/packages/SystemUI/src/com/android/systemui/statusbar/KeyguardAffordanceView.java
 +++ b/packages/SystemUI/src/com/android/systemui/statusbar/KeyguardAffordanceView.java
 @@ -131,7 +131,7 @@ public class KeyguardAffordanceView extends ImageView implements Palette.Palette
@@ -34,5 +34,5 @@ index b94df1d..3d661b7 100644
  
          mNormalColor = 0xffffffff;
 -- 
-2.9.3
+2.11.1
 

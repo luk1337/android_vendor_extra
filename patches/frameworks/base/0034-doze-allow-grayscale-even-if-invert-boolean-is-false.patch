@@ -1,7 +1,7 @@
-From 7d8713e9763e72ce1ecb42e8f715b87314b3962b Mon Sep 17 00:00:00 2001
+From e454e7470e0cf92f43e0bb600e555aadc974573d Mon Sep 17 00:00:00 2001
 From: Daniel Koman <dankoman30@gmail.com>
 Date: Wed, 28 Sep 2016 15:28:26 +0200
-Subject: [PATCH 34/44] doze: allow grayscale even if invert boolean is false
+Subject: [PATCH 34/45] doze: allow grayscale even if invert boolean is false
 
 for dark themes, we are setting the config boolean for inverting
     doze notifications to false.  in addition to preventing
@@ -17,7 +17,7 @@ Change-Id: Ifc5efbccbeb02910684b76793721b10f1d64f870
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java b/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java
-index 605f381..16d46c0 100644
+index 605f381e9e2..16d46c0362e 100644
 --- a/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java
 +++ b/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java
 @@ -92,7 +92,7 @@ public class ViewInvertHelper {
@@ -41,5 +41,5 @@ index 605f381..16d46c0 100644
  
      public void setInverted(boolean invert, boolean fade, long delay) {
 -- 
-2.9.3
+2.11.1
 

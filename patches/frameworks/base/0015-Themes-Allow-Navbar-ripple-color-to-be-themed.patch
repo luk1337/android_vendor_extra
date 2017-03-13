@@ -1,7 +1,7 @@
-From 425642e9223a14abddea7e34618ae3f6b5385e36 Mon Sep 17 00:00:00 2001
+From 88b94c2fb97f178d8c56ab85fbbbdb074d525011 Mon Sep 17 00:00:00 2001
 From: Dave Kover <dkover@cyngn.com>
 Date: Thu, 14 Apr 2016 10:19:13 +0700
-Subject: [PATCH 15/44] Themes: Allow Navbar ripple color to be themed
+Subject: [PATCH 15/45] Themes: Allow Navbar ripple color to be themed
 
 PS1:
 Layers Commit by @setiawanjimmy
@@ -18,7 +18,7 @@ Change-Id: I7969e952d7e08f1d12e89291512312421585b70f
 
 diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
 new file mode 100644
-index 0000000..a0f1df0
+index 00000000000..a0f1df06b6a
 --- /dev/null
 +++ b/packages/SystemUI/res/values/projekt_colors.xml
 @@ -0,0 +1,21 @@
@@ -44,7 +44,7 @@ index 0000000..a0f1df0
 +    <color name="navbutton_ripple_color">#FFFFFFFF</color>
 +</resources>
 diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/policy/KeyButtonRipple.java b/packages/SystemUI/src/com/android/systemui/statusbar/policy/KeyButtonRipple.java
-index 57e092a..2579579 100644
+index 57e092a2603..2579579b0e7 100644
 --- a/packages/SystemUI/src/com/android/systemui/statusbar/policy/KeyButtonRipple.java
 +++ b/packages/SystemUI/src/com/android/systemui/statusbar/policy/KeyButtonRipple.java
 @@ -65,16 +65,19 @@ public class KeyButtonRipple extends Drawable {
@@ -69,5 +69,5 @@ index 57e092a..2579579 100644
          return mRipplePaint;
      }
 -- 
-2.9.3
+2.11.1
 

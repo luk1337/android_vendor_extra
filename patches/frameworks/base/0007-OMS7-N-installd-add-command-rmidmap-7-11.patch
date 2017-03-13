@@ -1,7 +1,7 @@
-From fcf5fb5a90e23fcc926ee57021f701a6690263e0 Mon Sep 17 00:00:00 2001
+From 77e70e046ea44a3fe57af2c53747f16d37df4c0b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Thu, 2 Jun 2016 09:35:09 +0200
-Subject: [PATCH 07/44] OMS7-N: installd: add command 'rmidmap' [7/11]
+Subject: [PATCH 07/45] OMS7-N: installd: add command 'rmidmap' [7/11]
 
 Add an installd command to remove an idmap file. This is the inverse of
 the 'idmap' command and is intended for clean-up once an idmap file is
@@ -16,7 +16,7 @@ Change-Id: I58f55f643da99c0bd69136ee43c1c8c70c352797
  1 file changed, 7 insertions(+)
 
 diff --git a/services/core/java/com/android/server/pm/Installer.java b/services/core/java/com/android/server/pm/Installer.java
-index 2e18b1c..7f618b8 100644
+index 2e18b1c417f..7f618b8134b 100644
 --- a/services/core/java/com/android/server/pm/Installer.java
 +++ b/services/core/java/com/android/server/pm/Installer.java
 @@ -170,6 +170,13 @@ public final class Installer extends SystemService {
@@ -34,5 +34,5 @@ index 2e18b1c..7f618b8 100644
          assertValidInstructionSet(instructionSet);
          mInstaller.execute("rmdex", codePath, instructionSet);
 -- 
-2.9.3
+2.11.1
 

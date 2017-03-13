@@ -1,7 +1,7 @@
-From a60d2fea89df8eecd7af96a58f8fbc3624d1b8bf Mon Sep 17 00:00:00 2001
+From da6d7a0af5b508354da61897b8cf96ca7b3b8cb4 Mon Sep 17 00:00:00 2001
 From: Abdulwahab Isam <abdoi94.iq@gmail.com>
 Date: Fri, 7 Oct 2016 08:30:11 +0300
-Subject: [PATCH 29/44] Themes: Expose QS battery
+Subject: [PATCH 29/45] Themes: Expose QS battery
 
 This is needed for white themes like Belo. Should function the same with dark themes as well.
 
@@ -12,7 +12,7 @@ Change-Id: I65e3f777a2a2605a06260705f92f8617407d9005
  2 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/packages/SystemUI/res/layout/battery_detail.xml b/packages/SystemUI/res/layout/battery_detail.xml
-index 8abfcf6..af3acdc 100644
+index 8abfcf6057a..af3acdc5c53 100644
 --- a/packages/SystemUI/res/layout/battery_detail.xml
 +++ b/packages/SystemUI/res/layout/battery_detail.xml
 @@ -27,7 +27,7 @@
@@ -36,7 +36,7 @@ index 8abfcf6..af3acdc 100644
      <com.android.systemui.ResizingSpace
          android:layout_width="match_parent"
 diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
-index 0f89199..83b8524 100644
+index 0f891994c9d..83b852416e1 100644
 --- a/packages/SystemUI/res/values/projekt_colors.xml
 +++ b/packages/SystemUI/res/values/projekt_colors.xml
 @@ -24,4 +24,10 @@
@@ -51,5 +51,5 @@ index 0f89199..83b8524 100644
 +    <color name="qs_battery_accent">@*android:color/accent_device_default_light</color>
  </resources>
 -- 
-2.9.3
+2.11.1
 

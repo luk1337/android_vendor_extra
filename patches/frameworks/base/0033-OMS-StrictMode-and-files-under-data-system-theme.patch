@@ -1,7 +1,7 @@
-From 086081173e84533937aa0d6898a609b48103ec7b Mon Sep 17 00:00:00 2001
+From 6cce771b443b13957f9419fdaccfbda365c8860d Mon Sep 17 00:00:00 2001
 From: mickybart <mickybart@pygoscelis.org>
 Date: Sat, 19 Nov 2016 19:05:05 -0500
-Subject: [PATCH 33/44] OMS: StrictMode and files under /data/system/theme/
+Subject: [PATCH 33/45] OMS: StrictMode and files under /data/system/theme/
 
 Themes are using /data/system/theme/ to push some files like LowBattery.ogg (audio notification)
 When the device battery trigger the low battery state, the sound is not played due
@@ -22,7 +22,7 @@ Change-Id: I154dc4280de8eaf891772a9632283e9f547f5718
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/core/java/android/net/Uri.java b/core/java/android/net/Uri.java
-index 67378bd..4fb189e 100644
+index 67378bd0cd8..4fb189e85c1 100644
 --- a/core/java/android/net/Uri.java
 +++ b/core/java/android/net/Uri.java
 @@ -2342,7 +2342,8 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
@@ -36,5 +36,5 @@ index 67378bd..4fb189e 100644
          }
      }
 -- 
-2.9.3
+2.11.1
 

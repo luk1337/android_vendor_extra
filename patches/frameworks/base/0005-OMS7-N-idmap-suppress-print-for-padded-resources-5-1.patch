@@ -1,7 +1,7 @@
-From a27ed7bc2f1e2450d7febf07a8c0912233f89a8d Mon Sep 17 00:00:00 2001
+From f8889f2970a1abd1c4847035a6eda28a06486c3f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Mon, 29 Feb 2016 14:12:35 +0100
-Subject: [PATCH 05/44] OMS7-N: idmap: suppress print for padded resources
+Subject: [PATCH 05/45] OMS7-N: idmap: suppress print for padded resources
  [5/11]
 
 Change-Id: I565ccf515068b96927e4317cc9c06543415bb324
@@ -10,7 +10,7 @@ Change-Id: I565ccf515068b96927e4317cc9c06543415bb324
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/cmds/idmap/inspect.cpp b/cmds/idmap/inspect.cpp
-index 924090f..cb52a39 100644
+index 924090fbb9d..cb52a394427 100644
 --- a/cmds/idmap/inspect.cpp
 +++ b/cmds/idmap/inspect.cpp
 @@ -289,7 +289,9 @@ namespace {
@@ -25,5 +25,5 @@ index 924090f..cb52a39 100644
          }
  
 -- 
-2.9.3
+2.11.1
 

@@ -1,7 +1,7 @@
-From 397cd6d8b76e2b84dc80d142066d143d61d8a4f4 Mon Sep 17 00:00:00 2001
+From 5dae5610d22e8fc2cc85c454f07d01b6902e6927 Mon Sep 17 00:00:00 2001
 From: 0xD34D <clark@scheffsblend.com>
 Date: Wed, 22 Jun 2016 23:54:23 +0300
-Subject: [PATCH 25/44] N-Extras: Add dynamic theme fonts support
+Subject: [PATCH 25/45] N-Extras: Add dynamic theme fonts support
 
 Due to the nature of the removal of assetSeq in OMS7+, we now use the
 more controllable font scale updating code to update the fonts on
@@ -53,7 +53,7 @@ Change-Id: I1f61bd269b42ab6145482a51d25fe5b1b5308f94
  8 files changed, 240 insertions(+), 27 deletions(-)
 
 diff --git a/core/java/android/app/ActivityThread.java b/core/java/android/app/ActivityThread.java
-index 55fc25d..44a900b 100644
+index 55fc25de68b..44a900b3a1f 100644
 --- a/core/java/android/app/ActivityThread.java
 +++ b/core/java/android/app/ActivityThread.java
 @@ -48,6 +48,7 @@ import android.database.sqlite.SQLiteDebug;
@@ -79,7 +79,7 @@ index 55fc25d..44a900b 100644
              }
          }
 diff --git a/core/java/android/content/pm/ActivityInfo.java b/core/java/android/content/pm/ActivityInfo.java
-index 5a09c00..42febcf 100644
+index 5a09c0028cd..42febcfe59c 100644
 --- a/core/java/android/content/pm/ActivityInfo.java
 +++ b/core/java/android/content/pm/ActivityInfo.java
 @@ -624,6 +624,11 @@ public class ActivityInfo extends ComponentInfo
@@ -95,7 +95,7 @@ index 5a09c00..42febcf 100644
       * can itself handle changes to the font scaling factor.  Set from the
       * {@link android.R.attr#configChanges} attribute.  This is
 diff --git a/core/java/android/content/res/Configuration.java b/core/java/android/content/res/Configuration.java
-index b2d518c..2f7c3ec 100644
+index b2d518c56ca..2f7c3ec18dc 100644
 --- a/core/java/android/content/res/Configuration.java
 +++ b/core/java/android/content/res/Configuration.java
 @@ -955,6 +955,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
@@ -125,7 +125,7 @@ index b2d518c..2f7c3ec 100644
  
      /**
 diff --git a/core/java/android/os/Process.java b/core/java/android/os/Process.java
-index e1b7fda..6dcd045 100644
+index e1b7fdad25e..6dcd045b07f 100644
 --- a/core/java/android/os/Process.java
 +++ b/core/java/android/os/Process.java
 @@ -516,11 +516,12 @@ public class Process {
@@ -161,7 +161,7 @@ index e1b7fda..6dcd045 100644
  
              //TODO optionally enable debuger
 diff --git a/core/java/com/android/internal/os/ZygoteConnection.java b/core/java/com/android/internal/os/ZygoteConnection.java
-index 85d84bb..81257f0 100644
+index 85d84bb3f98..81257f0d341 100644
 --- a/core/java/com/android/internal/os/ZygoteConnection.java
 +++ b/core/java/com/android/internal/os/ZygoteConnection.java
 @@ -22,6 +22,7 @@ import static android.system.OsConstants.STDERR_FILENO;
@@ -203,7 +203,7 @@ index 85d84bb..81257f0 100644
                      break;
                  }
 diff --git a/graphics/java/android/graphics/FontListParser.java b/graphics/java/android/graphics/FontListParser.java
-index 7871aa8..f4590c9 100644
+index 7871aa81dde..f4590c94647 100644
 --- a/graphics/java/android/graphics/FontListParser.java
 +++ b/graphics/java/android/graphics/FontListParser.java
 @@ -21,6 +21,9 @@ import android.util.Xml;
@@ -310,7 +310,7 @@ index 7871aa8..f4590c9 100644
          return new Font(fullFilename, index, axes, weight, isItalic);
      }
 diff --git a/graphics/java/android/graphics/Typeface.java b/graphics/java/android/graphics/Typeface.java
-index 2886f0d..990c9bd 100644
+index 2886f0dd4a2..990c9bd1fbf 100644
 --- a/graphics/java/android/graphics/Typeface.java
 +++ b/graphics/java/android/graphics/Typeface.java
 @@ -17,6 +17,7 @@
@@ -560,7 +560,7 @@ index 2886f0d..990c9bd 100644
      protected void finalize() throws Throwable {
          try {
 diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
-index f4d07af..5d8ab51 100644
+index f4d07aff3e6..5d8ab51d077 100644
 --- a/services/core/java/com/android/server/am/ActivityManagerService.java
 +++ b/services/core/java/com/android/server/am/ActivityManagerService.java
 @@ -513,6 +513,8 @@ public final class ActivityManagerService extends ActivityManagerNative
@@ -596,5 +596,5 @@ index f4d07af..5d8ab51 100644
              Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
  
 -- 
-2.9.3
+2.11.1
 

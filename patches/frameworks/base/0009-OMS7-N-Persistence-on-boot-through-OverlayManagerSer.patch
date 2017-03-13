@@ -1,7 +1,7 @@
-From b6b118aaba00675b1975ef1d7bbf9316f5b3b0eb Mon Sep 17 00:00:00 2001
+From 5a3a75f20bb450999384f8a3d5bf91eb6f921ad5 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Sun, 19 Jun 2016 10:37:13 -0400
-Subject: [PATCH 09/44] OMS7-N: Persistence on boot through
+Subject: [PATCH 09/45] OMS7-N: Persistence on boot through
  OverlayManagerServiceImpl [9/11]
 
 Overlays should not be enforced by the traditional OverlayManagerService
@@ -14,7 +14,7 @@ Change-Id: Ic6eeb38b5e7bcec4211405d4504ba37a75738227
  1 file changed, 21 insertions(+), 10 deletions(-)
 
 diff --git a/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java b/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
-index 2a0d88b..4c61968 100644
+index 2a0d88b416d..4c6196824cf 100644
 --- a/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
 +++ b/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
 @@ -402,34 +402,45 @@ final class OverlayManagerServiceImpl {
@@ -74,5 +74,5 @@ index 2a0d88b..4c61968 100644
  
      private void removeIdmapIfPossible(@NonNull final OverlayInfo oi) {
 -- 
-2.9.3
+2.11.1
 

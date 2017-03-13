@@ -1,7 +1,7 @@
-From 41ab365045aba18537b51505a201a33d74a8944d Mon Sep 17 00:00:00 2001
+From bb216afed77d1c7349149df59ba5eca0445002b2 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Sat, 27 Aug 2016 10:56:46 -0400
-Subject: [PATCH 19/44] Notifications: Expose a bool to disable dynamic colors
+Subject: [PATCH 19/45] Notifications: Expose a bool to disable dynamic colors
 
 This commit allows a themer to overlay a boolean value in config.xml to
 disable dynamic colors applied to the app title and app icon of each
@@ -22,7 +22,7 @@ Change-Id: I3c7828118991ec4fc616011caf073c81f75428b4
  create mode 100644 core/res/res/values/projekt_symbols.xml
 
 diff --git a/core/java/android/app/Notification.java b/core/java/android/app/Notification.java
-index 9f217d4..55029aa 100644
+index 9f217d48aa8..55029aad4ae 100644
 --- a/core/java/android/app/Notification.java
 +++ b/core/java/android/app/Notification.java
 @@ -29,6 +29,7 @@ import android.content.pm.ApplicationInfo;
@@ -85,7 +85,7 @@ index 9f217d4..55029aa 100644
              }
              CharSequence text = m.mText == null ? "" : m.mText;
 diff --git a/core/res/res/values/projekt_colors.xml b/core/res/res/values/projekt_colors.xml
-index a7316ab..d17fbba 100644
+index a7316ab979c..d17fbba053d 100644
 --- a/core/res/res/values/projekt_colors.xml
 +++ b/core/res/res/values/projekt_colors.xml
 @@ -21,4 +21,6 @@
@@ -97,7 +97,7 @@ index a7316ab..d17fbba 100644
  </resources>
 diff --git a/core/res/res/values/projekt_config.xml b/core/res/res/values/projekt_config.xml
 new file mode 100644
-index 0000000..f6eb90a
+index 00000000000..f6eb90a49eb
 --- /dev/null
 +++ b/core/res/res/values/projekt_config.xml
 @@ -0,0 +1,25 @@
@@ -128,7 +128,7 @@ index 0000000..f6eb90a
 +</resources>
 diff --git a/core/res/res/values/projekt_symbols.xml b/core/res/res/values/projekt_symbols.xml
 new file mode 100644
-index 0000000..f597a5f
+index 00000000000..f597a5f3f7b
 --- /dev/null
 +++ b/core/res/res/values/projekt_symbols.xml
 @@ -0,0 +1,25 @@
@@ -158,5 +158,5 @@ index 0000000..f597a5f
 +
 +</resources>
 -- 
-2.9.3
+2.11.1
 

@@ -1,7 +1,7 @@
-From d3735910edfaf506fd49adc6bfaacaa845965496 Mon Sep 17 00:00:00 2001
+From 7eb82b22b707e5a090ad1b6070621fdf8d2cfca8 Mon Sep 17 00:00:00 2001
 From: Jacob McSwain <jacob.a.mcswain@gmail.com>
 Date: Sun, 26 Jun 2016 15:21:52 -0500
-Subject: [PATCH 11/44] OMS7-N: Implement multi-target enable/disable and
+Subject: [PATCH 11/45] OMS7-N: Implement multi-target enable/disable and
  disable-all [11/11]
 
 Just use the enable option like normal, but you can add more arguments
@@ -27,7 +27,7 @@ Change-Id: I04a595084a87b8260b5c534c4f5f111adbe154d7
  5 files changed, 161 insertions(+), 44 deletions(-)
 
 diff --git a/core/java/android/content/om/IOverlayManager.aidl b/core/java/android/content/om/IOverlayManager.aidl
-index 4f5d960..8e349dc 100644
+index 4f5d96038d1..8e349dcf6ca 100644
 --- a/core/java/android/content/om/IOverlayManager.aidl
 +++ b/core/java/android/content/om/IOverlayManager.aidl
 @@ -83,10 +83,12 @@ interface IOverlayManager {
@@ -56,7 +56,7 @@ index 4f5d960..8e349dc 100644
 +    void refresh(in int uid);
  }
 diff --git a/services/core/java/com/android/server/om/OverlayManagerService.java b/services/core/java/com/android/server/om/OverlayManagerService.java
-index 761ef52..deb9046 100644
+index 761ef5240ec..deb9046a2d4 100644
 --- a/services/core/java/com/android/server/om/OverlayManagerService.java
 +++ b/services/core/java/com/android/server/om/OverlayManagerService.java
 @@ -255,7 +255,7 @@ public final class OverlayManagerService extends SystemService {
@@ -178,7 +178,7 @@ index 761ef52..deb9046 100644
          final boolean updateFrameworkRes = targetPackageNames.contains("android");
          if (updateFrameworkRes) {
 diff --git a/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java b/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
-index 4c61968..c515640 100644
+index 4c6196824cf..c5156403b3f 100644
 --- a/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
 +++ b/services/core/java/com/android/server/om/OverlayManagerServiceImpl.java
 @@ -324,7 +324,7 @@ final class OverlayManagerServiceImpl {
@@ -222,7 +222,7 @@ index 4c61968..c515640 100644
      }
  
 diff --git a/services/core/java/com/android/server/om/OverlayManagerSettings.java b/services/core/java/com/android/server/om/OverlayManagerSettings.java
-index af0bb64..935ea02 100644
+index af0bb64bd67..935ea02890b 100644
 --- a/services/core/java/com/android/server/om/OverlayManagerSettings.java
 +++ b/services/core/java/com/android/server/om/OverlayManagerSettings.java
 @@ -76,7 +76,7 @@ final class OverlayManagerSettings {
@@ -321,7 +321,7 @@ index af0bb64..935ea02 100644
      }
  
 diff --git a/services/core/java/com/android/server/om/OverlayManagerShellCommand.java b/services/core/java/com/android/server/om/OverlayManagerShellCommand.java
-index d6f5373..44004c1 100644
+index d6f53737913..44004c140a4 100644
 --- a/services/core/java/com/android/server/om/OverlayManagerShellCommand.java
 +++ b/services/core/java/com/android/server/om/OverlayManagerShellCommand.java
 @@ -25,8 +25,10 @@ import android.os.ShellCommand;
@@ -466,5 +466,5 @@ index d6f5373..44004c1 100644
  
      private int runSetPriority() throws RemoteException {
 -- 
-2.9.3
+2.11.1
 

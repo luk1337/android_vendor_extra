@@ -1,7 +1,7 @@
-From fe50bb1ff1c0f13805f04fe85e5245b54aa5d5b2 Mon Sep 17 00:00:00 2001
+From 4c1e0875511f971804d92fe58c7046dc357380d0 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 4 Mar 2017 00:35:08 +0100
-Subject: [PATCH 44/44] Revert "Add a protected broadcast for Masquerade
+Subject: [PATCH 44/45] Revert "Add a protected broadcast for Masquerade
  events"
 
 Requires https://substratum.review/#/c/374
@@ -15,7 +15,7 @@ Change-Id: Ida416c3949379a3d6a24a104667c74eef1f56630
  2 files changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index e4eeedf..eddbc1d 100644
+index e4eeedf93f0..eddbc1d19a9 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
 @@ -517,7 +517,6 @@
@@ -27,7 +27,7 @@ index e4eeedf..eddbc1d 100644
      <!-- ====================================================================== -->
      <!--                          RUNTIME PERMISSIONS                           -->
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 79032a9..faaff1f 100644
+index 79032a915ca..faaff1f08a2 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
 @@ -4568,8 +4568,7 @@ public class PackageManagerService extends IPackageManager.Stub {
@@ -41,5 +41,5 @@ index 79032a9..faaff1f 100644
                  }
              }
 -- 
-2.9.3
+2.11.1
 
