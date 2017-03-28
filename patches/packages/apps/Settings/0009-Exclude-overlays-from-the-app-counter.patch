@@ -1,4 +1,4 @@
-From 725d540d6f14c2a45017f24bb618596ee19cf024 Mon Sep 17 00:00:00 2001
+From 543cd64fb4c7bb0fd4970d81b66b55fc64dc76d9 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Fri, 9 Dec 2016 02:19:20 +0100
 Subject: [PATCH 09/20] Exclude overlays from the app counter

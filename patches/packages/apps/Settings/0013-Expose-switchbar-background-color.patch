@@ -1,4 +1,4 @@
-From 1df525c93d1fe24c7bab897d3368d04911ebe4d6 Mon Sep 17 00:00:00 2001
+From a9f6de659abaaf005b4befb799e289d3a960c77a Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sun, 8 Jan 2017 01:22:47 +0100
 Subject: [PATCH 13/20] Expose switchbar background color

@@ -1,4 +1,4 @@
-From 7cf66e5d4e6cc714d29cadb90ae9234c3ade2a9a Mon Sep 17 00:00:00 2001
+From 8c69f2089767bb0a770f06658955d8e2966d4c85 Mon Sep 17 00:00:00 2001
 From: Clark Scheff <clark@scheffsblend.com>
 Date: Fri, 23 Dec 2016 09:52:57 -0500
 Subject: [PATCH 11/20] Expose color for external settings icons

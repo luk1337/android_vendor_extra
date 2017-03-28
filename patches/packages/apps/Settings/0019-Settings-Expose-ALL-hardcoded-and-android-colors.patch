@@ -1,4 +1,4 @@
-From da47e91252026c33587940c9146be8c97dc1db63 Mon Sep 17 00:00:00 2001
+From 1a31913520b5d0d0282658e6d84bcd13fd4bfb27 Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Mon, 27 Feb 2017 22:24:09 -0600
 Subject: [PATCH 19/20] Settings: Expose "ALL" hardcoded and @android colors

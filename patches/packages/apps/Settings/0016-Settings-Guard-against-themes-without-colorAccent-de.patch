@@ -1,4 +1,4 @@
-From 904cfc107939f7576ee5f89335b11649f18a17e7 Mon Sep 17 00:00:00 2001
+From 0e2f8c35309b07b6d7cbc1f2a42b7ce19f3cc252 Mon Sep 17 00:00:00 2001
 From: Clark Scheff <clark@scheffsblend.com>
 Date: Mon, 27 Feb 2017 00:55:37 +0100
 Subject: [PATCH 16/20] Settings: Guard against themes without colorAccent

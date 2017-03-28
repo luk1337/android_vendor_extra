@@ -1,4 +1,4 @@
-From 84d0c53dc8dc5ff66d267419ed820596dfbf7aa3 Mon Sep 17 00:00:00 2001
+From 4190ba44a209fa7dbd2f9b54a0c058d590226e0b Mon Sep 17 00:00:00 2001
 From: daveyannihilation <daveyannihilation@hotmail.com>
 Date: Tue, 20 Sep 2016 23:35:04 +0800
 Subject: [PATCH 02/20] Settings: Expose condition card colors

@@ -1,7 +1,7 @@
-From be5cdb06e90496602deb8c3b62a04acf175b8eb4 Mon Sep 17 00:00:00 2001
+From 9927bcd8b73bbed7a16f852de3957ab4753a68db Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Mon, 27 Feb 2017 19:06:31 -0600
-Subject: [PATCH 42/45] FWB: Give power dialogs own set of volume icons for
+Subject: [PATCH 40/42] FWB: Give power dialogs own set of volume icons for
  themes
 
 Change-Id: I5add336c06a83b162dfd0832dfabfb06a2827421
@@ -18,7 +18,7 @@ Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
 
 diff --git a/core/res/res/drawable/ic_power_audio_ring_notif.xml b/core/res/res/drawable/ic_power_audio_ring_notif.xml
 new file mode 100644
-index 00000000000..6b2dcc4a675
+index 0000000..6b2dcc4
 --- /dev/null
 +++ b/core/res/res/drawable/ic_power_audio_ring_notif.xml
 @@ -0,0 +1,20 @@
@@ -44,7 +44,7 @@ index 00000000000..6b2dcc4a675
 +</selector>
 diff --git a/core/res/res/drawable/ic_power_audio_ring_notif_mute.xml b/core/res/res/drawable/ic_power_audio_ring_notif_mute.xml
 new file mode 100644
-index 00000000000..dab250cc2d8
+index 0000000..dab250c
 --- /dev/null
 +++ b/core/res/res/drawable/ic_power_audio_ring_notif_mute.xml
 @@ -0,0 +1,20 @@
@@ -70,7 +70,7 @@ index 00000000000..dab250cc2d8
 +</selector>
 diff --git a/core/res/res/drawable/ic_power_audio_ring_notif_vibrate.xml b/core/res/res/drawable/ic_power_audio_ring_notif_vibrate.xml
 new file mode 100644
-index 00000000000..f278ccbf980
+index 0000000..f278ccb
 --- /dev/null
 +++ b/core/res/res/drawable/ic_power_audio_ring_notif_vibrate.xml
 @@ -0,0 +1,20 @@
@@ -95,7 +95,7 @@ index 00000000000..f278ccbf980
 +    <item android:drawable="@drawable/ic_audio_ring_notif_vibrate" />
 +</selector>
 diff --git a/core/res/res/layout/global_actions_silent_mode.xml b/core/res/res/layout/global_actions_silent_mode.xml
-index a3586232a15..3fe7bbec960 100644
+index a358623..3fe7bbe 100644
 --- a/core/res/res/layout/global_actions_silent_mode.xml
 +++ b/core/res/res/layout/global_actions_silent_mode.xml
 @@ -37,7 +37,7 @@
@@ -126,5 +126,5 @@ index a3586232a15..3fe7bbec960 100644
              android:duplicateParentState="true"
              android:background="@drawable/silent_mode_indicator"
 -- 
-2.11.1
+2.9.3
 

@@ -1,4 +1,4 @@
-From 46a271fe4474c1623b40e13558adbfa7fbdcc01b Mon Sep 17 00:00:00 2001
+From d60689245c7d9d3502ba5f03ee2de28ce9e4db35 Mon Sep 17 00:00:00 2001
 From: SpiritCroc <spiritcroc@gmail.com>
 Date: Thu, 8 Dec 2016 20:40:16 +0100
 Subject: [PATCH 05/20] Settings: Expose storage icon colors

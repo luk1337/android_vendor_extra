@@ -1,7 +1,7 @@
-From 17c4131f89992453b741130a0f6baec1280b622c Mon Sep 17 00:00:00 2001
+From 1e00bba63c5b6facec5a8beef1bb39863b251183 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Thu, 9 Mar 2017 13:28:22 +0100
-Subject: [PATCH 45/45] ThemeSafety: Introduce App Crash Intent
+Subject: [PATCH 42/42] ThemeSafety: Introduce App Crash Intent
 
 The intent received by substratum and it will disable all enabled
 overlays.
@@ -12,7 +12,7 @@ Change-Id: Ifabd57c2ea71ca93ecc2959ce09ccde3e91782dd
  1 file changed, 8 insertions(+)
 
 diff --git a/services/core/java/com/android/server/am/AppErrors.java b/services/core/java/com/android/server/am/AppErrors.java
-index 0e2fa23f95f..1ff1cdc0081 100644
+index 0e2fa23..1ff1cdc 100644
 --- a/services/core/java/com/android/server/am/AppErrors.java
 +++ b/services/core/java/com/android/server/am/AppErrors.java
 @@ -365,6 +365,14 @@ class AppErrors {
@@ -31,5 +31,5 @@ index 0e2fa23f95f..1ff1cdc0081 100644
  
          int res = result.get();
 -- 
-2.11.1
+2.9.3
 

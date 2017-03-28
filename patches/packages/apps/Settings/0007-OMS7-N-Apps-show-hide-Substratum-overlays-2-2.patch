@@ -1,4 +1,4 @@
-From 303eb15b016fecdd7032bd3c6a5f291d578aaaec Mon Sep 17 00:00:00 2001
+From c723ba7b2530caa587a841398059573c93d758ac Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Mon, 4 Jul 2016 12:07:11 +0300
 Subject: [PATCH 07/20] OMS7-N: Apps: show/hide Substratum overlays [2/2]

@@ -1,15 +1,15 @@
-From b6b4eaf6df434964f0c3147d4363664096a5c947 Mon Sep 17 00:00:00 2001
+From 2145cfc41892ff9851a8b5e99c5afc4d5e8bcd8a Mon Sep 17 00:00:00 2001
 From: Abdulwahab Isam <abdoi94.iq@gmail.com>
 Date: Mon, 19 Sep 2016 18:42:06 +0300
 Subject: [PATCH 2/2] Themes: Expose all elevations
 
 Change-Id: I7d161c1fce17ac3b8a468e1597a3a1632433224b
 ---
- res/layout/display.xml     | 2 +-
- res/values-port/styles.xml | 2 +-
- res/values/dimens.xml      | 5 +++++
- 3 files changed, 7 insertions(+), 2 deletions(-)
- create mode 100644 res/values/dimens.xml
+ res/layout/display.xml        |  2 +-
+ res/values-port/styles.xml    |  2 +-
+ res/values/projekt_dimens.xml | 20 ++++++++++++++++++++
+ 3 files changed, 22 insertions(+), 2 deletions(-)
+ create mode 100644 res/values/projekt_dimens.xml
 
 diff --git a/res/layout/display.xml b/res/layout/display.xml
 index 638f0d2..043b531 100644
@@ -37,13 +37,28 @@ index a6d2013..9e7e1df 100644
          <item name="android:paddingTop">12dip</item>
          <item name="android:paddingBottom">20dip</item>
          <item name="android:paddingStart">20dip</item>
-diff --git a/res/values/dimens.xml b/res/values/dimens.xml
+diff --git a/res/values/projekt_dimens.xml b/res/values/projekt_dimens.xml
 new file mode 100644
-index 0000000..065de72
+index 0000000..c1a0196
 --- /dev/null
-+++ b/res/values/dimens.xml
-@@ -0,0 +1,5 @@
++++ b/res/values/projekt_dimens.xml
+@@ -0,0 +1,20 @@
 +<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2017 Projekt Substratum
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
 +<resources>
 +    <dimen name="display_elevation">4.0dip</dimen>
 +    <dimen name="pad_elevation">4.0dip</dimen>

@@ -1,4 +1,4 @@
-From 8d7fce408ebcd7167a186bac0dfc13831b3624e5 Mon Sep 17 00:00:00 2001
+From 614e827e959ea39c36d8db6e004353ead93732d3 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sat, 28 Jan 2017 13:40:55 +0100
 Subject: [PATCH 15/20] Set external settings icon tint mode to SRC_ATOP

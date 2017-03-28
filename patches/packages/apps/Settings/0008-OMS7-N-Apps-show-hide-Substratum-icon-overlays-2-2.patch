@@ -1,4 +1,4 @@
-From 81e80f7f8dcc84a66e2cb297e5c18399eb115944 Mon Sep 17 00:00:00 2001
+From c960d1be404e87787c4a26e01679af5ff8d89670 Mon Sep 17 00:00:00 2001
 From: Kuba Schenk <abukcz@gmail.com>
 Date: Thu, 1 Dec 2016 22:00:31 +0100
 Subject: [PATCH 08/20] OMS7-N: Apps: show/hide Substratum icon overlays [2/2]
