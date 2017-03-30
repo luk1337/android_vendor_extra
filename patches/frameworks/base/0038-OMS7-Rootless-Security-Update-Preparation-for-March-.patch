@@ -1,7 +1,7 @@
-From d0d8be2b9081d7feb3cf57864db302939def2df7 Mon Sep 17 00:00:00 2001
+From 23b7bb57097951ee0aed4a51ce750b18aae952f2 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Wed, 22 Feb 2017 22:55:15 -0500
-Subject: [PATCH 38/42] OMS7: Rootless Security Update Preparation for March
+Subject: [PATCH 38/43] OMS7: Rootless Security Update Preparation for March
  2017
 
 Change-Id: I93f7917eebf9f86590eb9c00841460d236702cb3
@@ -12,7 +12,7 @@ Change-Id: I93f7917eebf9f86590eb9c00841460d236702cb3
  delete mode 100644 services/core/java/com/android/server/om/OverlayManagerShellCommand.java
 
 diff --git a/services/core/java/com/android/server/om/OverlayManagerService.java b/services/core/java/com/android/server/om/OverlayManagerService.java
-index e205ce1..ac56985 100644
+index e205ce1d030..ac56985ce54 100644
 --- a/services/core/java/com/android/server/om/OverlayManagerService.java
 +++ b/services/core/java/com/android/server/om/OverlayManagerService.java
 @@ -528,14 +528,6 @@ public final class OverlayManagerService extends SystemService {
@@ -32,7 +32,7 @@ index e205ce1..ac56985 100644
              enforceDumpPermission("dump");
 diff --git a/services/core/java/com/android/server/om/OverlayManagerShellCommand.java b/services/core/java/com/android/server/om/OverlayManagerShellCommand.java
 deleted file mode 100644
-index 44004c1..0000000
+index 44004c140a4..00000000000
 --- a/services/core/java/com/android/server/om/OverlayManagerShellCommand.java
 +++ /dev/null
 @@ -1,269 +0,0 @@
@@ -306,5 +306,5 @@ index 44004c1..0000000
 -    }
 -}
 -- 
-2.9.3
+2.11.1
 

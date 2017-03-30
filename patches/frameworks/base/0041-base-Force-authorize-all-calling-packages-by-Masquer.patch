@@ -1,7 +1,7 @@
-From 682f792168d7d1ac4d5ea719eca6fd5e4d01b43d Mon Sep 17 00:00:00 2001
+From b7c3ea5a70af8680e8ff6ced1f1accc819e2d7a7 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Sat, 25 Feb 2017 17:32:18 +0200
-Subject: [PATCH 41/42] base: Force authorize all calling packages by
+Subject: [PATCH 41/43] base: Force authorize all calling packages by
  Masquerade (2/3)
 
 Change-Id: Iaf354c4d891acf9f5e19767223e4f9860a07338f
@@ -10,10 +10,10 @@ Change-Id: Iaf354c4d891acf9f5e19767223e4f9860a07338f
  1 file changed, 6 insertions(+)
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 7fe6034..4d3e6c9 100644
+index dd2a5dea961..a773e190113 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -6572,6 +6572,12 @@ public final class Settings {
+@@ -6564,6 +6564,12 @@ public final class Settings {
          public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
  
          /**
@@ -27,5 +27,5 @@ index 7fe6034..4d3e6c9 100644
           *
           * NOTE: Settings are backed up and restored in the order they appear
 -- 
-2.9.3
+2.11.1
 

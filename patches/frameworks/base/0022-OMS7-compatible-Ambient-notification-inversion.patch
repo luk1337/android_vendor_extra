@@ -1,7 +1,7 @@
-From da2da4fb97e61e83771ac5c6cd573b21f7ed31d2 Mon Sep 17 00:00:00 2001
+From 14d5d1ea48192e941a26b541bef9f35f68bc94f8 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Mon, 14 Nov 2016 14:44:17 +0200
-Subject: [PATCH 22/42] OMS7 compatible 'Ambient notification inversion'
+Subject: [PATCH 22/43] OMS7 compatible 'Ambient notification inversion'
 
 OMS7 introduced this fine piece of code: https://github.com/SubstratumResources/platform_frameworks_base/blob/n-oms7/core/java/android/app/ResourcesManager.java#L897..#L904
 
@@ -22,7 +22,7 @@ Change-Id: I80ad5d037004f0dc63d9eb746c3af05e59a8834e
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java b/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java
-index 65fd115..605f381 100644
+index 65fd1158b95..605f381e9e2 100644
 --- a/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java
 +++ b/packages/SystemUI/src/com/android/systemui/ViewInvertHelper.java
 @@ -20,7 +20,6 @@ import android.animation.Animator;
@@ -60,5 +60,5 @@ index 65fd115..605f381 100644
              for (int i = 0; i < mTargets.size(); i++) {
                  mTargets.get(i).setLayerType(View.LAYER_TYPE_HARDWARE, mDarkPaint);
 -- 
-2.9.3
+2.11.1
 
