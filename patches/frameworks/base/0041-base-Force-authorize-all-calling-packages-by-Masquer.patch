@@ -1,7 +1,7 @@
-From b7c3ea5a70af8680e8ff6ced1f1accc819e2d7a7 Mon Sep 17 00:00:00 2001
+From 7269c14a19e2d5322e9ff7b66c9a99f8189eef1e Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Sat, 25 Feb 2017 17:32:18 +0200
-Subject: [PATCH 41/43] base: Force authorize all calling packages by
+Subject: [PATCH 41/44] base: Force authorize all calling packages by
  Masquerade (2/3)
 
 Change-Id: Iaf354c4d891acf9f5e19767223e4f9860a07338f

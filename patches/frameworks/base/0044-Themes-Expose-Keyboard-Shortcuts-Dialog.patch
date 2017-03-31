@@ -1,0 +1,41 @@
+From 862ea3e77116f9a1ad4b2d6db6dbcd1010b41dab Mon Sep 17 00:00:00 2001
+From: Bryan Owens <djbryan3540@gmail.com>
+Date: Thu, 30 Mar 2017 13:30:04 -0500
+Subject: [PATCH 44/44] Themes: Expose Keyboard Shortcuts Dialog
+
+Change-Id: I84d3e57fe8c42d79ff6e0b6502cb6cd49aaaf91b
+Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
+---
+ packages/SystemUI/res/values/projekt_styles.xml                        | 3 +++
+ .../SystemUI/src/com/android/systemui/statusbar/KeyboardShortcuts.java | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/res/values/projekt_styles.xml b/packages/SystemUI/res/values/projekt_styles.xml
+index f49834bc202..4144151809d 100644
+--- a/packages/SystemUI/res/values/projekt_styles.xml
++++ b/packages/SystemUI/res/values/projekt_styles.xml
+@@ -20,5 +20,8 @@
+     <style name="TextAppearance.SwitchBar" parent="@android:style/TextAppearance.Material.Title">
+         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+     </style>
++
++    <!-- Phyisical Keyboard Dialog style -->
++    <style name="KeyboardShortcutsDialog" parent="@*android:style/Theme.DeviceDefault.Light" />
+ </resources>
+ 
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/KeyboardShortcuts.java b/packages/SystemUI/src/com/android/systemui/statusbar/KeyboardShortcuts.java
+index 016e1f2f5a9..c471cfe8cd4 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/KeyboardShortcuts.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/KeyboardShortcuts.java
+@@ -118,7 +118,7 @@ public final class KeyboardShortcuts {
+     private KeyCharacterMap mKeyCharacterMap;
+ 
+     private KeyboardShortcuts(Context context) {
+-        this.mContext = new ContextThemeWrapper(context, android.R.style.Theme_DeviceDefault_Light);
++        this.mContext = new ContextThemeWrapper(context, R.style.KeyboardShortcutsDialog);
+         this.mPackageManager = AppGlobals.getPackageManager();
+         loadResources(context);
+     }
+-- 
+2.11.1
+

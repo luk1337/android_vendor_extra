@@ -1,7 +1,7 @@
-From 8bb866e77295f38e512a8b0bff7dbb4d2ad0ee22 Mon Sep 17 00:00:00 2001
+From 0dddffd1c6201f3cd5e235a37014bc10331e45eb Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Thu, 2 Jun 2016 09:35:31 +0200
-Subject: [PATCH 03/43] OMS7-N: Integrate OverlayManagerService into framework
+Subject: [PATCH 03/44] OMS7-N: Integrate OverlayManagerService into framework
  [3/11]
 
 Hand over ownership of overlays to OverlayManagerService.

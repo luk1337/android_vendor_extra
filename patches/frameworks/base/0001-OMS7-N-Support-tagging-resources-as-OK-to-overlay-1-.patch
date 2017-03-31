@@ -1,7 +1,7 @@
-From 6ddf49b9c0a75e3d2cc7ac08775ad3f7ed522cf5 Mon Sep 17 00:00:00 2001
+From aec0448a9ef3828a4882dad71265334dca4e087f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Tue, 15 Dec 2015 16:08:31 +0100
-Subject: [PATCH 01/43] OMS7-N: Support tagging resources as OK to overlay
+Subject: [PATCH 01/44] OMS7-N: Support tagging resources as OK to overlay
  [1/11]
 
 This will allow applications to have a resource xml defining what

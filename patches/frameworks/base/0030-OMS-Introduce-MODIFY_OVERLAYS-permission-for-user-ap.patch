@@ -1,7 +1,7 @@
-From b49dd21cff01d7aeffab3a4815cfe980ab3530de Mon Sep 17 00:00:00 2001
+From a52d42aabfef0bb6460c0e2f23d848e0e7b17205 Mon Sep 17 00:00:00 2001
 From: bigrushdog <randall.rushing@gmail.com>
 Date: Mon, 19 Dec 2016 04:33:31 -0800
-Subject: [PATCH 30/43] OMS: Introduce MODIFY_OVERLAYS permission for user apps
+Subject: [PATCH 30/44] OMS: Introduce MODIFY_OVERLAYS permission for user apps
 
 This permission will grant the app read and write permissions
 to access OverlayManagerService. If caller does not posess

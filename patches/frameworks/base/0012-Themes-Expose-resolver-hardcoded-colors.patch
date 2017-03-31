@@ -1,7 +1,7 @@
-From 93377f9b5801d144f20222c5c18707aef1b440ef Mon Sep 17 00:00:00 2001
+From 9c8d1caf4ceed49cce6f8d314f1a8a8867ac21a2 Mon Sep 17 00:00:00 2001
 From: Dave Kover <dkover@cyngn.com>
 Date: Fri, 9 Dec 2016 10:47:17 -0700
-Subject: [PATCH 12/43] Themes: Expose resolver hardcoded colors
+Subject: [PATCH 12/44] Themes: Expose resolver hardcoded colors
 
 commit dbbd5e70cc65002df41561474b03362022dd6716
 Author: Dave Kover <dkover@cyngn.com>

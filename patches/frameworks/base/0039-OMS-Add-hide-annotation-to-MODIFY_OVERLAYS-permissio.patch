@@ -1,7 +1,7 @@
-From 89140e303a2f18d1ba7ff821c591a59a14c3eca8 Mon Sep 17 00:00:00 2001
+From a88449305ba7f06a57890c7c188e75a0d67c01ce Mon Sep 17 00:00:00 2001
 From: Evan Anderson <evananderson@aospa.co>
 Date: Mon, 27 Feb 2017 15:16:18 -0500
-Subject: [PATCH 39/43] OMS: Add hide annotation to MODIFY_OVERLAYS permission
+Subject: [PATCH 39/44] OMS: Add hide annotation to MODIFY_OVERLAYS permission
 
 * Modifications in this file affect the public API, so we must hide our
   additions to build in release mode

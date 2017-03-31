@@ -1,7 +1,7 @@
-From 17c154fb0703f4da107935f5886471fa474e1bf9 Mon Sep 17 00:00:00 2001
+From 665269aa1ed0cf30e8d06da0e1516c62be32192b Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Tue, 17 Nov 2015 18:57:11 -0500
-Subject: [PATCH 13/43] Themes: Allow Immersive cling colors to be fully themed
+Subject: [PATCH 13/44] Themes: Allow Immersive cling colors to be fully themed
 
 This allows the immersive mode help tooltip to be themed completely by
 removing hardcoded framework calls. Let the themer decide what they want

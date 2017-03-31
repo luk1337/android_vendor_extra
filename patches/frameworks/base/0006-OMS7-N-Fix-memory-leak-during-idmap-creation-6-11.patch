@@ -1,7 +1,7 @@
-From 4210f552c46cfb86b861fabb8694a166296b963d Mon Sep 17 00:00:00 2001
+From 1d7b5b5e6be2f5907ce930be3702c29d83bf26ac Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Thu, 2 Jun 2016 09:34:36 +0200
-Subject: [PATCH 06/43] OMS7-N: Fix memory leak during idmap creation [6/11]
+Subject: [PATCH 06/44] OMS7-N: Fix memory leak during idmap creation [6/11]
 
 Plug a memory leak in AssetManager::createIdmap.
 

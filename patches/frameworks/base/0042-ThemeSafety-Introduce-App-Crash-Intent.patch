@@ -1,7 +1,7 @@
-From bc0a751b1ca020aba84331eebdaf0b3fbfb0e5dd Mon Sep 17 00:00:00 2001
+From aabad857d74935eaebc590ec3b105f96cec93e25 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Thu, 9 Mar 2017 13:28:22 +0100
-Subject: [PATCH 42/43] ThemeSafety: Introduce App Crash Intent
+Subject: [PATCH 42/44] ThemeSafety: Introduce App Crash Intent
 
 The intent received by substratum and it will disable all enabled
 overlays.

@@ -1,7 +1,7 @@
-From 4c0ab9a46b9b58c14f7cbebd1bc6609644544caf Mon Sep 17 00:00:00 2001
+From 48b30b14aa7ec1039bc07ee3ce29d17f70df0ac2 Mon Sep 17 00:00:00 2001
 From: Daniel Koman <dankoman30@gmail.com>
 Date: Wed, 28 Sep 2016 15:28:26 +0200
-Subject: [PATCH 32/43] doze: allow grayscale even if invert boolean is false
+Subject: [PATCH 32/44] doze: allow grayscale even if invert boolean is false
 
 for dark themes, we are setting the config boolean for inverting
     doze notifications to false.  in addition to preventing
