@@ -1,7 +1,7 @@
-From 862ea3e77116f9a1ad4b2d6db6dbcd1010b41dab Mon Sep 17 00:00:00 2001
+From 56501aeb001e8575f9819c211eef38721d8e29a7 Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Thu, 30 Mar 2017 13:30:04 -0500
-Subject: [PATCH 44/44] Themes: Expose Keyboard Shortcuts Dialog
+Subject: [PATCH 46/47] Themes: Expose Keyboard Shortcuts Dialog
 
 Change-Id: I84d3e57fe8c42d79ff6e0b6502cb6cd49aaaf91b
 Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
@@ -11,7 +11,7 @@ Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
  2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/packages/SystemUI/res/values/projekt_styles.xml b/packages/SystemUI/res/values/projekt_styles.xml
-index f49834bc202..4144151809d 100644
+index d0be98087e6..87dd19cb97c 100644
 --- a/packages/SystemUI/res/values/projekt_styles.xml
 +++ b/packages/SystemUI/res/values/projekt_styles.xml
 @@ -20,5 +20,8 @@

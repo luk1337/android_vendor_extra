@@ -1,4 +1,4 @@
-From 2145cfc41892ff9851a8b5e99c5afc4d5e8bcd8a Mon Sep 17 00:00:00 2001
+From 08678d8b1447e4df8254534b4e4f36206fe2ee8d Mon Sep 17 00:00:00 2001
 From: Abdulwahab Isam <abdoi94.iq@gmail.com>
 Date: Mon, 19 Sep 2016 18:42:06 +0300
 Subject: [PATCH 2/2] Themes: Expose all elevations
@@ -39,13 +39,13 @@ index a6d2013..9e7e1df 100644
          <item name="android:paddingStart">20dip</item>
 diff --git a/res/values/projekt_dimens.xml b/res/values/projekt_dimens.xml
 new file mode 100644
-index 0000000..c1a0196
+index 0000000..6e68036
 --- /dev/null
 +++ b/res/values/projekt_dimens.xml
 @@ -0,0 +1,20 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+     Copyright (C) 2017 Projekt Substratum
++     Copyright (C) 2016-2017 Projekt Substratum
 +
 +     Licensed under the Apache License, Version 2.0 (the "License");
 +     you may not use this file except in compliance with the License.
@@ -64,5 +64,5 @@ index 0000000..c1a0196
 +    <dimen name="pad_elevation">4.0dip</dimen>
 +</resources>
 -- 
-2.9.3
+2.11.1
 

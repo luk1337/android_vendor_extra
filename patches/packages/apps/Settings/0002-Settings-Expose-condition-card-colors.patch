@@ -1,4 +1,4 @@
-From 4190ba44a209fa7dbd2f9b54a0c058d590226e0b Mon Sep 17 00:00:00 2001
+From 59d8f9a2b5afc91026a29708239e994d6166d677 Mon Sep 17 00:00:00 2001
 From: daveyannihilation <daveyannihilation@hotmail.com>
 Date: Tue, 20 Sep 2016 23:35:04 +0800
 Subject: [PATCH 02/20] Settings: Expose condition card colors
@@ -9,22 +9,14 @@ PS2 Change to the actual colors in fwb that these attrs call to.
 
 Change-Id: I8de2e2a4f79a28c0fe1f025b4d23937931fe293a
 ---
- res/layout/condition_card.xml | 18 +++++++++---------
+ res/layout/condition_card.xml | 16 ++++++++--------
  res/values/projekt_colors.xml |  9 +++++++++
- 2 files changed, 18 insertions(+), 9 deletions(-)
+ 2 files changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/res/layout/condition_card.xml b/res/layout/condition_card.xml
-index 7c9e46d..88277c2 100644
+index 7c9e46da00..a5eb6c85cf 100644
 --- a/res/layout/condition_card.xml
 +++ b/res/layout/condition_card.xml
-@@ -1,6 +1,6 @@
- <?xml version="1.0" encoding="utf-8"?>
- <!--
--     Copyright (C) 2015 The Android Open Source Project
-+     Copyright (C) 2016 The Android Open Source Project
- 
-      Licensed under the Apache License, Version 2.0 (the "License");
-      you may not use this file except in compliance with the License.
 @@ -25,7 +25,7 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
@@ -96,7 +88,7 @@ index 7c9e46d..88277c2 100644
  
              </com.android.internal.widget.ButtonBarLayout>
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index 60419bd..9340830 100644
+index c30d7eda21..ea54a02a24 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -18,4 +18,13 @@
@@ -114,5 +106,5 @@ index 60419bd..9340830 100644
 +    <color name="condition_card_second_button_text_color">@*android:color/primary_text_default_material_dark</color>
  </resources>
 -- 
-2.9.3
+2.11.1
 

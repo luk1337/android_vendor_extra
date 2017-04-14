@@ -1,4 +1,4 @@
-From 359630888f09069f9bad56dfc88102655025da6d Mon Sep 17 00:00:00 2001
+From 463eda9e55b3f417750559306e5e72c294430961 Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Fri, 11 Dec 2015 22:04:15 -0600
 Subject: [PATCH 2/2] Themes: Define back arrow tint color for themes
@@ -13,7 +13,7 @@ Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
  2 files changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/res/layout/search_bar_expanded.xml b/res/layout/search_bar_expanded.xml
-index c530299..e5e180a 100644
+index c5302994..e5e180a1 100644
 --- a/res/layout/search_bar_expanded.xml
 +++ b/res/layout/search_bar_expanded.xml
 @@ -30,7 +30,7 @@
@@ -26,7 +26,7 @@ index c530299..e5e180a 100644
      <EditText
          android:id="@+id/search_view"
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index a5d6bd3..07d6963 100644
+index b503bfb9..4c45cd9c 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -19,4 +19,5 @@
@@ -36,5 +36,5 @@ index a5d6bd3..07d6963 100644
 +    <color name="back_arrow_icon_tint_color">@color/actionbar_background_color</color>
  </resources>
 -- 
-2.9.3
+2.11.1
 

@@ -1,4 +1,4 @@
-From c75924e4334f4ac14a4bf7bce15cc2a93b191998 Mon Sep 17 00:00:00 2001
+From 848c3d6f9aa362f70507fe9508b91a413dbb7a3c Mon Sep 17 00:00:00 2001
 From: LuK1337 <priv.luk@gmail.com>
 Date: Wed, 1 Mar 2017 23:11:49 +0100
 Subject: [PATCH 09/10] sepolicy: Redo masquerade rules

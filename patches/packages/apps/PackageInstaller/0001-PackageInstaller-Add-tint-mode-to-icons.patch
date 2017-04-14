@@ -1,4 +1,4 @@
-From 3ce22cd049cde21d7790c58b255b9d072e116625 Mon Sep 17 00:00:00 2001
+From 450424bfd622327e83d48511d94254ed7a7617fc Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Fri, 8 Apr 2016 19:41:40 -0500
 Subject: [PATCH] PackageInstaller: Add tint mode to icons
@@ -12,7 +12,7 @@ Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/src/com/android/packageinstaller/permission/utils/Utils.java b/src/com/android/packageinstaller/permission/utils/Utils.java
-index 22663e1..628846a 100644
+index c2da5824..98ae77c6 100644
 --- a/src/com/android/packageinstaller/permission/utils/Utils.java
 +++ b/src/com/android/packageinstaller/permission/utils/Utils.java
 @@ -25,6 +25,7 @@ import android.content.pm.ResolveInfo;
@@ -32,5 +32,5 @@ index 22663e1..628846a 100644
      }
  
 -- 
-2.9.3
+2.11.1
 

@@ -1,4 +1,4 @@
-From 1a31913520b5d0d0282658e6d84bcd13fd4bfb27 Mon Sep 17 00:00:00 2001
+From 0d4563664ba23fe8c41d41b4819457d2f2dbc7a1 Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Mon, 27 Feb 2017 22:24:09 -0600
 Subject: [PATCH 19/20] Settings: Expose "ALL" hardcoded and @android colors
@@ -27,7 +27,7 @@ Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
  18 files changed, 53 insertions(+), 31 deletions(-)
 
 diff --git a/res/layout-sw600dp/nfc_payment_how_it_works.xml b/res/layout-sw600dp/nfc_payment_how_it_works.xml
-index 3bee160..5d71e1a 100644
+index 3bee160406..5d71e1a25e 100644
 --- a/res/layout-sw600dp/nfc_payment_how_it_works.xml
 +++ b/res/layout-sw600dp/nfc_payment_how_it_works.xml
 @@ -3,7 +3,7 @@
@@ -84,7 +84,7 @@ index 3bee160..5d71e1a 100644
          </RelativeLayout>
      </RelativeLayout>
 diff --git a/res/layout/app_header.xml b/res/layout/app_header.xml
-index 2d8a099..bbce943 100644
+index 2d8a099be7..bbce9438c0 100644
 --- a/res/layout/app_header.xml
 +++ b/res/layout/app_header.xml
 @@ -36,7 +36,7 @@
@@ -97,7 +97,7 @@ index 2d8a099..bbce943 100644
  
      <ImageView
 diff --git a/res/layout/crypt_keeper_emergency_button.xml b/res/layout/crypt_keeper_emergency_button.xml
-index 0b6f810..cf35315 100644
+index 0b6f810b62..cf353152bf 100644
 --- a/res/layout/crypt_keeper_emergency_button.xml
 +++ b/res/layout/crypt_keeper_emergency_button.xml
 @@ -33,7 +33,7 @@
@@ -110,7 +110,7 @@ index 0b6f810..cf35315 100644
  
  </LinearLayout>
 diff --git a/res/layout/crypt_keeper_status.xml b/res/layout/crypt_keeper_status.xml
-index bddff1a..fd9f82e 100644
+index bddff1ad57..fd9f82e4fd 100644
 --- a/res/layout/crypt_keeper_status.xml
 +++ b/res/layout/crypt_keeper_status.xml
 @@ -35,7 +35,7 @@
@@ -132,7 +132,7 @@ index bddff1a..fd9f82e 100644
  
  </LinearLayout>
 diff --git a/res/layout/data_usage_chart.xml b/res/layout/data_usage_chart.xml
-index c87a006..324d09f 100644
+index c87a006a94..324d09fa5a 100644
 --- a/res/layout/data_usage_chart.xml
 +++ b/res/layout/data_usage_chart.xml
 @@ -44,7 +44,7 @@
@@ -154,7 +154,7 @@ index c87a006..324d09f 100644
  
  </com.android.settings.widget.ChartDataUsageView>
 diff --git a/res/layout/filter_spinner_item.xml b/res/layout/filter_spinner_item.xml
-index e83dd80..6b7bdb8 100644
+index e83dd8071e..6b7bdb85f7 100644
 --- a/res/layout/filter_spinner_item.xml
 +++ b/res/layout/filter_spinner_item.xml
 @@ -23,5 +23,5 @@
@@ -165,7 +165,7 @@ index e83dd80..6b7bdb8 100644
 +    android:textColor="@color/text_color_white"
      android:textAlignment="inherit"/>
 diff --git a/res/layout/master_clear_disallowed_screen.xml b/res/layout/master_clear_disallowed_screen.xml
-index 80326ca..ce14f46 100644
+index 80326caeaf..ce14f46216 100644
 --- a/res/layout/master_clear_disallowed_screen.xml
 +++ b/res/layout/master_clear_disallowed_screen.xml
 @@ -26,8 +26,8 @@
@@ -180,7 +180,7 @@ index 80326ca..ce14f46 100644
  
          <TextView android:id="@android:id/empty"
 diff --git a/res/layout/multi_sim_dialog.xml b/res/layout/multi_sim_dialog.xml
-index d0e7df8..02643ac 100644
+index d0e7df8758..02643accd2 100644
 --- a/res/layout/multi_sim_dialog.xml
 +++ b/res/layout/multi_sim_dialog.xml
 @@ -44,7 +44,7 @@
@@ -211,7 +211,7 @@ index d0e7df8..02643ac 100644
  
          </LinearLayout>
 diff --git a/res/layout/network_reset_disallowed_screen.xml b/res/layout/network_reset_disallowed_screen.xml
-index 04f6fc2..e72708b 100644
+index 04f6fc2b4b..e72708bf27 100644
 --- a/res/layout/network_reset_disallowed_screen.xml
 +++ b/res/layout/network_reset_disallowed_screen.xml
 @@ -26,8 +26,8 @@
@@ -226,7 +226,7 @@ index 04f6fc2..e72708b 100644
  
          <TextView android:id="@android:id/empty"
 diff --git a/res/layout/nfc_payment_how_it_works.xml b/res/layout/nfc_payment_how_it_works.xml
-index 565a16b..a870e5b 100644
+index 565a16b7d7..a870e5b265 100644
 --- a/res/layout/nfc_payment_how_it_works.xml
 +++ b/res/layout/nfc_payment_how_it_works.xml
 @@ -3,7 +3,7 @@
@@ -283,7 +283,7 @@ index 565a16b..a870e5b 100644
          </RelativeLayout>
      </RelativeLayout>
 diff --git a/res/layout/permission_settings.xml b/res/layout/permission_settings.xml
-index f08b9d6..2067c02 100644
+index f08b9d64f3..2067c02f14 100644
 --- a/res/layout/permission_settings.xml
 +++ b/res/layout/permission_settings.xml
 @@ -43,7 +43,7 @@
@@ -296,7 +296,7 @@ index f08b9d6..2067c02 100644
                  android:paddingTop="6dip"
                  android:paddingBottom="6dip"
 diff --git a/res/layout/preference_importance_slider.xml b/res/layout/preference_importance_slider.xml
-index 3861807..7e340f9 100644
+index 38618079bb..7e340f952f 100644
 --- a/res/layout/preference_importance_slider.xml
 +++ b/res/layout/preference_importance_slider.xml
 @@ -61,7 +61,7 @@
@@ -309,7 +309,7 @@ index 3861807..7e340f9 100644
      </FrameLayout>
  
 diff --git a/res/layout/settings_color_picker_item.xml b/res/layout/settings_color_picker_item.xml
-index c171950..d8fc8c1 100644
+index c171950d18..d8fc8c1f97 100644
 --- a/res/layout/settings_color_picker_item.xml
 +++ b/res/layout/settings_color_picker_item.xml
 @@ -41,7 +41,7 @@
@@ -323,7 +323,7 @@ index c171950..d8fc8c1 100644
  </LinearLayout>
 \ No newline at end of file
 diff --git a/res/layout/storage_internal_format.xml b/res/layout/storage_internal_format.xml
-index 8aec28f..c90ed28 100644
+index 8aec28f9ab..c90ed285f4 100644
 --- a/res/layout/storage_internal_format.xml
 +++ b/res/layout/storage_internal_format.xml
 @@ -46,7 +46,7 @@
@@ -336,7 +336,7 @@ index 8aec28f..c90ed28 100644
      </FrameLayout>
  
 diff --git a/res/layout/storage_wizard_navigation.xml b/res/layout/storage_wizard_navigation.xml
-index 94f9baf..191d4f2 100644
+index 94f9bafef2..191d4f2208 100644
 --- a/res/layout/storage_wizard_navigation.xml
 +++ b/res/layout/storage_wizard_navigation.xml
 @@ -46,7 +46,7 @@
@@ -349,7 +349,7 @@ index 94f9baf..191d4f2 100644
  
  </LinearLayout>
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index a93ca3c..eb37be3 100644
+index f5c092198e..8d66eac2f6 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -55,4 +55,22 @@
@@ -376,7 +376,7 @@ index a93ca3c..eb37be3 100644
 +    <color name="background_color_white">@android:color/white</color>
  </resources>
 diff --git a/src/com/android/settings/deviceinfo/StorageSettings.java b/src/com/android/settings/deviceinfo/StorageSettings.java
-index 57fd13b..6ab7a85 100755
+index 38be6d7b4f..27780c2405 100755
 --- a/src/com/android/settings/deviceinfo/StorageSettings.java
 +++ b/src/com/android/settings/deviceinfo/StorageSettings.java
 @@ -27,6 +27,7 @@ import android.content.Intent;
@@ -387,7 +387,7 @@ index 57fd13b..6ab7a85 100755
  import android.os.AsyncTask;
  import android.os.Bundle;
  import android.os.UserHandle;
-@@ -204,6 +205,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
+@@ -207,6 +208,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
                  final Drawable icon = context.getDrawable(R.drawable.ic_sim_sd);
                  icon.mutate();
                  icon.setTint(getColorPublic(getResources()));
@@ -396,7 +396,7 @@ index 57fd13b..6ab7a85 100755
                  final Preference pref = new Preference(context);
                  pref.setKey(rec.getFsUuid());
 diff --git a/src/com/android/settings/deviceinfo/StorageVolumePreference.java b/src/com/android/settings/deviceinfo/StorageVolumePreference.java
-index 8a2780a..a6c227c 100644
+index 8a2780a90b..a6c227c2cd 100644
 --- a/src/com/android/settings/deviceinfo/StorageVolumePreference.java
 +++ b/src/com/android/settings/deviceinfo/StorageVolumePreference.java
 @@ -20,6 +20,7 @@ import android.content.Context;
@@ -416,5 +416,5 @@ index 8a2780a..a6c227c 100644
  
          if (volume.getType() == VolumeInfo.TYPE_PUBLIC
 -- 
-2.9.3
+2.11.1
 

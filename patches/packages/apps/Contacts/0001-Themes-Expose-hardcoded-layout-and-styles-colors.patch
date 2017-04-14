@@ -1,4 +1,4 @@
-From 821a5244f3d480fc62d5b16ec9167d16a0f86ea2 Mon Sep 17 00:00:00 2001
+From 8c3f30d4a76837b5221b8b99d13237bd09b1a39f Mon Sep 17 00:00:00 2001
 From: beanstown106 <nbenis106@gmail.com>
 Date: Fri, 20 Nov 2015 17:27:43 -0500
 Subject: [PATCH] Themes: Expose hardcoded layout and styles colors
@@ -16,7 +16,7 @@ Change-Id: I4ca0347470333508e399bfae7ed5291a1a704410
  create mode 100644 res/values/projekt_colors.xml
 
 diff --git a/res/layout/confirm_add_detail_activity.xml b/res/layout/confirm_add_detail_activity.xml
-index 1fa6236..eb54b8a 100644
+index 1fa62363b..eb54b8afb 100644
 --- a/res/layout/confirm_add_detail_activity.xml
 +++ b/res/layout/confirm_add_detail_activity.xml
 @@ -55,7 +55,7 @@
@@ -47,7 +47,7 @@ index 1fa6236..eb54b8a 100644
                  android:paddingBottom="4dip"
                  android:visibility="gone" />
 diff --git a/res/layout/editor_account_header.xml b/res/layout/editor_account_header.xml
-index 59ae3b1..a7d0c62 100644
+index 59ae3b126..a7d0c6252 100644
 --- a/res/layout/editor_account_header.xml
 +++ b/res/layout/editor_account_header.xml
 @@ -20,7 +20,7 @@
@@ -61,13 +61,13 @@ index 59ae3b1..a7d0c62 100644
      android:paddingBottom="8dip"
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
 new file mode 100644
-index 0000000..d2ae4f8
+index 000000000..c161ef5bf
 --- /dev/null
 +++ b/res/values/projekt_colors.xml
 @@ -0,0 +1,29 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Projekt Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.
@@ -95,7 +95,7 @@ index 0000000..d2ae4f8
 +    <color name="account_type_name_text_color">#363636</color>
 +</resources>
 diff --git a/res/values/styles.xml b/res/values/styles.xml
-index 95641e3..69d79ea 100644
+index 95641e345..69d79eab7 100644
 --- a/res/values/styles.xml
 +++ b/res/values/styles.xml
 @@ -44,7 +44,13 @@
@@ -184,5 +184,5 @@ index 95641e3..69d79ea 100644
      </style>
  </resources>
 -- 
-2.9.3
+2.11.1
 

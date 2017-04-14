@@ -1,7 +1,7 @@
-From a52d42aabfef0bb6460c0e2f23d848e0e7b17205 Mon Sep 17 00:00:00 2001
+From f3509121dd03604364ee4477193b6e35cfa47d95 Mon Sep 17 00:00:00 2001
 From: bigrushdog <randall.rushing@gmail.com>
 Date: Mon, 19 Dec 2016 04:33:31 -0800
-Subject: [PATCH 30/44] OMS: Introduce MODIFY_OVERLAYS permission for user apps
+Subject: [PATCH 31/47] OMS: Introduce MODIFY_OVERLAYS permission for user apps
 
 This permission will grant the app read and write permissions
 to access OverlayManagerService. If caller does not posess
@@ -16,10 +16,10 @@ Change-Id: Ib6b10b516577f338aee31e759bfd16278f902c20
  3 files changed, 29 insertions(+), 8 deletions(-)
 
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index 6a5bd3946db..3ceb17ba568 100644
+index cd200e20481..fe1ef539139 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
-@@ -3162,6 +3162,12 @@
+@@ -3167,6 +3167,12 @@
      <permission android:name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"
                  android:protectionLevel="signature|privileged" />
  
@@ -33,10 +33,10 @@ index 6a5bd3946db..3ceb17ba568 100644
                   android:persistent="true"
                   android:hasCode="false"
 diff --git a/core/res/res/values/strings.xml b/core/res/res/values/strings.xml
-index 8f5f8cfa0de..8313d5d0b9c 100755
+index d3df61ba194..4a16df0da51 100755
 --- a/core/res/res/values/strings.xml
 +++ b/core/res/res/values/strings.xml
-@@ -1411,6 +1411,11 @@
+@@ -1426,6 +1426,11 @@
      <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
      <string name="permdesc_access_notification_policy">Allows the app to read and write Do Not Disturb configuration.</string>
  

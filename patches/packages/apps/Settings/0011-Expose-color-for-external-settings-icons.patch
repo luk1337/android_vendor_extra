@@ -1,4 +1,4 @@
-From 8c69f2089767bb0a770f06658955d8e2966d4c85 Mon Sep 17 00:00:00 2001
+From 6345ed2d8d210e74ed139aabc1c7b05d76b040eb Mon Sep 17 00:00:00 2001
 From: Clark Scheff <clark@scheffsblend.com>
 Date: Fri, 23 Dec 2016 09:52:57 -0500
 Subject: [PATCH 11/20] Expose color for external settings icons
@@ -24,7 +24,7 @@ Change-Id: Ifb4a99a315271cdcf978a796e3dea0eaef8d7750
  2 files changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index e1977f9..4ecd1b2 100644
+index 27efb1d1a7..a58aa40f6b 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -39,9 +39,11 @@
@@ -41,7 +41,7 @@ index e1977f9..4ecd1b2 100644
 +    <color name="external_tile_icon_tint_color">?android:attr/colorAccent</color>
  </resources>
 diff --git a/src/com/android/settings/dashboard/DashboardAdapter.java b/src/com/android/settings/dashboard/DashboardAdapter.java
-index 6b2e145..c29da43 100755
+index 6b2e145dc3..c29da4308e 100755
 --- a/src/com/android/settings/dashboard/DashboardAdapter.java
 +++ b/src/com/android/settings/dashboard/DashboardAdapter.java
 @@ -114,10 +114,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
@@ -73,5 +73,5 @@ index 6b2e145..c29da43 100755
              }
          }
 -- 
-2.9.3
+2.11.1
 

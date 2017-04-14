@@ -1,7 +1,7 @@
-From 1295b160f7903ffdbc6ee4c79af58375c75ae8ff Mon Sep 17 00:00:00 2001
+From ffa5e6a5cfd683386da30a78418761c2dbc3466a Mon Sep 17 00:00:00 2001
 From: Alex Cruz <mazdarider23@gmail.com>
 Date: Tue, 24 Jan 2017 11:14:46 +0100
-Subject: [PATCH 33/44] Expose external qs tile tint color
+Subject: [PATCH 33/47] Expose external qs tile tint color
 
 This should allow themers to get around issues like this (see pic below)
 
@@ -14,7 +14,7 @@ Change-Id: If6dbf9ab29f8007d85a3c45524b1cf4ba1b032fb
  2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
-index 83b852416e1..e31d1244ac8 100644
+index 2e8308a26b1..9bd5fed5498 100644
 --- a/packages/SystemUI/res/values/projekt_colors.xml
 +++ b/packages/SystemUI/res/values/projekt_colors.xml
 @@ -30,4 +30,6 @@

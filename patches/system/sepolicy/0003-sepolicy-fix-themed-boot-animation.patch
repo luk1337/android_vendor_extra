@@ -1,4 +1,4 @@
-From 9aa0995284f8eda8450d51963d813efcb1183c99 Mon Sep 17 00:00:00 2001
+From 7f4af920165c7d80018b199388d4309a6c450f88 Mon Sep 17 00:00:00 2001
 From: bigrushdog <randall.rushing@gmail.com>
 Date: Wed, 4 Jan 2017 10:31:29 -0800
 Subject: [PATCH 03/10] sepolicy: fix themed boot animation

@@ -1,7 +1,7 @@
-From 665269aa1ed0cf30e8d06da0e1516c62be32192b Mon Sep 17 00:00:00 2001
+From 5bdb65ab83637446427dc8be510f75a784d1cb0e Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Tue, 17 Nov 2015 18:57:11 -0500
-Subject: [PATCH 13/44] Themes: Allow Immersive cling colors to be fully themed
+Subject: [PATCH 16/47] Themes: Allow Immersive cling colors to be fully themed
 
 This allows the immersive mode help tooltip to be themed completely by
 removing hardcoded framework calls. Let the themer decide what they want
@@ -65,7 +65,7 @@ index b08b0f4d59c..6dbde20d481 100644
 \ No newline at end of file
 +</RelativeLayout>
 diff --git a/core/res/res/values/projekt_colors.xml b/core/res/res/values/projekt_colors.xml
-index c6dbc1ca1c9..7408ae99682 100644
+index 0743f7f4b04..63fddaf7125 100644
 --- a/core/res/res/values/projekt_colors.xml
 +++ b/core/res/res/values/projekt_colors.xml
 @@ -17,4 +17,7 @@

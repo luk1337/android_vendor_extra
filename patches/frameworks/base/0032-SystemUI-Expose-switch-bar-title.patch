@@ -1,7 +1,7 @@
-From e6ffc28bf3894806ccaaa694eba82e0cbe9e34e9 Mon Sep 17 00:00:00 2001
+From 35c793d3fa2c1c909d0108a1139ff7860a400b6f Mon Sep 17 00:00:00 2001
 From: daveyannihilation <daveyannihilation@hotmail.com>
 Date: Sun, 1 Jan 2017 01:47:53 -0700
-Subject: [PATCH 31/44] SystemUI: Expose switch bar title
+Subject: [PATCH 32/47] SystemUI: Expose switch bar title
 
 This is needed for the power notifications switchbar in SystemUI Tuner, amongst other things.
 
@@ -28,13 +28,13 @@ index 41cdb78392a..344c5aa0531 100644
  
 diff --git a/packages/SystemUI/res/values/projekt_styles.xml b/packages/SystemUI/res/values/projekt_styles.xml
 new file mode 100644
-index 00000000000..f49834bc202
+index 00000000000..d0be98087e6
 --- /dev/null
 +++ b/packages/SystemUI/res/values/projekt_styles.xml
 @@ -0,0 +1,24 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Projekt Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.

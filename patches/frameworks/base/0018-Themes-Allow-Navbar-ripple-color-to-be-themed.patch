@@ -1,7 +1,7 @@
-From 4395120608ef592baf35fde2431b7943b7298ad4 Mon Sep 17 00:00:00 2001
+From 466359b147637ec9a126b6e4e411156e977ebd67 Mon Sep 17 00:00:00 2001
 From: Dave Kover <dkover@cyngn.com>
 Date: Thu, 14 Apr 2016 10:19:13 +0700
-Subject: [PATCH 15/44] Themes: Allow Navbar ripple color to be themed
+Subject: [PATCH 18/47] Themes: Allow Navbar ripple color to be themed
 
 PS1:
 Layers Commit by @setiawanjimmy
@@ -18,13 +18,13 @@ Change-Id: I7969e952d7e08f1d12e89291512312421585b70f
 
 diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
 new file mode 100644
-index 00000000000..a0f1df06b6a
+index 00000000000..b3696c0373a
 --- /dev/null
 +++ b/packages/SystemUI/res/values/projekt_colors.xml
 @@ -0,0 +1,21 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Projekt Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.

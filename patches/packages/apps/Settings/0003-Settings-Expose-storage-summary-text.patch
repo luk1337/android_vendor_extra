@@ -1,4 +1,4 @@
-From cd5696d8110762846fcd792589018889fd9e9441 Mon Sep 17 00:00:00 2001
+From 14445dd56fd01d0328bf2e1f8e2b17419ff94f45 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Tue, 3 Nov 2015 23:57:22 +0200
 Subject: [PATCH 03/20] Settings: Expose storage summary text
@@ -17,7 +17,7 @@ Change-Id: I10c124b6a1516a1be7ac234c1dd7dbe2cbe05bb2
  4 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/res/layout/storage_summary.xml b/res/layout/storage_summary.xml
-index 7bc51df..c01d2da 100644
+index 7bc51df5e6..c01d2dae5d 100644
 --- a/res/layout/storage_summary.xml
 +++ b/res/layout/storage_summary.xml
 @@ -33,7 +33,7 @@
@@ -30,7 +30,7 @@ index 7bc51df..c01d2da 100644
          android:ellipsize="marquee"
          android:fadingEdge="horizontal" />
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index 9340830..fb0d99e 100644
+index ea54a02a24..9cb442b1b5 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -27,4 +27,6 @@
@@ -41,7 +41,7 @@ index 9340830..fb0d99e 100644
 +    <color name="storage_summary_title_color">@*android:color/accent_device_default_light</color>
  </resources>
 diff --git a/src/com/android/settings/deviceinfo/StorageSummaryPreference.java b/src/com/android/settings/deviceinfo/StorageSummaryPreference.java
-index e1cf774..2741798 100644
+index e1cf7742ef..274179830c 100644
 --- a/src/com/android/settings/deviceinfo/StorageSummaryPreference.java
 +++ b/src/com/android/settings/deviceinfo/StorageSummaryPreference.java
 @@ -21,6 +21,7 @@ import android.graphics.Color;
@@ -80,7 +80,7 @@ index e1cf774..2741798 100644
          super.onBindViewHolder(view);
      }
 diff --git a/src/com/android/settings/deviceinfo/StorageVolumePreference.java b/src/com/android/settings/deviceinfo/StorageVolumePreference.java
-index 6389075..9d3c7dc 100644
+index 63890758ba..9d3c7dccf2 100644
 --- a/src/com/android/settings/deviceinfo/StorageVolumePreference.java
 +++ b/src/com/android/settings/deviceinfo/StorageVolumePreference.java
 @@ -27,6 +27,7 @@ import android.support.v7.preference.PreferenceViewHolder;
@@ -120,5 +120,5 @@ index 6389075..9d3c7dc 100644
          }
  
 -- 
-2.9.3
+2.11.1
 

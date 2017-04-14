@@ -1,7 +1,7 @@
-From aec0448a9ef3828a4882dad71265334dca4e087f Mon Sep 17 00:00:00 2001
+From e399fb9b4fee40ad4bf0e4aee27b6cffae5a5899 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Tue, 15 Dec 2015 16:08:31 +0100
-Subject: [PATCH 01/44] OMS7-N: Support tagging resources as OK to overlay
+Subject: [PATCH 01/47] OMS7-N: Support tagging resources as OK to overlay
  [1/11]
 
 This will allow applications to have a resource xml defining what
@@ -97,10 +97,10 @@ index 12a6b0f9a4e..6094a576d75 100644
              String8* pTargetPath, String8* pOverlayPath);
  
 diff --git a/libs/androidfw/AssetManager.cpp b/libs/androidfw/AssetManager.cpp
-index 5b36a43abdc..c0e8a980c2d 100644
+index 61a04c212d4..6319d893cc8 100644
 --- a/libs/androidfw/AssetManager.cpp
 +++ b/libs/androidfw/AssetManager.cpp
-@@ -252,7 +252,7 @@ bool AssetManager::addOverlayPath(const String8& packagePath, int32_t* cookie)
+@@ -253,7 +253,7 @@ bool AssetManager::addOverlayPath(const String8& packagePath, int32_t* cookie)
      String8 targetPath;
      String8 overlayPath;
      if (!ResTable::getIdmapInfo(idmap->getBuffer(false), idmap->getLength(),

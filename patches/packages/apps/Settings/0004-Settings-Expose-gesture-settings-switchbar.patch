@@ -1,4 +1,4 @@
-From d076d99bef6c56a8154c0325193fa37498ccd81e Mon Sep 17 00:00:00 2001
+From 624f7356a320e6a942aeb9add1520d2b5b9a1a75 Mon Sep 17 00:00:00 2001
 From: daveyannihilation <daveyannihilation@hotmail.com>
 Date: Fri, 25 Nov 2016 15:20:04 -0700
 Subject: [PATCH 04/20] Settings: Expose gesture settings switchbar
@@ -15,7 +15,7 @@ Change-Id: I9857c10ee4e54d27ca1287c80a7d8e420adc9a61
  2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/res/layout/gesture_preference.xml b/res/layout/gesture_preference.xml
-index ccbc42a..9fcd14f 100644
+index ccbc42ad25..9fcd14f3fc 100644
 --- a/res/layout/gesture_preference.xml
 +++ b/res/layout/gesture_preference.xml
 @@ -31,7 +31,7 @@
@@ -28,7 +28,7 @@ index ccbc42a..9fcd14f 100644
          <TextView
              android:id="@android:id/title"
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index fb0d99e..00252332 100644
+index 9cb442b1b5..afde5ae973 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -29,4 +29,7 @@
@@ -40,5 +40,5 @@ index fb0d99e..00252332 100644
 +
  </resources>
 -- 
-2.9.3
+2.11.1
 

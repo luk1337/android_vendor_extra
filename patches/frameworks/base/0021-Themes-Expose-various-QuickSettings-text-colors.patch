@@ -1,7 +1,7 @@
-From 8efc87d7a3387f3f6d754ef36bc8bb9897a2e2f0 Mon Sep 17 00:00:00 2001
+From bb171f6151d20d4dce0a0319aebbdb7637f74714 Mon Sep 17 00:00:00 2001
 From: "Niklas Schnettler (Sh4dowSoul)" <niklas.schnettler@gmail.com>
 Date: Wed, 5 Oct 2016 18:07:43 +0200
-Subject: [PATCH 18/44] Themes: Expose various QuickSettings text colors
+Subject: [PATCH 21/47] Themes: Expose various QuickSettings text colors
 
 Change-Id: Iaea71ca83afbc3d8cc6faea6afac16cabb46cfff
 ---
@@ -38,7 +38,7 @@ index 1b47d4b5a19..dca8afb8cb8 100644
          android:gravity="top"
          android:background="?android:attr/selectableItemBackgroundBorderless"
 diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
-index 42f4a1568df..0f891994c9d 100644
+index 740c740771f..76cde3ed614 100644
 --- a/packages/SystemUI/res/values/projekt_colors.xml
 +++ b/packages/SystemUI/res/values/projekt_colors.xml
 @@ -20,4 +20,8 @@

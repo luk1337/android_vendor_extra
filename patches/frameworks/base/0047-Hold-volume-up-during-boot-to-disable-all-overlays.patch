@@ -1,0 +1,140 @@
+From 590ff215ebbf88799b01715d155d05e6116df082 Mon Sep 17 00:00:00 2001
+From: George G <kreach3r@users.noreply.github.com>
+Date: Sat, 11 Mar 2017 14:11:54 +0200
+Subject: [PATCH 47/47] Hold "volume up" during boot to disable all overlays
+
+Following the way "safe mode" was coded, you can now long press
+"volume up" during boot to automatically disable all overlays
+(from the current system/owner user).
+
+This should come in handy as a global "reset" mechanism.
+
+Example output:
+03-12 03:22:07.090   678   678 D TEST    : Disabling overlay android.GalaxyEvolution
+03-12 03:22:07.176   678   678 D TEST    : Disabling overlay com.android.launcher3.GalaxyEvolution
+03-12 03:22:07.267   678   678 D TEST    : Disabling overlay com.android.server.telecom.GalaxyEvolution
+
+Caveats:
+SystemServer seems to have already loaded a context based on the
+overlays by the time "disableOverlays" is finished, so SystemUI
+turns up themed, even if the overlay is correctly disabled.
+
+In the case of a user using this reset mode to "fix" a SystemUI FC,
+this means that the user will experience one more FC after boot
+(which then would trigger a SystemUI restart, loading the default
+theme this time, and thus ending the FC loop).
+
+Change-Id: I64fb769ea175d37a90a0804f916926b63e5b93ca
+---
+ .../android/server/am/ActivityManagerService.java  | 29 ++++++++++++++++++++++
+ .../android/server/wm/WindowManagerService.java    | 22 ++++++++++++++++
+ services/java/com/android/server/SystemServer.java |  6 +++++
+ 3 files changed, 57 insertions(+)
+
+diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
+index 7424f1e356f..78f6d078924 100644
+--- a/services/core/java/com/android/server/am/ActivityManagerService.java
++++ b/services/core/java/com/android/server/am/ActivityManagerService.java
+@@ -125,6 +125,8 @@ import android.content.IIntentSender;
+ import android.content.Intent;
+ import android.content.IntentFilter;
+ import android.content.IntentSender;
++import android.content.om.IOverlayManager;
++import android.content.om.OverlayInfo;
+ import android.content.pm.ActivityInfo;
+ import android.content.pm.ApplicationInfo;
+ import android.content.pm.ConfigurationInfo;
+@@ -13086,6 +13088,33 @@ public final class ActivityManagerService extends ActivityManagerNative
+                 Context.WINDOW_SERVICE)).addView(v, lp);
+     }
+ 
++    public final void disableOverlays() {
++        try {
++            IOverlayManager iom = IOverlayManager.Stub.asInterface(
++                    ServiceManager.getService("overlay"));
++            if (iom == null) {
++                return;
++            }
++            Log.d(TAG, "Contacting the Overlay Manager Service for the list of enabled overlays");
++            Map<String, List<OverlayInfo>> allOverlays = iom.getAllOverlays(UserHandle.USER_SYSTEM);
++            if (allOverlays != null) {
++                Log.d(TAG, "The Overlay Manager Service provided the list of enabled overlays");
++                Set<String> set = allOverlays.keySet();
++                for (String targetPackageName : set) {
++                    for (OverlayInfo oi : allOverlays.get(targetPackageName)) {
++                        if (oi.isEnabled()) {
++                            iom.setEnabled(oi.packageName, false, UserHandle.USER_SYSTEM, false);
++                            Log.d(TAG, "Now disabling \'" + oi.packageName + "\'");
++                        }
++                    }
++                }
++            }
++        } catch (RemoteException re) {
++            re.printStackTrace();
++            Log.d(TAG, "RemoteException while trying to contact the Overlay Manager Service!");
++        }
++    }
++
+     public void noteWakeupAlarm(IIntentSender sender, int sourceUid, String sourcePkg, String tag) {
+         if (sender != null && !(sender instanceof PendingIntentRecord)) {
+             return;
+diff --git a/services/core/java/com/android/server/wm/WindowManagerService.java b/services/core/java/com/android/server/wm/WindowManagerService.java
+index 3c9170e65a7..d044e4c8852 100644
+--- a/services/core/java/com/android/server/wm/WindowManagerService.java
++++ b/services/core/java/com/android/server/wm/WindowManagerService.java
+@@ -536,6 +536,7 @@ public class WindowManagerService extends IWindowManager.Stub
+ 
+     boolean mDisplayReady;
+     boolean mSafeMode;
++    boolean mDisableOverlays;
+     boolean mDisplayEnabled = false;
+     boolean mSystemBooted = false;
+     boolean mForceDisplayEnabled = false;
+@@ -8206,6 +8207,27 @@ public class WindowManagerService extends IWindowManager.Stub
+         return mSafeMode;
+     }
+ 
++    public boolean detectDisableOverlays() {
++        if (!mInputMonitor.waitForInputDevicesReady(
++                INPUT_DEVICES_READY_FOR_SAFE_MODE_DETECTION_TIMEOUT_MILLIS)) {
++            Slog.w(TAG_WM, "Devices still not ready after waiting "
++                   + INPUT_DEVICES_READY_FOR_SAFE_MODE_DETECTION_TIMEOUT_MILLIS
++                   + " milliseconds before attempting to detect safe mode.");
++        }
++
++        int volumeUpState = mInputManager.getKeyCodeState(-1, InputDevice.SOURCE_ANY,
++                KeyEvent.KEYCODE_VOLUME_UP);
++        mDisableOverlays = volumeUpState > 0;
++
++        if (mDisableOverlays) {
++            Log.i(TAG_WM, "All enabled theme overlays will now be disabled.");
++        } else {
++            Log.i(TAG_WM, "System will boot with enabled overlays intact.");
++        }
++
++        return mDisableOverlays;
++    }
++
+     public void displayReady() {
+         for (Display display : mDisplays) {
+             displayReady(display.getDisplayId());
+diff --git a/services/java/com/android/server/SystemServer.java b/services/java/com/android/server/SystemServer.java
+index 6e973b785f6..d01af54289e 100644
+--- a/services/java/com/android/server/SystemServer.java
++++ b/services/java/com/android/server/SystemServer.java
+@@ -1395,6 +1395,12 @@ public final class SystemServer {
+             mActivityManagerService.showSafeModeOverlay();
+         }
+ 
++        // Let's check whether we should disable all theme overlays
++        final boolean disableOverlays = wm.detectDisableOverlays();
++        if (disableOverlays) {
++            mActivityManagerService.disableOverlays();
++        }
++
+         // Update the configuration for this context by hand, because we're going
+         // to start using it before the config change done in wm.systemReady() will
+         // propagate to it.
+-- 
+2.11.1
+

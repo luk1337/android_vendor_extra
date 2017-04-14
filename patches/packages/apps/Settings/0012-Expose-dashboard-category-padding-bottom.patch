@@ -1,4 +1,4 @@
-From 04b30d6b758e7bbdb2067f6a0b7698bfa11de219 Mon Sep 17 00:00:00 2001
+From c5d0122299fa33dd5c04551a202e04c971c5dd70 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sun, 8 Jan 2017 00:18:47 +0100
 Subject: [PATCH 12/20] Expose dashboard category padding bottom
@@ -6,12 +6,12 @@ Subject: [PATCH 12/20] Expose dashboard category padding bottom
 Change-Id: I5a0d3266bbe96dbe6a136f78ed84cb1ee0a6a19b
 ---
  res/layout/dashboard_category.xml |  2 +-
- res/values/projekt_dimens.xml     | 16 ++++++++++++++++
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ res/values/projekt_dimens.xml     | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
  create mode 100644 res/values/projekt_dimens.xml
 
 diff --git a/res/layout/dashboard_category.xml b/res/layout/dashboard_category.xml
-index 7836644..86dac35 100644
+index 7836644806..86dac35d47 100644
 --- a/res/layout/dashboard_category.xml
 +++ b/res/layout/dashboard_category.xml
 @@ -19,7 +19,7 @@
@@ -25,26 +25,30 @@ index 7836644..86dac35 100644
      <TextView android:id="@android:id/title"
 diff --git a/res/values/projekt_dimens.xml b/res/values/projekt_dimens.xml
 new file mode 100644
-index 0000000..a5aae4e
+index 0000000000..960c4943b6
 --- /dev/null
 +++ b/res/values/projekt_dimens.xml
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,20 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2017 Projekt Substratum
-+    Licensed under the Apache License, Version 2.0 (the "License");
-+    you may not use this file except in compliance with the License.
-+    You may obtain a copy of the License at
-+        http://www.apache.org/licenses/LICENSE-2.0
-+    Unless required by applicable law or agreed to in writing, software
-+    distributed under the License is distributed on an "AS IS" BASIS,
-+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-+    See the License for the specific language governing permissions and
-+    limitations under the License.
++     Copyright (c) 2017 Projekt Substratum
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++         http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
 +-->
++
 +<resources>
 +    <dimen name="dashboard_category_padding_bottom">8dip</dimen>
 +</resources>
 -- 
-2.9.3
+2.11.1
 

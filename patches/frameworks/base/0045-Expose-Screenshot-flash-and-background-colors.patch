@@ -1,7 +1,7 @@
-From 1b5826792b4a0b94d40e280d6e3113e61d8547a7 Mon Sep 17 00:00:00 2001
-From: Ezio Lacandia Bijelkic <account-1000215@substratum.review>
+From 54b0d34c2391fb034ddc0a507e216c2923febb2e Mon Sep 17 00:00:00 2001
+From: ezio84 <brabus84@gmail.com>
 Date: Tue, 7 Mar 2017 23:33:40 +0100
-Subject: [PATCH 43/44] Expose Screenshot flash and background colors
+Subject: [PATCH 45/47] Expose Screenshot flash and background colors
 
 Keep in mind that Background color already gets 0.5f opacity in the
 GlobalScreenshot class (BACKGROUND_ALPHA with some math).
@@ -36,7 +36,7 @@ index 59952e09555..c74c69ba8e9 100644
      <com.android.systemui.screenshot.ScreenshotSelectorView
          android:id="@+id/global_screenshot_selector"
 diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
-index e8f8e502845..48c5e77d040 100644
+index 72e1f88c323..84e3b75505b 100644
 --- a/packages/SystemUI/res/values/projekt_colors.xml
 +++ b/packages/SystemUI/res/values/projekt_colors.xml
 @@ -34,4 +34,7 @@

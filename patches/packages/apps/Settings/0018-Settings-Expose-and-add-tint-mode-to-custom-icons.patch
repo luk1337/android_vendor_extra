@@ -1,4 +1,4 @@
-From 2feffe9fb57f627bfac953bc83e0ce29c93cad42 Mon Sep 17 00:00:00 2001
+From 8bb660b05e3b2e451d90e0ffff1c7ad17fee8ac5 Mon Sep 17 00:00:00 2001
 From: Randall Rushing <randall.rushing@gmail.com>
 Date: Tue, 5 Apr 2016 11:24:26 -0500
 Subject: [PATCH 18/20] Settings: Expose and add tint mode to custom icons
@@ -16,7 +16,7 @@ Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
  2 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index a619c50..a93ca3c 100644
+index d7dc15bd83..f5c092198e 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -43,17 +43,16 @@
@@ -40,7 +40,7 @@ index a619c50..a93ca3c 100644
 +    <color name="power_usage_ab_icon_tint">@android:color/white</color>
  </resources>
 diff --git a/src/com/android/settings/fuelgauge/PowerUsageDetail.java b/src/com/android/settings/fuelgauge/PowerUsageDetail.java
-index f091f66..eae0ca1 100644
+index f091f6649e..eae0ca14e9 100644
 --- a/src/com/android/settings/fuelgauge/PowerUsageDetail.java
 +++ b/src/com/android/settings/fuelgauge/PowerUsageDetail.java
 @@ -29,6 +29,7 @@ import android.content.pm.PackageInfo;
@@ -69,5 +69,5 @@ index f091f66..eae0ca1 100644
  
      public void onClick(View v) {
 -- 
-2.9.3
+2.11.1
 

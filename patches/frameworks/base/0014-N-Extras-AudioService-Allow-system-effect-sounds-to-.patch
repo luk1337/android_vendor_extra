@@ -1,7 +1,7 @@
-From cfc3eb11fa4e993884a183926d702ad644e9d1d5 Mon Sep 17 00:00:00 2001
+From 4fe7e1f0459c09f59b87f2fe59203065e160ee1d Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Sun, 17 Jul 2016 17:56:40 -0400
-Subject: [PATCH 26/44] N-Extras: AudioService: Allow system effect sounds to
+Subject: [PATCH 14/47] N-Extras: AudioService: Allow system effect sounds to
  be themed
 
 This commit checks whether there is a preexisting file in the themed
@@ -17,7 +17,7 @@ Change-Id: I7666c2bd259443ccec442bf6059786bea3dc069e
  1 file changed, 21 insertions(+), 5 deletions(-)
 
 diff --git a/services/core/java/com/android/server/audio/AudioService.java b/services/core/java/com/android/server/audio/AudioService.java
-index f5db48806de..c6144d0b0b9 100644
+index 1cce6c8b5c1..c42f95b856c 100644
 --- a/services/core/java/com/android/server/audio/AudioService.java
 +++ b/services/core/java/com/android/server/audio/AudioService.java
 @@ -123,6 +123,7 @@ import com.android.server.pm.UserManagerService;
@@ -36,7 +36,7 @@ index f5db48806de..c6144d0b0b9 100644
      private static final List<String> SOUND_EFFECT_FILES = new ArrayList<String>();
  
      /* Sound effect file name mapping sound effect id (AudioManager.FX_xxx) to
-@@ -4679,9 +4681,16 @@ public class AudioService extends IAudioService.Stub {
+@@ -4687,9 +4689,16 @@ public class AudioService extends IAudioService.Stub {
                          continue;
                      }
                      if (poolId[SOUND_EFFECT_FILES_MAP[effect][0]] == -1) {
@@ -56,7 +56,7 @@ index f5db48806de..c6144d0b0b9 100644
                          int sampleId = mSoundPool.load(filePath, 0);
                          if (sampleId <= 0) {
                              Log.w(TAG, "Soundpool could not load file: "+filePath);
-@@ -4787,8 +4796,15 @@ public class AudioService extends IAudioService.Stub {
+@@ -4795,8 +4804,15 @@ public class AudioService extends IAudioService.Stub {
                  } else {
                      MediaPlayer mediaPlayer = new MediaPlayer();
                      try {

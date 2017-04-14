@@ -1,7 +1,7 @@
-From 9c8d1caf4ceed49cce6f8d314f1a8a8867ac21a2 Mon Sep 17 00:00:00 2001
+From f55f8d8025d795ddbe1f759055f4ea3d5dcf98af Mon Sep 17 00:00:00 2001
 From: Dave Kover <dkover@cyngn.com>
 Date: Fri, 9 Dec 2016 10:47:17 -0700
-Subject: [PATCH 12/44] Themes: Expose resolver hardcoded colors
+Subject: [PATCH 15/47] Themes: Expose resolver hardcoded colors
 
 commit dbbd5e70cc65002df41561474b03362022dd6716
 Author: Dave Kover <dkover@cyngn.com>
@@ -171,13 +171,13 @@ index 02dc2ede430..d3baf682fe0 100644
          android:divider="@null" />
 diff --git a/core/res/res/values/projekt_colors.xml b/core/res/res/values/projekt_colors.xml
 new file mode 100644
-index 00000000000..c6dbc1ca1c9
+index 00000000000..0743f7f4b04
 --- /dev/null
 +++ b/core/res/res/values/projekt_colors.xml
 @@ -0,0 +1,20 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Projekt Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.

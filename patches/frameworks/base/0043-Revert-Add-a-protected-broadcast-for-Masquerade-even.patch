@@ -1,0 +1,46 @@
+From 04ec5440cac206bc1b4c2b5f2ca513d802055a6e Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <natechancellor@gmail.com>
+Date: Sat, 4 Mar 2017 00:35:08 +0100
+Subject: [PATCH 43/47] Revert "Add a protected broadcast for Masquerade
+ events"
+
+Requires https://substratum.review/#/c/374
+
+This reverts commit 4cd8990c89e79acb926f9c1ae1959661955dcbe2.
+
+Change-Id: Ida416c3949379a3d6a24a104667c74eef1f56630
+---
+ core/res/AndroidManifest.xml                                        | 2 --
+ services/core/java/com/android/server/pm/PackageManagerService.java | 3 +--
+ 2 files changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
+index 12d12efb3c8..58fb5f533c1 100644
+--- a/core/res/AndroidManifest.xml
++++ b/core/res/AndroidManifest.xml
+@@ -524,8 +524,6 @@
+     <!-- ====================================================================== -->
+     <eat-comment />
+ 
+-    <protected-broadcast android:name="masquerade.substratum.STATUS_CHANGED" />
+-
+     <!-- ====================================================================== -->
+     <!-- Permissions for accessing user's contacts including personal profile   -->
+     <!-- ====================================================================== -->
+diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
+index 4d983571622..6c89c2e2129 100644
+--- a/services/core/java/com/android/server/pm/PackageManagerService.java
++++ b/services/core/java/com/android/server/pm/PackageManagerService.java
+@@ -4550,8 +4550,7 @@ public class PackageManagerService extends IPackageManager.Stub {
+                 if (actionName.startsWith("android.net.netmon.lingerExpired")
+                         || actionName.startsWith("com.android.server.sip.SipWakeupTimer")
+                         || actionName.startsWith("com.android.internal.telephony.data-reconnect")
+-                        || actionName.startsWith("android.net.netmon.launchCaptivePortalApp")
+-                        || actionName.startsWith("masquerade.substratum.STATUS_CHANGED")) {
++                        || actionName.startsWith("android.net.netmon.launchCaptivePortalApp")) {
+                     return true;
+                 }
+             }
+-- 
+2.11.1
+

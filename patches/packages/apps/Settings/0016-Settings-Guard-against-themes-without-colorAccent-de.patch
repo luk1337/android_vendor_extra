@@ -1,4 +1,4 @@
-From 0e2f8c35309b07b6d7cbc1f2a42b7ce19f3cc252 Mon Sep 17 00:00:00 2001
+From 315730403ffbf452c119cdd3bfb4a040cdd3525f Mon Sep 17 00:00:00 2001
 From: Clark Scheff <clark@scheffsblend.com>
 Date: Mon, 27 Feb 2017 00:55:37 +0100
 Subject: [PATCH 16/20] Settings: Guard against themes without colorAccent
@@ -17,7 +17,7 @@ Change-Id: I2754a88a50277abb1b685183c0fb2e5b606eb451
  2 files changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index e0d3ab1..a619c50 100644
+index ac786ac2cc..d7dc15bd83 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -53,4 +53,7 @@
@@ -29,7 +29,7 @@ index e0d3ab1..a619c50 100644
 +    <color name="switch_accent_color">@*android:color/accent_device_default_light</color>
  </resources>
 diff --git a/src/com/android/settings/applications/AppOpsSummary.java b/src/com/android/settings/applications/AppOpsSummary.java
-index a86be73..cd534cd 100644
+index a86be734eb..cd534cd6ec 100644
 --- a/src/com/android/settings/applications/AppOpsSummary.java
 +++ b/src/com/android/settings/applications/AppOpsSummary.java
 @@ -161,7 +161,9 @@ public class AppOpsSummary extends InstrumentedFragment {
@@ -44,5 +44,5 @@ index a86be73..cd534cd 100644
  
          // We have to do this now because PreferenceFrameLayout looks at it
 -- 
-2.9.3
+2.11.1
 

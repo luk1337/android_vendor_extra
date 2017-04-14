@@ -1,7 +1,7 @@
-From 16d66568ce9eb9a5fbc06281415a56d3f292f0e9 Mon Sep 17 00:00:00 2001
+From 13155afe5a3c9a0cc921e3626c8e4e943ac5287e Mon Sep 17 00:00:00 2001
 From: 0xD34D <clark@scheffsblend.com>
 Date: Wed, 22 Jun 2016 23:54:23 +0300
-Subject: [PATCH 25/44] N-Extras: Add dynamic theme fonts support
+Subject: [PATCH 13/47] N-Extras: Add dynamic theme fonts support
 
 Due to the nature of the removal of assetSeq in OMS7+, we now use the
 more controllable font scale updating code to update the fonts on
@@ -53,7 +53,7 @@ Change-Id: I1f61bd269b42ab6145482a51d25fe5b1b5308f94
  8 files changed, 240 insertions(+), 27 deletions(-)
 
 diff --git a/core/java/android/app/ActivityThread.java b/core/java/android/app/ActivityThread.java
-index 55fc25de68b..44a900b3a1f 100644
+index 9e479ec6772..0061062943a 100644
 --- a/core/java/android/app/ActivityThread.java
 +++ b/core/java/android/app/ActivityThread.java
 @@ -48,6 +48,7 @@ import android.database.sqlite.SQLiteDebug;
@@ -64,7 +64,7 @@ index 55fc25de68b..44a900b3a1f 100644
  import android.hardware.display.DisplayManagerGlobal;
  import android.net.ConnectivityManager;
  import android.net.IConnectivityManager;
-@@ -4852,8 +4853,12 @@ public final class ActivityThread {
+@@ -4853,8 +4854,12 @@ public final class ActivityThread {
          if (configDiff != 0) {
              // Ask text layout engine to free its caches if there is a locale change
              boolean hasLocaleConfigChange = ((configDiff & ActivityInfo.CONFIG_LOCALE) != 0);
@@ -560,7 +560,7 @@ index 2886f0dd4a2..990c9bd1fbf 100644
      protected void finalize() throws Throwable {
          try {
 diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
-index f4d07aff3e6..5d8ab51d077 100644
+index a94822e5698..7424f1e356f 100644
 --- a/services/core/java/com/android/server/am/ActivityManagerService.java
 +++ b/services/core/java/com/android/server/am/ActivityManagerService.java
 @@ -513,6 +513,8 @@ public final class ActivityManagerService extends ActivityManagerNative
@@ -572,7 +572,7 @@ index f4d07aff3e6..5d8ab51d077 100644
      // Access modes for handleIncomingUser.
      static final int ALLOW_NON_FULL = 0;
      static final int ALLOW_NON_FULL_IN_PROFILE = 1;
-@@ -3948,6 +3950,13 @@ public final class ActivityManagerService extends ActivityManagerNative
+@@ -3956,6 +3958,13 @@ public final class ActivityManagerService extends ActivityManagerNative
                  mNativeDebuggingApp = null;
              }
  
@@ -586,7 +586,7 @@ index f4d07aff3e6..5d8ab51d077 100644
              String requiredAbi = (abiOverride != null) ? abiOverride : app.info.primaryCpuAbi;
              if (requiredAbi == null) {
                  requiredAbi = Build.SUPPORTED_ABIS[0];
-@@ -3972,7 +3981,7 @@ public final class ActivityManagerService extends ActivityManagerNative
+@@ -3980,7 +3989,7 @@ public final class ActivityManagerService extends ActivityManagerNative
              Process.ProcessStartResult startResult = Process.start(entryPoint,
                      app.processName, uid, uid, gids, debugFlags, mountExternal,
                      app.info.targetSdkVersion, app.info.seinfo, requiredAbi, instructionSet,

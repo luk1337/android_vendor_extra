@@ -1,18 +1,13 @@
-From 70dc365c2877d443aebb7da11f061fa3d69dd2a4 Mon Sep 17 00:00:00 2001
+From 072fba04d4d8ad9598bbac24e27f2b7497378de5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Tue, 15 Dec 2015 14:02:30 +0100
-Subject: [PATCH] OMS-N: installd: add command 'rmidmap'
+Subject: [PATCH] OMS7-N: installd: add command 'rmidmap'
 
 Add an installd command to remove an idmap file. This is the inverse of
 the 'idmap' command and is intended for clean-up once an idmap file is
 no longer needed because an APK was removed, etc.
 
-This commit depends on a corresponding commit in frameworks/base
-(with the same Change-Id).
-
-Bug: 31052947
-
-Change-Id: Iae19a519803f0c172b02a32faa283ef36f43863c
+Change-Id: I98cb26a51d03d7babda6b7b46b6a328abb032836
 ---
  cmds/installd/commands.cpp | 16 ++++++++++++++++
  cmds/installd/commands.h   |  1 +
@@ -20,7 +15,7 @@ Change-Id: Iae19a519803f0c172b02a32faa283ef36f43863c
  3 files changed, 23 insertions(+)
 
 diff --git a/cmds/installd/commands.cpp b/cmds/installd/commands.cpp
-index cadcd1e..0b25da1 100644
+index cadcd1ef1..0b25da1d7 100644
 --- a/cmds/installd/commands.cpp
 +++ b/cmds/installd/commands.cpp
 @@ -2047,6 +2047,22 @@ fail:
@@ -47,7 +42,7 @@ index cadcd1e..0b25da1 100644
          appid_t appid, const char* seinfo) {
      int res = 0;
 diff --git a/cmds/installd/commands.h b/cmds/installd/commands.h
-index ba27517..2da80dd 100644
+index ba275170a..2da80dd7e 100644
 --- a/cmds/installd/commands.h
 +++ b/cmds/installd/commands.h
 @@ -76,6 +76,7 @@ int dexopt(const char* const params[DEXOPT_PARAM_COUNT]);
@@ -59,7 +54,7 @@ index ba27517..2da80dd 100644
  int rm_package_dir(const char* apk_path);
  int clear_app_profiles(const char* pkgname);
 diff --git a/cmds/installd/installd.cpp b/cmds/installd/installd.cpp
-index 8f883db..93388ce 100644
+index 8f883db05..93388cedc 100644
 --- a/cmds/installd/installd.cpp
 +++ b/cmds/installd/installd.cpp
 @@ -383,6 +383,11 @@ static int do_idmap(char **arg, char reply[REPLY_MAX] ATTRIBUTE_UNUSED)
@@ -83,5 +78,5 @@ index 8f883db..93388ce 100644
      { "rmpackagedir",         1, do_rm_package_dir },
      { "clear_app_profiles",   1, do_clear_app_profiles },
 -- 
-2.9.3
+2.11.1
 

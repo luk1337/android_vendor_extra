@@ -1,4 +1,4 @@
-From 45afc298e2f4bb658ac810c3aa3672d1ebee5571 Mon Sep 17 00:00:00 2001
+From e113da2631251ae612b42de0639ebeba954e2245 Mon Sep 17 00:00:00 2001
 From: Surge1223 <surge1223@gmail.com>
 Date: Tue, 21 Feb 2017 12:28:05 -0600
 Subject: [PATCH 06/10] sepolicy: rename masquerade domain and allow JobService
@@ -152,7 +152,7 @@ index 85303d0..bbf8b78 100644
 -user=system isPrivApp=true domain=masquerade_app seinfo=platform name=masquerade.substratum type=system_app_data_file
 +user=system isPrivApp=true domain=masquerade seinfo=platform name=masquerade.substratum type=system_app_data_file
 diff --git a/service.te b/service.te
-index 6f9ab3f..efa08e7 100644
+index a8d16c2..782201f 100644
 --- a/service.te
 +++ b/service.te
 @@ -68,6 +68,7 @@ type jobscheduler_service, app_api_service, system_server_service, service_manag
@@ -164,7 +164,7 @@ index 6f9ab3f..efa08e7 100644
  type media_router_service, app_api_service, system_server_service, service_manager_type;
  type media_session_service, app_api_service, system_server_service, service_manager_type;
 diff --git a/service_contexts b/service_contexts
-index b7d7473..b831312 100644
+index 19cf907..77b508e 100644
 --- a/service_contexts
 +++ b/service_contexts
 @@ -65,6 +65,7 @@ jobscheduler                              u:object_r:jobscheduler_service:s0

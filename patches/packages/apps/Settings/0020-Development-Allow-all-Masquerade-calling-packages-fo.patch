@@ -1,4 +1,4 @@
-From ee6a0be005d11c0dad4d59d388e04c5dfa6fd9aa Mon Sep 17 00:00:00 2001
+From 8e5290cb3604878f06aad71bf7ef6a45860fe9db Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Sat, 25 Feb 2017 18:24:06 +0200
 Subject: [PATCH 20/20] Development: Allow all Masquerade calling packages for
@@ -14,7 +14,7 @@ Change-Id: I4d8ca60ead6fe058e7bc2ef8b7613e77457b3f27
  3 files changed, 29 insertions(+)
 
 diff --git a/res/values/projekt_strings.xml b/res/values/projekt_strings.xml
-index 4c45544..0d339e2 100644
+index 004e268b9c..5641da3d35 100644
 --- a/res/values/projekt_strings.xml
 +++ b/res/values/projekt_strings.xml
 @@ -25,4 +25,8 @@
@@ -27,7 +27,7 @@ index 4c45544..0d339e2 100644
 +
  </resources>
 diff --git a/res/xml/development_prefs.xml b/res/xml/development_prefs.xml
-index 1e7ed4a..d654829 100644
+index 1e7ed4a2b9..d654829ca1 100644
 --- a/res/xml/development_prefs.xml
 +++ b/res/xml/development_prefs.xml
 @@ -210,6 +210,11 @@
@@ -43,7 +43,7 @@ index 1e7ed4a..d654829 100644
  
      <PreferenceCategory android:key="debug_networking_category"
 diff --git a/src/com/android/settings/DevelopmentSettings.java b/src/com/android/settings/DevelopmentSettings.java
-index 02e2a75..17f0717 100644
+index 10e0b73447..e2c0a46b44 100644
 --- a/src/com/android/settings/DevelopmentSettings.java
 +++ b/src/com/android/settings/DevelopmentSettings.java
 @@ -235,6 +235,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
@@ -106,7 +106,7 @@ index 02e2a75..17f0717 100644
      private void resetDangerousOptions() {
          mDontPokeProperties = true;
          for (int i=0; i< mResetSwitchPrefs.size(); i++) {
-@@ -2256,6 +2274,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
+@@ -2255,6 +2273,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
              writeUSBAudioOptions();
          } else if (preference == mForceResizable) {
              writeForceResizableOptions();
@@ -116,5 +116,5 @@ index 02e2a75..17f0717 100644
              startInactiveAppsFragment();
          } else if (BACKGROUND_CHECK_KEY.equals(preference.getKey())) {
 -- 
-2.9.3
+2.11.1
 

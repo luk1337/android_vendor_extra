@@ -1,4 +1,4 @@
-From 3ed524feda787229cef8076048e00c7933218ced Mon Sep 17 00:00:00 2001
+From 7ecfcd842717ee20c0736b6b7251f9a7edafe287 Mon Sep 17 00:00:00 2001
 From: d34d <clark@cyngn.com>
 Date: Wed, 4 Jan 2017 10:29:34 -0800
 Subject: [PATCH 02/10] Introduce sepolicy exceptions for theme assets
@@ -42,10 +42,10 @@ index c3091ab..3ae9478 100644
 +allow bootanim theme_data_file:dir search;
 +allow bootanim theme_data_file:file r_file_perms;
 diff --git a/file.te b/file.te
-index dfa3c9b..1e18b89 100644
+index 446c182..07bdff1 100644
 --- a/file.te
 +++ b/file.te
-@@ -266,3 +266,6 @@ allow postinstall_file self:filesystem associate;
+@@ -267,3 +267,6 @@ allow postinstall_file self:filesystem associate;
  # Should be:
  #   type apk_data_file, file_type, data_file_type;
  neverallow fs_type file_type:filesystem associate;
@@ -53,10 +53,10 @@ index dfa3c9b..1e18b89 100644
 +# Themes
 +type theme_data_file, file_type, data_file_type;
 diff --git a/file_contexts b/file_contexts
-index 3448f21..392e655 100644
+index 085a57b..fefa9d7 100644
 --- a/file_contexts
 +++ b/file_contexts
-@@ -401,3 +401,6 @@
+@@ -402,3 +402,6 @@
  /mnt/user(/.*)?             u:object_r:mnt_user_file:s0
  /mnt/runtime(/.*)?          u:object_r:storage_file:s0
  /storage(/.*)?              u:object_r:storage_file:s0

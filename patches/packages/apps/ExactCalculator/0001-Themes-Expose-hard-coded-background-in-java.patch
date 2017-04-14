@@ -1,4 +1,4 @@
-From 86ffec60f1b9006a910eb51ff5bc46e4f3e731fc Mon Sep 17 00:00:00 2001
+From af19354356f0af1cdde634bbd2cbbf10c4d34eb9 Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Tue, 29 Dec 2015 22:25:10 -0600
 Subject: [PATCH 1/2] Themes: Expose hard coded background in java
@@ -12,13 +12,13 @@ Change-Id: I30bade7c82f29767c6659c8a75bb402d245e49f1
 
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
 new file mode 100644
-index 0000000..9e15ffc
+index 0000000..b849cb3
 --- /dev/null
 +++ b/res/values/projekt_colors.xml
 @@ -0,0 +1,19 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+     Copyright (C) 2016 Projekt Substratum
++     Copyright (C) 2016-2017 Projekt Substratum
 +
 +     Licensed under the Apache License, Version 2.0 (the "License");
 +     you may not use this file except in compliance with the License.
@@ -49,5 +49,5 @@ index d4520c5..5b02e4b 100644
          setPageTransformer(false, mPageTransformer);
          addOnPageChangeListener(mOnPageChangeListener);
 -- 
-2.9.3
+2.11.1
 

@@ -1,4 +1,4 @@
-From d265922f6a29e129ac222e323707dc0bd195d312 Mon Sep 17 00:00:00 2001
+From d64ff088ccf23a17e054abcd101eabc1ae444a40 Mon Sep 17 00:00:00 2001
 From: Surge1223 <surge1223@gmail.com>
 Date: Wed, 22 Feb 2017 20:45:04 -0600
 Subject: [PATCH 07/10] sepolicy: allow masquerade to read and write theme

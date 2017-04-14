@@ -1,4 +1,4 @@
-From c723ba7b2530caa587a841398059573c93d758ac Mon Sep 17 00:00:00 2001
+From e356e3c75fda6aa44cf18083ef89c4a4d17e815c Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Mon, 4 Jul 2016 12:07:11 +0300
 Subject: [PATCH 07/20] OMS7-N: Apps: show/hide Substratum overlays [2/2]
@@ -18,7 +18,7 @@ Change-Id: I1cd4d4d3acd767a87fe402c325a872a4c04e0438
  create mode 100644 res/values/projekt_strings.xml
 
 diff --git a/res/menu/manage_apps.xml b/res/menu/manage_apps.xml
-index 02ee2bb..67f09e5 100644
+index 02ee2bbefd..67f09e5fc8 100644
 --- a/res/menu/manage_apps.xml
 +++ b/res/menu/manage_apps.xml
 @@ -30,6 +30,14 @@
@@ -38,12 +38,12 @@ index 02ee2bb..67f09e5 100644
          android:showAsAction="never" />
 diff --git a/res/values/projekt_strings.xml b/res/values/projekt_strings.xml
 new file mode 100644
-index 0000000..177e78c
+index 0000000000..ed7cab6c7a
 --- /dev/null
 +++ b/res/values/projekt_strings.xml
 @@ -0,0 +1,23 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<!-- Copyright (c) 2016 Project Substratum
++<!-- Copyright (c) 2016-2017 Projekt Substratum
 +
 +     Licensed under the Apache License, Version 2.0 (the "License");
 +     you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ index 0000000..177e78c
 +
 +</resources>
 diff --git a/src/com/android/settings/applications/ManageApplications.java b/src/com/android/settings/applications/ManageApplications.java
-index 8b1dd27..070754a 100644
+index 8b1dd27ef1..070754addb 100644
 --- a/src/com/android/settings/applications/ManageApplications.java
 +++ b/src/com/android/settings/applications/ManageApplications.java
 @@ -107,6 +107,7 @@ public class ManageApplications extends InstrumentedFragment
@@ -155,5 +155,5 @@ index 8b1dd27..070754a 100644
              switch (mLastSortMode) {
                  case R.id.sort_order_size:
 -- 
-2.9.3
+2.11.1
 

@@ -1,7 +1,7 @@
-From a9f29c6f2ff4a9123e4874a1adcd3afd68b2f1d7 Mon Sep 17 00:00:00 2001
+From c0be59e8d33c8c68fadbab2df750d6f3254173ac Mon Sep 17 00:00:00 2001
 From: SpiritCroc <spiritcroc@gmail.com>
 Date: Sun, 5 Feb 2017 12:00:54 +0100
-Subject: [PATCH 37/44] Notification tint: add optional findContrastColor
+Subject: [PATCH 37/47] Notification tint: add optional findContrastColor
  algorithm for dark backgrounds
 
 Overlay config_useDarkBgNotificationIconTextTinting to enable dark bg tinting
@@ -117,7 +117,7 @@ index 4748e6fb19f..bbc9a24b1ed 100644
          if (color != resolvedColor) {
              if (DEBUG){
 diff --git a/core/res/res/values/projekt_config.xml b/core/res/res/values/projekt_config.xml
-index 5234959fc9e..8cf5666a7e4 100644
+index c180166a16b..d74b683be9d 100644
 --- a/core/res/res/values/projekt_config.xml
 +++ b/core/res/res/values/projekt_config.xml
 @@ -27,4 +27,8 @@
@@ -130,7 +130,7 @@ index 5234959fc9e..8cf5666a7e4 100644
 +
  </resources>
 diff --git a/core/res/res/values/projekt_symbols.xml b/core/res/res/values/projekt_symbols.xml
-index 16a5728e6c9..faa71e064e6 100644
+index 9c2dc35dbcd..94193ca4df9 100644
 --- a/core/res/res/values/projekt_symbols.xml
 +++ b/core/res/res/values/projekt_symbols.xml
 @@ -19,6 +19,7 @@

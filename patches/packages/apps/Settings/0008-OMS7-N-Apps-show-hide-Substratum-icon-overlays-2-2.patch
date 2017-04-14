@@ -1,4 +1,4 @@
-From c960d1be404e87787c4a26e01679af5ff8d89670 Mon Sep 17 00:00:00 2001
+From 76f3432534432343b2562ec825b5e13ef03c2a1b Mon Sep 17 00:00:00 2001
 From: Kuba Schenk <abukcz@gmail.com>
 Date: Thu, 1 Dec 2016 22:00:31 +0100
 Subject: [PATCH 08/20] OMS7-N: Apps: show/hide Substratum icon overlays [2/2]
@@ -10,7 +10,6 @@ So we follow the current trend set by Android with
 "show system" and make it "show icon overlays" on default.
 
 Change-Id: Ib6dd011f821f21bee6da1979615f2eb4658c9f52
-(cherry picked from commit a01b70568db202255fbf7f62d87c3e89e91f933d)
 ---
  res/menu/manage_apps.xml                           |  8 ++++++
  res/values/projekt_strings.xml                     |  5 ++++
@@ -18,7 +17,7 @@ Change-Id: Ib6dd011f821f21bee6da1979615f2eb4658c9f52
  3 files changed, 37 insertions(+), 9 deletions(-)
 
 diff --git a/res/menu/manage_apps.xml b/res/menu/manage_apps.xml
-index 67f09e5..267cff8 100644
+index 67f09e5fc8..267cff8b41 100644
 --- a/res/menu/manage_apps.xml
 +++ b/res/menu/manage_apps.xml
 @@ -38,6 +38,14 @@
@@ -37,7 +36,7 @@ index 67f09e5..267cff8 100644
          android:title="@string/sort_order_alpha"
          android:showAsAction="never" />
 diff --git a/res/values/projekt_strings.xml b/res/values/projekt_strings.xml
-index 177e78c..4c45544 100644
+index ed7cab6c7a..004e268b9c 100644
 --- a/res/values/projekt_strings.xml
 +++ b/res/values/projekt_strings.xml
 @@ -20,4 +20,9 @@
@@ -51,7 +50,7 @@ index 177e78c..4c45544 100644
 +
  </resources>
 diff --git a/src/com/android/settings/applications/ManageApplications.java b/src/com/android/settings/applications/ManageApplications.java
-index 070754a..5d3b353 100644
+index 070754addb..5d3b353766 100644
 --- a/src/com/android/settings/applications/ManageApplications.java
 +++ b/src/com/android/settings/applications/ManageApplications.java
 @@ -108,6 +108,7 @@ public class ManageApplications extends InstrumentedFragment
@@ -147,5 +146,5 @@ index 070754a..5d3b353 100644
              switch (mLastSortMode) {
                  case R.id.sort_order_size:
 -- 
-2.9.3
+2.11.1
 

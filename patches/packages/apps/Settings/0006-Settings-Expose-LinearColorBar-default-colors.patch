@@ -1,4 +1,4 @@
-From cfe707f8060d6b8568a87eca94e77cb2a5d4054b Mon Sep 17 00:00:00 2001
+From 550a7b41ac1d427988ba391f34d936be8fc95bc5 Mon Sep 17 00:00:00 2001
 From: SpiritCroc <spiritcroc@gmail.com>
 Date: Fri, 9 Dec 2016 12:47:54 +0100
 Subject: [PATCH 06/20] Settings: Expose LinearColorBar default colors
@@ -10,7 +10,7 @@ Change-Id: I8e63f10f9e4079d1a03eaece18e8343102f4a755
  2 files changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index bb6099b..e1977f9 100644
+index 2bee210dfd..27efb1d1a7 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -39,4 +39,9 @@
@@ -24,7 +24,7 @@ index bb6099b..e1977f9 100644
 +    <color name="linear_color_bar_right">#ffced7db</color>
  </resources>
 diff --git a/src/com/android/settings/applications/LinearColorBar.java b/src/com/android/settings/applications/LinearColorBar.java
-index b637671..b0b8b82 100644
+index b637671f73..b0b8b82e8c 100644
 --- a/src/com/android/settings/applications/LinearColorBar.java
 +++ b/src/com/android/settings/applications/LinearColorBar.java
 @@ -15,6 +15,7 @@ import android.util.DisplayMetrics;
@@ -64,5 +64,5 @@ index b637671..b0b8b82 100644
 \ No newline at end of file
 +}
 -- 
-2.9.3
+2.11.1
 

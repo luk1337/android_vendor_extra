@@ -1,7 +1,7 @@
-From 36093ba31e7cb282ca2017a6cb31042d2251cf1b Mon Sep 17 00:00:00 2001
+From 5f1190b455b738cd8df13d216846fedf9c671434 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sun, 18 Sep 2016 21:33:18 +0700
-Subject: [PATCH 16/44] SystemUI: Expose QS edit item decoration background
+Subject: [PATCH 19/47] SystemUI: Expose QS edit item decoration background
  color
 
 PS2:
@@ -16,7 +16,7 @@ Change-Id: I9867ca26e7d9dacad37d2b70180a98fede0fb0e8
  2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
-index a0f1df06b6a..42f4a1568df 100644
+index b3696c0373a..740c740771f 100644
 --- a/packages/SystemUI/res/values/projekt_colors.xml
 +++ b/packages/SystemUI/res/values/projekt_colors.xml
 @@ -18,4 +18,6 @@

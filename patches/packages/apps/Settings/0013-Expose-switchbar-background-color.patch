@@ -1,4 +1,4 @@
-From a9f6de659abaaf005b4befb799e289d3a960c77a Mon Sep 17 00:00:00 2001
+From 36175c23dcd46cef01cf7c5511a1da5d4a06da7a Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sun, 8 Jan 2017 01:22:47 +0100
 Subject: [PATCH 13/20] Expose switchbar background color
@@ -11,7 +11,7 @@ Change-Id: Idc8b09c921bb57c9464d6ea956cfdd9b2b95e6a8
  3 files changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index 4ecd1b2..f37cc54 100644
+index a58aa40f6b..09d691e98c 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -46,4 +46,6 @@
@@ -22,7 +22,7 @@ index 4ecd1b2..f37cc54 100644
 +    <color name="switchbar_background_color">?android:attr/colorSecondary</color>
  </resources>
 diff --git a/res/values/themes.xml b/res/values/themes.xml
-index ffe802e..acabe21 100644
+index ffe802e2f2..acabe2195f 100644
 --- a/res/values/themes.xml
 +++ b/res/values/themes.xml
 @@ -196,13 +196,13 @@
@@ -42,7 +42,7 @@ index ffe802e..acabe21 100644
  
      <style name="Theme.DialogWhenLarge" parent="@*android:style/Theme.DeviceDefault.Settings.DialogWhenLarge">
 diff --git a/src/com/android/settings/widget/SwitchBar.java b/src/com/android/settings/widget/SwitchBar.java
-index 240c062..ce73a39 100644
+index 240c06296b..ce73a397f0 100644
 --- a/src/com/android/settings/widget/SwitchBar.java
 +++ b/src/com/android/settings/widget/SwitchBar.java
 @@ -24,6 +24,7 @@ import android.text.SpannableStringBuilder;
@@ -73,5 +73,5 @@ index 240c062..ce73a39 100644
          mTextView.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
          mLabel = getResources().getString(R.string.switch_off_text);
 -- 
-2.9.3
+2.11.1
 

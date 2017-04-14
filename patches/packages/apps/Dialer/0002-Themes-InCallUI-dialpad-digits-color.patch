@@ -1,4 +1,4 @@
-From 377d7dc8d57e9bd58ac184ecdf3af670d7a0ac01 Mon Sep 17 00:00:00 2001
+From 27948580bec527aedb79410787e87176bd330c12 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Mon, 14 Nov 2016 16:05:32 +0200
 Subject: [PATCH 2/2] Themes: InCallUI dialpad digits color
@@ -21,7 +21,7 @@ Change-Id: I9fc18dc5068f8bab90fbe8b5cfc608f0500a09c8
  create mode 100644 res/values/projekt_config.xml
 
 diff --git a/InCallUI/src/com/android/incallui/DialpadFragment.java b/InCallUI/src/com/android/incallui/DialpadFragment.java
-index ad288bd..38e3d8f 100644
+index ad288bdc6..38e3d8f41 100644
 --- a/InCallUI/src/com/android/incallui/DialpadFragment.java
 +++ b/InCallUI/src/com/android/incallui/DialpadFragment.java
 @@ -455,6 +455,10 @@ public class DialpadFragment extends BaseFragment<DialpadPresenter, DialpadPrese
@@ -36,7 +36,7 @@ index ad288bd..38e3d8f 100644
          if (mCurrentTextColor == textColor) {
              return;
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
-index a5f4aa9..a894291 100644
+index 4e4689433..43e24ba6a 100644
 --- a/res/values/projekt_colors.xml
 +++ b/res/values/projekt_colors.xml
 @@ -17,4 +17,5 @@
@@ -47,13 +47,13 @@ index a5f4aa9..a894291 100644
  </resources>
 diff --git a/res/values/projekt_config.xml b/res/values/projekt_config.xml
 new file mode 100644
-index 0000000..1f61f12
+index 000000000..4325e103e
 --- /dev/null
 +++ b/res/values/projekt_config.xml
 @@ -0,0 +1,20 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Project Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.
@@ -72,5 +72,5 @@ index 0000000..1f61f12
 +    <bool name="config_dialpadDigitsStaticColor">false</bool>
 +</resources>
 -- 
-2.9.3
+2.11.1
 

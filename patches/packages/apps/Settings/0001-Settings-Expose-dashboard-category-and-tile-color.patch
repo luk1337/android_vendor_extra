@@ -1,4 +1,4 @@
-From 0c3691321abfd7072133ed7a0727a03c9c1132c8 Mon Sep 17 00:00:00 2001
+From a36ad14268d30c19f15e88ce3c6ff74035233c53 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sun, 18 Sep 2016 10:12:05 +0700
 Subject: [PATCH 01/20] Settings: Expose dashboard category and tile color
@@ -17,13 +17,13 @@ Change-Id: Ia9c83eb9b8360923ed52e03641b4179681a80330
 
 diff --git a/res/drawable/dashboard_category_title_bg.xml b/res/drawable/dashboard_category_title_bg.xml
 new file mode 100644
-index 0000000..0e9604d
+index 0000000000..7427ee9b05
 --- /dev/null
 +++ b/res/drawable/dashboard_category_title_bg.xml
 @@ -0,0 +1,21 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Project Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.
@@ -44,13 +44,13 @@ index 0000000..0e9604d
 +</shape>
 diff --git a/res/drawable/dashboard_tile_bg.xml b/res/drawable/dashboard_tile_bg.xml
 new file mode 100644
-index 0000000..61d113d
+index 0000000000..e8a190b677
 --- /dev/null
 +++ b/res/drawable/dashboard_tile_bg.xml
 @@ -0,0 +1,21 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Project Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ index 0000000..61d113d
 +   <solid android:color="@color/selectable_card_background" />
 +</shape>
 diff --git a/res/drawable/selectable_card.xml b/res/drawable/selectable_card.xml
-index df9ddb1..74018b2 100644
+index df9ddb1367..74018b214b 100644
 --- a/res/drawable/selectable_card.xml
 +++ b/res/drawable/selectable_card.xml
 @@ -18,5 +18,5 @@
@@ -83,7 +83,7 @@ index df9ddb1..74018b2 100644
 +    <item android:drawable="@drawable/dashboard_tile_bg"/>
 +</ripple>
 diff --git a/res/layout/dashboard_category.xml b/res/layout/dashboard_category.xml
-index 2e5dd5c..7836644 100644
+index 2e5dd5ce06..7836644806 100644
 --- a/res/layout/dashboard_category.xml
 +++ b/res/layout/dashboard_category.xml
 @@ -20,7 +20,7 @@
@@ -97,13 +97,13 @@ index 2e5dd5c..7836644 100644
          android:layout_width="match_parent"
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
 new file mode 100644
-index 0000000..60419bd
+index 0000000000..c30d7eda21
 --- /dev/null
 +++ b/res/values/projekt_colors.xml
 @@ -0,0 +1,21 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Projekt Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.
@@ -123,5 +123,5 @@ index 0000000..60419bd
 +    <color name="selectable_card_background">@color/card_background</color>
 +</resources>
 -- 
-2.9.3
+2.11.1
 

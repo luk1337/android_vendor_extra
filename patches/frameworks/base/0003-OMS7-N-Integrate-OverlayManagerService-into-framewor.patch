@@ -1,7 +1,7 @@
-From 0dddffd1c6201f3cd5e235a37014bc10331e45eb Mon Sep 17 00:00:00 2001
+From 427b392b55d816ff7a56461718d94d42048cb775 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Thu, 2 Jun 2016 09:35:31 +0200
-Subject: [PATCH 03/44] OMS7-N: Integrate OverlayManagerService into framework
+Subject: [PATCH 03/47] OMS7-N: Integrate OverlayManagerService into framework
  [3/11]
 
 Hand over ownership of overlays to OverlayManagerService.
@@ -52,17 +52,17 @@ Change-Id: If0b1eaa690c38f9c33f7c8dc981314205a73fa9c
  core/java/android/app/ResourcesManager.java        | 119 ++++++++++++++----
  core/java/android/content/pm/PackageParser.java    |  20 +--
  core/java/android/content/pm/PackageUserState.java |   7 +-
- core/jni/android_util_AssetManager.cpp             |  95 ---------------
- include/androidfw/AssetManager.h                   |  15 +--
- libs/androidfw/AssetManager.cpp                    | 112 -----------------
+ core/jni/android_util_AssetManager.cpp             |  89 --------------
+ include/androidfw/AssetManager.h                   |  14 +--
+ libs/androidfw/AssetManager.cpp                    | 111 -----------------
  .../com/android/server/SystemServiceManager.java   |  24 ++--
  .../android/server/am/ActivityManagerService.java  |  51 ++++++++
- .../android/server/om/OverlayManagerService.java   |  61 +++++-----
- .../android/server/pm/PackageManagerService.java   | 134 ++++-----------------
+ .../android/server/om/OverlayManagerService.java   |  61 +++++----
+ .../android/server/pm/PackageManagerService.java   | 136 ++++-----------------
  .../com/android/server/pm/PackageSettingBase.java  |   9 +-
  .../core/java/com/android/server/pm/Settings.java  |   4 +-
  services/java/com/android/server/SystemServer.java |   4 +
- 21 files changed, 337 insertions(+), 481 deletions(-)
+ 21 files changed, 337 insertions(+), 475 deletions(-)
 
 diff --git a/cmds/idmap/Android.mk b/cmds/idmap/Android.mk
 index 50ccb07a382..eb6da18ea0a 100644
@@ -244,10 +244,10 @@ index 50479c8e951..389f3422fb5 100644
              throws RemoteException {
          Parcel data = Parcel.obtain();
 diff --git a/core/java/android/app/ActivityThread.java b/core/java/android/app/ActivityThread.java
-index 2d22f26069f..55fc25de68b 100644
+index 9d2ef914738..9e479ec6772 100644
 --- a/core/java/android/app/ActivityThread.java
 +++ b/core/java/android/app/ActivityThread.java
-@@ -897,6 +897,14 @@ public final class ActivityThread {
+@@ -898,6 +898,14 @@ public final class ActivityThread {
              sendMessage(H.CONFIGURATION_CHANGED, config);
          }
  
@@ -262,7 +262,7 @@ index 2d22f26069f..55fc25de68b 100644
          public void updateTimeZone() {
              TimeZone.setDefault(null);
          }
-@@ -1405,6 +1413,7 @@ public final class ActivityThread {
+@@ -1406,6 +1414,7 @@ public final class ActivityThread {
          public static final int MULTI_WINDOW_MODE_CHANGED = 152;
          public static final int PICTURE_IN_PICTURE_MODE_CHANGED = 153;
          public static final int LOCAL_VOICE_INTERACTION_STARTED = 154;
@@ -270,7 +270,7 @@ index 2d22f26069f..55fc25de68b 100644
  
          String codeToString(int code) {
              if (DEBUG_MESSAGES) {
-@@ -1461,6 +1470,7 @@ public final class ActivityThread {
+@@ -1462,6 +1471,7 @@ public final class ActivityThread {
                      case MULTI_WINDOW_MODE_CHANGED: return "MULTI_WINDOW_MODE_CHANGED";
                      case PICTURE_IN_PICTURE_MODE_CHANGED: return "PICTURE_IN_PICTURE_MODE_CHANGED";
                      case LOCAL_VOICE_INTERACTION_STARTED: return "LOCAL_VOICE_INTERACTION_STARTED";
@@ -278,7 +278,7 @@ index 2d22f26069f..55fc25de68b 100644
                  }
              }
              return Integer.toString(code);
-@@ -1716,6 +1726,10 @@ public final class ActivityThread {
+@@ -1717,6 +1727,10 @@ public final class ActivityThread {
                      handleLocalVoiceInteractionStarted((IBinder) ((SomeArgs) msg.obj).arg1,
                              (IVoiceInteractor) ((SomeArgs) msg.obj).arg2);
                      break;
@@ -289,7 +289,7 @@ index 2d22f26069f..55fc25de68b 100644
              }
              Object obj = msg.obj;
              if (obj instanceof SomeArgs) {
-@@ -4803,6 +4817,37 @@ public final class ActivityThread {
+@@ -4804,6 +4818,37 @@ public final class ActivityThread {
          }
      }
  
@@ -658,15 +658,15 @@ index e64e4c4cc5e..83573951712 100644
  
      /**
 diff --git a/core/jni/android_util_AssetManager.cpp b/core/jni/android_util_AssetManager.cpp
-index 1a7294f1424..6c5a88fa827 100644
+index fd663cdc7fe..417edb22905 100644
 --- a/core/jni/android_util_AssetManager.cpp
 +++ b/core/jni/android_util_AssetManager.cpp
-@@ -129,85 +129,6 @@ jint copyValue(JNIEnv* env, jobject outValue, const ResTable* table,
+@@ -130,92 +130,6 @@ jint copyValue(JNIEnv* env, jobject outValue, const ResTable* table,
      return block;
  }
  
 -// This is called by zygote (running as user root) as part of preloadResources.
--static void verifySystemIdmaps(const char* overlay_dir)
+-static void verifySystemIdmaps()
 -{
 -    pid_t pid;
 -    char system_id[10];
@@ -710,7 +710,7 @@ index 1a7294f1424..6c5a88fa827 100644
 -                }
 -
 -                // Generic idmap parameters
--                const char* argv[7];
+-                const char* argv[8];
 -                int argc = 0;
 -                struct stat st;
 -
@@ -721,17 +721,24 @@ index 1a7294f1424..6c5a88fa827 100644
 -                argv[argc++] = AssetManager::TARGET_APK_PATH;
 -                argv[argc++] = AssetManager::IDMAP_DIR;
 -
--                // Directories to scan for overlays
--                // /vendor/overlay
--
--               if (stat(overlay_dir, &st) == 0) {
--                   argv[argc++] = overlay_dir;
+-                // Directories to scan for overlays: if OVERLAY_THEME_DIR_PROPERTY is defined,
+-                // use OVERLAY_DIR/<value of OVERLAY_THEME_DIR_PROPERTY> in addition to OVERLAY_DIR.
+-                char subdir[PROP_VALUE_MAX];
+-                int len = __system_property_get(AssetManager::OVERLAY_THEME_DIR_PROPERTY, subdir);
+-                if (len > 0) {
+-                    String8 overlayPath = String8(AssetManager::OVERLAY_DIR) + "/" + subdir;
+-                    if (stat(overlayPath.string(), &st) == 0) {
+-                        argv[argc++] = overlayPath.string();
+-                    }
+-                }
+-                if (stat(AssetManager::OVERLAY_DIR, &st) == 0) {
+-                    argv[argc++] = AssetManager::OVERLAY_DIR;
 -                }
 -
 -                // Finally, invoke idmap (if any overlay directory exists)
 -                if (argc > 5) {
 -                    execv(AssetManager::IDMAP_BIN, (char* const*)argv);
--                    ALOGE("failed to execl for idmap: %s", strerror(errno));
+-                    ALOGE("failed to execv for idmap: %s", strerror(errno));
 -                    exit(1); // should never get here
 -                } else {
 -                    exit(0);
@@ -747,34 +754,21 @@ index 1a7294f1424..6c5a88fa827 100644
  // ----------------------------------------------------------------------------
  
  // this guy is exported to other jni routines
-@@ -2078,22 +1999,6 @@ static jintArray android_content_AssetManager_getStyleAttributes(JNIEnv* env, jo
+@@ -2086,9 +2000,6 @@ static jintArray android_content_AssetManager_getStyleAttributes(JNIEnv* env, jo
  
  static void android_content_AssetManager_init(JNIEnv* env, jobject clazz, jboolean isSystem)
  {
 -    if (isSystem) {
--        // Load frameworks-res.apk's overlay through regionalization environment
--        if (Environment::isSupported()) {
--            Environment* environment = new Environment();
--            if (environment != NULL) {
--                const char* overlay_dir = environment->getOverlayDir();
--                if (overlay_dir != NULL && strcmp(overlay_dir, "") != 0) {
--                    ALOGD("Regionalization - getOverlayDir:%s", overlay_dir);
--                    verifySystemIdmaps(overlay_dir);
--                }
--                delete environment;
--            }
--        }
--
--        verifySystemIdmaps(AssetManager::OVERLAY_DIR);
+-        verifySystemIdmaps();
 -    }
      AssetManager* am = new AssetManager();
      if (am == NULL) {
          jniThrowException(env, "java/lang/OutOfMemoryError", "");
 diff --git a/include/androidfw/AssetManager.h b/include/androidfw/AssetManager.h
-index 2d5f4c2f90b..0326e2b3d33 100644
+index b4a645fc8ab..1abfe1fc8ca 100644
 --- a/include/androidfw/AssetManager.h
 +++ b/include/androidfw/AssetManager.h
-@@ -238,12 +238,10 @@ public:
+@@ -244,12 +244,10 @@ public:
  private:
      struct asset_path
      {
@@ -788,7 +782,7 @@ index 2d5f4c2f90b..0326e2b3d33 100644
          bool isSystemAsset;
      };
  
-@@ -288,9 +286,6 @@ private:
+@@ -294,9 +292,6 @@ private:
  
      Asset* openIdmapLocked(const struct asset_path& ap) const;
  
@@ -798,7 +792,7 @@ index 2d5f4c2f90b..0326e2b3d33 100644
      class SharedZip : public RefBase {
      public:
          static sp<SharedZip> get(const String8& path, bool createIfNotPresent = true);
-@@ -305,9 +300,6 @@ private:
+@@ -311,9 +306,6 @@ private:
          
          bool isUpToDate();
  
@@ -808,7 +802,7 @@ index 2d5f4c2f90b..0326e2b3d33 100644
      protected:
          ~SharedZip();
  
-@@ -322,8 +314,6 @@ private:
+@@ -328,8 +320,6 @@ private:
          Asset* mResourceTableAsset;
          ResTable* mResourceTable;
  
@@ -817,22 +811,20 @@ index 2d5f4c2f90b..0326e2b3d33 100644
          static Mutex gLock;
          static DefaultKeyedVector<String8, wp<SharedZip> > gOpen;
      };
-@@ -357,9 +347,8 @@ private:
+@@ -363,8 +353,6 @@ private:
  
          bool isUpToDate();
  
 -        void addOverlay(const String8& path, const asset_path& overlay);
 -        bool getOverlay(const String8& path, size_t idx, asset_path* out) const;
          void closeZipFromPath(const String8& zip);
-+
      private:
          void closeZip(int idx);
- 
 diff --git a/libs/androidfw/AssetManager.cpp b/libs/androidfw/AssetManager.cpp
-index c0e8a980c2d..b9954573d79 100644
+index 6319d893cc8..5eae1459444 100644
 --- a/libs/androidfw/AssetManager.cpp
 +++ b/libs/androidfw/AssetManager.cpp
-@@ -214,15 +214,6 @@ bool AssetManager::addAssetPath(
+@@ -215,15 +215,6 @@ bool AssetManager::addAssetPath(
          *cookie = static_cast<int32_t>(mAssetPaths.size());
      }
  
@@ -848,7 +840,7 @@ index c0e8a980c2d..b9954573d79 100644
      if (mResources != NULL) {
          appendPathToResTable(ap, appAsLib);
      }
-@@ -606,11 +597,6 @@ FileType AssetManager::getFileType(const char* fileName)
+@@ -607,11 +598,6 @@ FileType AssetManager::getFileType(const char* fileName)
  }
  
  bool AssetManager::appendPathToResTable(const asset_path& ap, bool appAsLib) const {
@@ -860,7 +852,7 @@ index c0e8a980c2d..b9954573d79 100644
      Asset* ass = NULL;
      ResTable* sharedRes = NULL;
      bool shared = true;
-@@ -652,14 +638,6 @@ bool AssetManager::appendPathToResTable(const asset_path& ap, bool appAsLib) con
+@@ -653,14 +639,6 @@ bool AssetManager::appendPathToResTable(const asset_path& ap, bool appAsLib) con
                  ALOGV("Creating shared resources for %s", ap.path.string());
                  sharedRes = new ResTable();
                  sharedRes->add(ass, idmap, nextEntryIdx + 1, false);
@@ -875,7 +867,7 @@ index c0e8a980c2d..b9954573d79 100644
                  sharedRes = const_cast<AssetManager*>(this)->
                      mZipSet.setZipResourceTable(ap.path, sharedRes);
              }
-@@ -772,66 +750,6 @@ Asset* AssetManager::openIdmapLocked(const struct asset_path& ap) const
+@@ -773,65 +751,6 @@ Asset* AssetManager::openIdmapLocked(const struct asset_path& ap) const
      return ass;
  }
  
@@ -921,7 +913,6 @@ index c0e8a980c2d..b9954573d79 100644
 -            sharedRes->add(oass, oidmap, offset + 1, false);
 -            const_cast<AssetManager*>(this)->mAssetPaths.add(oap);
 -            const_cast<AssetManager*>(this)->mZipSet.addOverlay(targetPackagePath, oap);
--
 -            oidmap->close();
 -            delete oidmap;
 -            ALOGD("close idmap=%s pid=%d\n", oap.idmap.string(), getpid());
@@ -930,8 +921,8 @@ index c0e8a980c2d..b9954573d79 100644
 -        if (oap.path.find(OVERLAY_DIR) != -1) {
 -           const_cast<AssetManager*>(this)->mZipSet.closeZipFromPath(oap.path);
 -           ALOGD("close: %s and reset entry\n", oap.path.string());
--      }
--  }
+-       }
+-   }
 -
 -#ifndef _WIN32
 -    TEMP_FAILURE_RETRY(flock(fileno(fin), LOCK_UN));
@@ -942,7 +933,7 @@ index c0e8a980c2d..b9954573d79 100644
  const ResTable& AssetManager::getResources(bool required) const
  {
      const ResTable* rt = getResTable(required);
-@@ -1970,20 +1888,6 @@ bool AssetManager::SharedZip::isUpToDate()
+@@ -1970,20 +1889,6 @@ bool AssetManager::SharedZip::isUpToDate()
      return mModWhen == modWhen;
  }
  
@@ -963,7 +954,7 @@ index c0e8a980c2d..b9954573d79 100644
  AssetManager::SharedZip::~SharedZip()
  {
      if (kIsDebug) {
-@@ -2125,22 +2029,6 @@ bool AssetManager::ZipSet::isUpToDate()
+@@ -2125,22 +2030,6 @@ bool AssetManager::ZipSet::isUpToDate()
      return true;
  }
  
@@ -987,7 +978,7 @@ index c0e8a980c2d..b9954573d79 100644
   * Compute the zip file's index.
   *
 diff --git a/services/core/java/com/android/server/SystemServiceManager.java b/services/core/java/com/android/server/SystemServiceManager.java
-index 90f507c146b..904c967acdc 100644
+index a0c80fe666e..0aad4c74b05 100644
 --- a/services/core/java/com/android/server/SystemServiceManager.java
 +++ b/services/core/java/com/android/server/SystemServiceManager.java
 @@ -16,6 +16,7 @@
@@ -998,7 +989,7 @@ index 90f507c146b..904c967acdc 100644
  import android.content.Context;
  import android.os.Trace;
  import android.util.Slog;
-@@ -104,22 +105,25 @@ public class SystemServiceManager {
+@@ -105,22 +106,25 @@ public class SystemServiceManager {
                          + ": service constructor threw an exception", ex);
              }
  
@@ -1035,10 +1026,10 @@ index 90f507c146b..904c967acdc 100644
       * Starts the specified boot phase for all system services that have been started up to
       * this point.
 diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
-index a3923b94ef9..f4d07aff3e6 100644
+index 2e73c72db93..a94822e5698 100644
 --- a/services/core/java/com/android/server/am/ActivityManagerService.java
 +++ b/services/core/java/com/android/server/am/ActivityManagerService.java
-@@ -19344,6 +19344,57 @@ public final class ActivityManagerService extends ActivityManagerNative
+@@ -19376,6 +19376,57 @@ public final class ActivityManagerService extends ActivityManagerNative
      }
  
      /**
@@ -1169,10 +1160,10 @@ index ec148dd9fa7..761ef5240ec 100644
  
      private void schedulePersistSettings() {
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 7860bbdaf5d..1d9a5906f34 100644
+index 3aacfb43913..298a9df359d 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
-@@ -400,17 +400,16 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -399,17 +399,16 @@ public class PackageManagerService extends IPackageManager.Stub {
      static final int SCAN_UPDATE_TIME = 1<<6;
      static final int SCAN_DEFER_DEX = 1<<7;
      static final int SCAN_BOOTING = 1<<8;
@@ -1200,7 +1191,7 @@ index 7860bbdaf5d..1d9a5906f34 100644
  
      private static final int[] EMPTY_INT_ARRAY = new int[0];
  
-@@ -601,10 +600,6 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -603,10 +602,6 @@ public class PackageManagerService extends IPackageManager.Stub {
      final ArrayMap<String, Set<String>> mKnownCodebase =
              new ArrayMap<String, Set<String>>();
  
@@ -1211,9 +1202,16 @@ index 7860bbdaf5d..1d9a5906f34 100644
      /**
       * Tracks new system packages [received in an OTA] that we expect to
       * find updated user-installed versions. Keys are package name, values
-@@ -2347,8 +2342,8 @@ public class PackageManagerService extends IPackageManager.Stub {
-             File vendorOverlayDir = new File(VENDOR_OVERLAY_DIR);
-             scanDirTracedLI(vendorOverlayDir, mDefParseFlags
+@@ -2354,13 +2349,13 @@ public class PackageManagerService extends IPackageManager.Stub {
+             if (!overlayThemeDir.isEmpty()) {
+                 scanDirTracedLI(new File(VENDOR_OVERLAY_DIR, overlayThemeDir), mDefParseFlags
+                         | PackageParser.PARSE_IS_SYSTEM
+-                        | PackageParser.PARSE_IS_SYSTEM_DIR
+-                        | PackageParser.PARSE_TRUSTED_OVERLAY, scanFlags | SCAN_TRUSTED_OVERLAY, 0);
++                        | PackageParser.PARSE_IS_SYSTEM_DIR,
++                        scanFlags, 0);
+             }
+             scanDirTracedLI(new File(VENDOR_OVERLAY_DIR), mDefParseFlags
                      | PackageParser.PARSE_IS_SYSTEM
 -                    | PackageParser.PARSE_IS_SYSTEM_DIR
 -                    | PackageParser.PARSE_TRUSTED_OVERLAY, scanFlags | SCAN_TRUSTED_OVERLAY, 0);
@@ -1222,16 +1220,7 @@ index 7860bbdaf5d..1d9a5906f34 100644
  
              // Find base frameworks (resource packages without code).
              scanDirTracedLI(frameworkDir, mDefParseFlags
-@@ -2405,7 +2400,7 @@ public class PackageManagerService extends IPackageManager.Stub {
-                     // Collect overlay in <Package>/system/vendor
-                     scanDirLI(new File(RegionalizationSystemDir, "vendor/overlay"),
-                             PackageParser.PARSE_IS_SYSTEM | PackageParser.PARSE_IS_SYSTEM_DIR,
--                            scanFlags | SCAN_TRUSTED_OVERLAY, 0);
-+                            scanFlags, 0);
-                 }
-             }
- 
-@@ -6732,60 +6727,6 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -6719,60 +6714,6 @@ public class PackageManagerService extends IPackageManager.Stub {
          return finalList;
      }
  
@@ -1292,7 +1281,7 @@ index 7860bbdaf5d..1d9a5906f34 100644
      private void scanDirTracedLI(File dir, final int parseFlags, int scanFlags, long currentTime) {
          Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "scanDir");
          try {
-@@ -6973,10 +6914,6 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -6954,10 +6895,6 @@ public class PackageManagerService extends IPackageManager.Stub {
          pp.setOnlyPowerOffAlarmApps(mOnlyPowerOffAlarm);
          pp.setDisplayMetrics(mMetrics);
  
@@ -1303,7 +1292,7 @@ index 7860bbdaf5d..1d9a5906f34 100644
          Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "parsePackage");
          final PackageParser.Package pkg;
          try {
-@@ -8209,7 +8146,6 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -8190,7 +8127,6 @@ public class PackageManagerService extends IPackageManager.Stub {
              pkg.applicationInfo.privateFlags &=
                      ~ApplicationInfo.PRIVATE_FLAG_DIRECT_BOOT_AWARE;
          }
@@ -1311,7 +1300,7 @@ index 7860bbdaf5d..1d9a5906f34 100644
  
          if ((policyFlags&PackageParser.PARSE_IS_PRIVILEGED) != 0) {
              pkg.applicationInfo.privateFlags |= ApplicationInfo.PRIVATE_FLAG_PRIVILEGED;
-@@ -8804,7 +8740,6 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -8785,7 +8721,6 @@ public class PackageManagerService extends IPackageManager.Stub {
          // writer
          Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "updateSettings");
  
@@ -1319,7 +1308,7 @@ index 7860bbdaf5d..1d9a5906f34 100644
          synchronized (mPackages) {
              // We don't expect installation to fail beyond this point
  
-@@ -9151,36 +9086,10 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -9132,36 +9067,10 @@ public class PackageManagerService extends IPackageManager.Stub {
              }
  
              pkgSetting.setTimeStamp(scanFileTime);
@@ -1356,7 +1345,7 @@ index 7860bbdaf5d..1d9a5906f34 100644
          return pkg;
      }
  
-@@ -16627,7 +16536,7 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -16628,7 +16537,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                      false /*hidden*/, false /*suspended*/, null, null, null,
                      false /*blockUninstall*/,
                      ps.readUserState(nextUserId).domainVerificationStatus, 0,
@@ -1365,7 +1354,7 @@ index 7860bbdaf5d..1d9a5906f34 100644
          }
      }
  
-@@ -21492,14 +21401,13 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
+@@ -21498,14 +21407,13 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
  
          @Override
          public void setResourceDirs(int userId, String packageName, String[] resourceDirs) {
@@ -1458,7 +1447,7 @@ index 285b5bbf3ec..f00080ce739 100755
                      readPreferredActivitiesLPw(parser, userId);
                  } else if (tagName.equals(TAG_PERSISTENT_PREFERRED_ACTIVITIES)) {
 diff --git a/services/java/com/android/server/SystemServer.java b/services/java/com/android/server/SystemServer.java
-index 6f2141708ed..ab425c05e95 100644
+index ef4fc252640..6e973b785f6 100644
 --- a/services/java/com/android/server/SystemServer.java
 +++ b/services/java/com/android/server/SystemServer.java
 @@ -85,6 +85,7 @@ import com.android.server.media.projection.MediaProjectionManagerService;
@@ -1469,7 +1458,7 @@ index 6f2141708ed..ab425c05e95 100644
  import com.android.server.os.RegionalizationService;
  import com.android.server.os.SchedulingPolicyService;
  import com.android.server.pm.BackgroundDexOptService;
-@@ -531,6 +532,9 @@ public final class SystemServer {
+@@ -537,6 +538,9 @@ public final class SystemServer {
          // Set up the Application instance for the system process and get started.
          mActivityManagerService.setSystemProcess();
  

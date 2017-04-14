@@ -1,4 +1,4 @@
-From acece0611d57e0467c65af1fdbabe1ad7d793b4d Mon Sep 17 00:00:00 2001
+From 730829b706844e30cda494a22653f13341527d86 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 4 Mar 2017 19:20:10 -0700
 Subject: [PATCH 10/10] Welcome to Theme Interfacer! [2/2]
@@ -202,7 +202,7 @@ index bbf8b78..5dc518d 100644
 -user=system isPrivApp=true domain=masquerade seinfo=platform name=masquerade.substratum type=system_app_data_file
 +user=system isPrivApp=true domain=interfacer seinfo=platform name=projekt.interfacer type=system_app_data_file
 diff --git a/service.te b/service.te
-index efa08e7..5818897 100644
+index 782201f..884c6ba 100644
 --- a/service.te
 +++ b/service.te
 @@ -63,12 +63,12 @@ type hardware_properties_service, app_api_service, system_server_service, servic
@@ -220,7 +220,7 @@ index efa08e7..5818897 100644
  type media_router_service, app_api_service, system_server_service, service_manager_type;
  type media_session_service, app_api_service, system_server_service, service_manager_type;
 diff --git a/service_contexts b/service_contexts
-index b831312..c38c017 100644
+index 77b508e..7112450 100644
 --- a/service_contexts
 +++ b/service_contexts
 @@ -57,6 +57,7 @@ iphonesubinfo2                            u:object_r:radio_service:s0

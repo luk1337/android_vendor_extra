@@ -1,7 +1,7 @@
-From 0865f28568ea71401837a37357bc270d8e3a062c Mon Sep 17 00:00:00 2001
+From f9e781525d7ece472d2016584914755e8d13bec7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Tue, 15 Dec 2015 16:40:23 +0100
-Subject: [PATCH 02/44] OMS7-N: Introduce the OverlayManagerService [2/11]
+Subject: [PATCH 02/47] OMS7-N: Introduce the OverlayManagerService [2/11]
 
 Add a new system service to manage Runtime Resource Overlays. This will
 offload the PackageManagerService and allow administration of overlay
@@ -84,7 +84,7 @@ Change-Id: Icc3c7daa25345d20bc5014b865024422eab72f5b
  create mode 100644 services/core/java/com/android/server/om/OverlayManagerShellCommand.java
 
 diff --git a/Android.mk b/Android.mk
-index bdb45550fa1..df427801fa7 100644
+index 7f06a7a02ad..a0fbd6930da 100644
 --- a/Android.mk
 +++ b/Android.mk
 @@ -137,6 +137,7 @@ LOCAL_SRC_FILES += \
@@ -96,10 +96,10 @@ index bdb45550fa1..df427801fa7 100644
  	core/java/android/content/pm/IOnAppsChangedListener.aidl \
  	core/java/android/content/pm/IOtaDexopt.aidl \
 diff --git a/core/java/android/content/Context.java b/core/java/android/content/Context.java
-index 3a2f471e96e..1ca44e0f633 100644
+index ab37cd80b81..dea1d5a60df 100644
 --- a/core/java/android/content/Context.java
 +++ b/core/java/android/content/Context.java
-@@ -3656,6 +3656,16 @@ public abstract class Context {
+@@ -3653,6 +3653,16 @@ public abstract class Context {
      public static final String GATEKEEPER_SERVICE = "android.service.gatekeeper.IGateKeeperService";
  
      /**
@@ -117,7 +117,7 @@ index 3a2f471e96e..1ca44e0f633 100644
       * process and user ID running in the system.
       *
 diff --git a/core/java/android/content/Intent.java b/core/java/android/content/Intent.java
-index 861aae5a879..1afae798bcf 100644
+index 2142aae2ec7..ad43aa5a776 100644
 --- a/core/java/android/content/Intent.java
 +++ b/core/java/android/content/Intent.java
 @@ -3092,6 +3092,40 @@ public class Intent implements Parcelable, Cloneable {
@@ -618,13 +618,13 @@ index 00000000000..a25cf0c008c
 +    }
 +}
 diff --git a/core/java/android/content/pm/PackageManagerInternal.java b/core/java/android/content/pm/PackageManagerInternal.java
-index f5bcf64417a..bdbdd1ebcf9 100644
+index 9bb21288686..7863919df4d 100644
 --- a/core/java/android/content/pm/PackageManagerInternal.java
 +++ b/core/java/android/content/pm/PackageManagerInternal.java
-@@ -168,4 +168,28 @@ public abstract class PackageManagerInternal {
-      * @return Whether was launched.
+@@ -181,4 +181,28 @@ public abstract class PackageManagerInternal {
+      * user id is not currently assigned.
       */
-     public abstract boolean wasPackageEverLaunched(String packageName, int userId);
+     public abstract String getNameForUid(int uid);
 +
 +    /**
 +     * Get all overlay packages for a user.
@@ -651,7 +651,7 @@ index f5bcf64417a..bdbdd1ebcf9 100644
 +    public abstract void setResourceDirs(int userId, String packageName, String[] resourceDirs);
  }
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index 2c76dee9754..6a5bd3946db 100644
+index e15a0b8c895..cd200e20481 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
 @@ -84,6 +84,10 @@
@@ -3026,12 +3026,12 @@ index 00000000000..d6f53737913
 +    }
 +}
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 4cfa3d5d40c..7860bbdaf5d 100644
+index 9e899afe3a3..3aacfb43913 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
-@@ -21460,6 +21460,47 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
-                 return mSettings.wasPackageEverLaunchedLPr(packageName, userId);
-             }
+@@ -21466,6 +21466,47 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
+         public String getNameForUid(int uid) {
+             return PackageManagerService.this.getNameForUid(uid);
          }
 +
 +        @Override

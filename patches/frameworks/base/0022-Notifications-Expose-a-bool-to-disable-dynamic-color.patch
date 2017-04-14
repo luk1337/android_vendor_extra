@@ -1,7 +1,7 @@
-From bb786714f7fd84e6fcbe62fc6bc760620c1a5861 Mon Sep 17 00:00:00 2001
+From c625ad1cc957fcbb4211fb827adbd6d7e871e9a6 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Sat, 27 Aug 2016 10:56:46 -0400
-Subject: [PATCH 19/44] Notifications: Expose a bool to disable dynamic colors
+Subject: [PATCH 22/47] Notifications: Expose a bool to disable dynamic colors
 
 This commit allows a themer to overlay a boolean value in config.xml to
 disable dynamic colors applied to the app title and app icon of each
@@ -85,7 +85,7 @@ index 9f217d48aa8..55029aad4ae 100644
              }
              CharSequence text = m.mText == null ? "" : m.mText;
 diff --git a/core/res/res/values/projekt_colors.xml b/core/res/res/values/projekt_colors.xml
-index a7316ab979c..d17fbba053d 100644
+index 06f3edfcc39..337620949dd 100644
 --- a/core/res/res/values/projekt_colors.xml
 +++ b/core/res/res/values/projekt_colors.xml
 @@ -21,4 +21,6 @@
@@ -97,13 +97,13 @@ index a7316ab979c..d17fbba053d 100644
  </resources>
 diff --git a/core/res/res/values/projekt_config.xml b/core/res/res/values/projekt_config.xml
 new file mode 100644
-index 00000000000..f6eb90a49eb
+index 00000000000..83f5494b0f6
 --- /dev/null
 +++ b/core/res/res/values/projekt_config.xml
 @@ -0,0 +1,25 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Project Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.
@@ -128,13 +128,13 @@ index 00000000000..f6eb90a49eb
 +</resources>
 diff --git a/core/res/res/values/projekt_symbols.xml b/core/res/res/values/projekt_symbols.xml
 new file mode 100644
-index 00000000000..f597a5f3f7b
+index 00000000000..e831f478d30
 --- /dev/null
 +++ b/core/res/res/values/projekt_symbols.xml
 @@ -0,0 +1,25 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Project Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.

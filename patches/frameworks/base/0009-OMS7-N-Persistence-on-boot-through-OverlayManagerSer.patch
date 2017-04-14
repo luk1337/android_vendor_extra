@@ -1,7 +1,7 @@
-From 6dca35a8d93847e1b1e92861cf1d3ea4dd499790 Mon Sep 17 00:00:00 2001
+From fa6affd0e6101b05268d8f838a5eb74a447b231b Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Sun, 19 Jun 2016 10:37:13 -0400
-Subject: [PATCH 09/44] OMS7-N: Persistence on boot through
+Subject: [PATCH 09/47] OMS7-N: Persistence on boot through
  OverlayManagerServiceImpl [9/11]
 
 Overlays should not be enforced by the traditional OverlayManagerService

@@ -1,4 +1,4 @@
-From 614e827e959ea39c36d8db6e004353ead93732d3 Mon Sep 17 00:00:00 2001
+From 5823708cb8f539ff271eb7ef4c263d4ad642b927 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sat, 28 Jan 2017 13:40:55 +0100
 Subject: [PATCH 15/20] Set external settings icon tint mode to SRC_ATOP
@@ -17,7 +17,7 @@ Change-Id: I65b710e2abefd1052b3af154a98247de9b4fe98d
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/src/com/android/settings/dashboard/DashboardAdapter.java b/src/com/android/settings/dashboard/DashboardAdapter.java
-index c29da43..8259d39 100755
+index c29da4308e..8259d39ee6 100755
 --- a/src/com/android/settings/dashboard/DashboardAdapter.java
 +++ b/src/com/android/settings/dashboard/DashboardAdapter.java
 @@ -19,6 +19,7 @@ import android.content.Context;
@@ -38,5 +38,5 @@ index c29da43..8259d39 100755
              }
          }
 -- 
-2.9.3
+2.11.1
 

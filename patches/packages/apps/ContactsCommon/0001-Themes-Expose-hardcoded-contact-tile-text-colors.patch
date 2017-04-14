@@ -1,4 +1,4 @@
-From 34f415cf87f857d4ce1426c60c784dcb417aa227 Mon Sep 17 00:00:00 2001
+From c2b6bf12c7a179f35274a2fafc91411993277c3e Mon Sep 17 00:00:00 2001
 From: bgill55 <bricam55@gmail.com>
 Date: Sat, 24 Jan 2015 18:12:39 -0700
 Subject: [PATCH 1/2] Themes: Expose hardcoded contact tile text colors
@@ -16,7 +16,7 @@ Change-Id: I85aa4349ece8a9821d9443523b13f2234edd4af7
  create mode 100644 res/values/projekt_colors.xml
 
 diff --git a/res/layout/contact_tile_frequent.xml b/res/layout/contact_tile_frequent.xml
-index b1e83ce..8c718fb 100644
+index b1e83ce0..8c718fb2 100644
 --- a/res/layout/contact_tile_frequent.xml
 +++ b/res/layout/contact_tile_frequent.xml
 @@ -38,7 +38,7 @@
@@ -29,7 +29,7 @@ index b1e83ce..8c718fb 100644
              android:singleLine="true"
              android:fadingEdge="horizontal"
 diff --git a/res/layout/contact_tile_starred.xml b/res/layout/contact_tile_starred.xml
-index 777cc05..88aa1e8 100644
+index 777cc058..88aa1e88 100644
 --- a/res/layout/contact_tile_starred.xml
 +++ b/res/layout/contact_tile_starred.xml
 @@ -43,7 +43,7 @@
@@ -42,7 +42,7 @@ index 777cc05..88aa1e8 100644
              android:singleLine="true"
              android:fadingEdge="horizontal"
 diff --git a/res/layout/contact_tile_starred_quick_contact.xml b/res/layout/contact_tile_starred_quick_contact.xml
-index ecbe583..2134ffc 100644
+index ecbe5839..2134ffcb 100644
 --- a/res/layout/contact_tile_starred_quick_contact.xml
 +++ b/res/layout/contact_tile_starred_quick_contact.xml
 @@ -47,7 +47,7 @@
@@ -56,13 +56,13 @@ index ecbe583..2134ffc 100644
                  android:fadingEdge="horizontal"
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
 new file mode 100644
-index 0000000..a5d6bd3
+index 00000000..b503bfb9
 --- /dev/null
 +++ b/res/values/projekt_colors.xml
 @@ -0,0 +1,22 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Project Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.
@@ -83,5 +83,5 @@ index 0000000..a5d6bd3
 +    <color name="starred_quick_contact_name_text_color">@android:color/white</color>
 +</resources>
 -- 
-2.9.3
+2.11.1
 

@@ -1,4 +1,4 @@
-From bf3a9728d3a62473b7f95fc2ec8056dcd43a9974 Mon Sep 17 00:00:00 2001
+From 4cabfd35796c44a005edae8a62dccc1ab3ac340a Mon Sep 17 00:00:00 2001
 From: Thyrus11 <thyrus11@gmail.com>
 Date: Sat, 21 Feb 2015 10:41:01 +0100
 Subject: [PATCH] Themes: Make dialpad seperator line theme-able
@@ -40,13 +40,13 @@ index 7bc4536..3fcf0da 100644
          android:layout_width="match_parent"
 diff --git a/res/values/projekt_colors.xml b/res/values/projekt_colors.xml
 new file mode 100644
-index 0000000..163e4f0
+index 0000000..91340e4
 --- /dev/null
 +++ b/res/values/projekt_colors.xml
 @@ -0,0 +1,20 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!--
-+    Copyright (c) 2016 Projekt Substratum
++    Copyright (c) 2016-2017 Projekt Substratum
 +
 +    Licensed under the Apache License, Version 2.0 (the "License");
 +    you may not use this file except in compliance with the License.
@@ -65,5 +65,5 @@ index 0000000..163e4f0
 +    <color name="dialpad_separator_color">#e3e3e3</color>
 +</resources>
 -- 
-2.9.3
+2.11.1
 
