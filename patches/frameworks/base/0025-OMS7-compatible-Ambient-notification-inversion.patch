@@ -1,7 +1,7 @@
-From cfc039feef23fb3144a5740075d3cec73c9a6e92 Mon Sep 17 00:00:00 2001
+From c017d1d8a7ae32fc5ea4935c79c60e36fd6df638 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Mon, 14 Nov 2016 14:44:17 +0200
-Subject: [PATCH 25/47] OMS7 compatible 'Ambient notification inversion'
+Subject: [PATCH 25/49] OMS7 compatible 'Ambient notification inversion'
 
 OMS7 introduced this fine piece of code: https://github.com/SubstratumResources/platform_frameworks_base/blob/n-oms7/core/java/android/app/ResourcesManager.java#L897..#L904
 

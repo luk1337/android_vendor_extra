@@ -1,0 +1,44 @@
+From d83c68696b4df8be3df704e9df0a882ca654577e Mon Sep 17 00:00:00 2001
+From: bigrushdog <randall.rushing@gmail.com>
+Date: Tue, 11 Apr 2017 01:01:04 -0700
+Subject: [PATCH 48/49] Separate tile label color from icon drawable color
+
+Sometimes it is desirable to override default icon tinting with
+transparent tinting. However, doing so makes the label text
+invisible. Allow themes to specify their own label color in this
+case.
+
+Change-Id: I9af2002929e41144469050a864c0eca243e32339
+---
+ packages/SystemUI/res/values/projekt_colors.xml                        | 2 ++
+ packages/SystemUI/src/com/android/systemui/qs/external/CustomTile.java | 3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/res/values/projekt_colors.xml b/packages/SystemUI/res/values/projekt_colors.xml
+index 84e3b75505b..8fd3fc3039d 100644
+--- a/packages/SystemUI/res/values/projekt_colors.xml
++++ b/packages/SystemUI/res/values/projekt_colors.xml
+@@ -37,4 +37,6 @@
+     <!-- Screenshot action colors -->
+     <color name="screenshot_flash_color">@android:color/white</color>
+     <color name="screenshot_background_color">@android:color/black</color>
++    <!-- Separate QS text label tint from icon tint -->
++    <color name="qs_tile_label_tint_unavailable">@color/qs_tile_tint_unavailable</color>
+ </resources>
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/external/CustomTile.java b/packages/SystemUI/src/com/android/systemui/qs/external/CustomTile.java
+index dfd2b77f7e7..5d1958ea25d 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/external/CustomTile.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/external/CustomTile.java
+@@ -307,7 +307,8 @@ public class CustomTile extends QSTile<QSTile.State> implements TileChangeListen
+         state.label = mTile.getLabel();
+         if (tileState == Tile.STATE_UNAVAILABLE) {
+             state.label = new SpannableStringBuilder().append(state.label,
+-                    new ForegroundColorSpan(color),
++                    new ForegroundColorSpan(
++                            mContext.getColor(R.color.qs_tile_label_tint_unavailable)),
+                     SpannableStringBuilder.SPAN_INCLUSIVE_INCLUSIVE);
+         }
+         if (mTile.getContentDescription() != null) {
+-- 
+2.11.1
+

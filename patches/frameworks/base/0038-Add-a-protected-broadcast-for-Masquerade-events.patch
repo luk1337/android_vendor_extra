@@ -1,7 +1,7 @@
-From 81a8710a8cf532eaf31a6cf938802572d82bae47 Mon Sep 17 00:00:00 2001
+From fac68ee9116877e5d1a4e87e6451765e7a585418 Mon Sep 17 00:00:00 2001
 From: bigrushdog <randall.rushing@gmail.com>
 Date: Sat, 14 Jan 2017 23:33:38 -0800
-Subject: [PATCH 38/47] Add a protected broadcast for Masquerade events
+Subject: [PATCH 38/49] Add a protected broadcast for Masquerade events
 
 Parse extras to get event details. Docs will be available
 in Masquerade source code
