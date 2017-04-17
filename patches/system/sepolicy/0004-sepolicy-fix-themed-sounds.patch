@@ -1,7 +1,7 @@
-From 64b2ac651ecc48a340ae9d12b8a57a98a084fb86 Mon Sep 17 00:00:00 2001
+From 8882f733308ff6ac5e5292eb38253bda7b874427 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Wed, 8 Feb 2017 17:22:44 +0200
-Subject: [PATCH 04/10] sepolicy: fix themed sounds
+Subject: [PATCH 04/11] sepolicy: fix themed sounds
 
 02-08 17:26:48.011 18259-18259/? W/SoundPoolThread: type=1400 audit(0.0:31): avc: denied { read } for path="/data/system/theme/audio/ui/Lock.ogg" dev="dm-0" ino=1006317 scontext=u:r:drmserver:s0 tcontext=u:object_r:theme_data_file:s0 tclass=file permissive=0
 

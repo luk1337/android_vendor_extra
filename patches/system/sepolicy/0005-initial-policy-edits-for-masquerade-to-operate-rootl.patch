@@ -1,7 +1,7 @@
-From 33abb5b8782a3886016eb8e04a3fd5dec97b16c3 Mon Sep 17 00:00:00 2001
+From 3a536ae9574dae37422ec188f119d9769c68355c Mon Sep 17 00:00:00 2001
 From: Surge1223 <surge1223@gmail.com>
 Date: Sat, 18 Feb 2017 08:46:15 -0600
-Subject: [PATCH 05/10] initial policy edits for masquerade to operate rootless
+Subject: [PATCH 05/11] initial policy edits for masquerade to operate rootless
 
 Change-Id: Iddfc408f206033772b9d49d335ca94e63b5e5210
 ---

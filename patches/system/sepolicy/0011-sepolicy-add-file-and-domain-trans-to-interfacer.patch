@@ -1,0 +1,38 @@
+From a65b9f9786bda8cca29f808cf8669bebb0c59578 Mon Sep 17 00:00:00 2001
+From: Surge Raval <Surge1223@gmail.com>
+Date: Sun, 16 Apr 2017 05:00:13 +0000
+Subject: [PATCH 11/11] sepolicy: add file and domain trans to interfacer
+
+This will fix bootanimations not applying on 7.1.2 ROMs
+
+Change-Id: I3dd752dcb58ee84ac9953252a1fb3c5cd84c90c7
+---
+ interfacer.te    | 5 +++++
+ untrusted_app.te | 1 +
+ 2 files changed, 6 insertions(+)
+
+diff --git a/interfacer.te b/interfacer.te
+index 45dcd6b..a5ba1d7 100644
+--- a/interfacer.te
++++ b/interfacer.te
+@@ -61,3 +61,8 @@ allow interfacer display_service:service_manager find;
+ allow interfacer mount_service:service_manager find;
+ allow interfacer network_management_service:service_manager find;
+ allow interfacer overlay_service:service_manager find;
++
++# Allow file and type transition for contexts
++type_transition interfacer system_data_file:file theme_data_file "theme";
++type_transition interfacer system_data_file:dir theme_data_file;
++file_type_auto_trans(interfacer, system_data_file, theme_data_file);
+diff --git a/untrusted_app.te b/untrusted_app.te
+index c2a5320..8dd0f3f 100644
+--- a/untrusted_app.te
++++ b/untrusted_app.te
+@@ -216,3 +216,4 @@ neverallow untrusted_app tun_device:chr_file open;
+ # Only allow appending to /data/anr/traces.txt (b/27853304, b/18340553)
+ neverallow untrusted_app anr_data_file:file ~{ open append };
+ neverallow untrusted_app anr_data_file:dir ~search;
++allow untrusted_app system_app_data_file:dir getattr;
+-- 
+2.11.1
+

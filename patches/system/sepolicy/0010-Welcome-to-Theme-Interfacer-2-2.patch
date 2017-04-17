@@ -1,7 +1,7 @@
-From 730829b706844e30cda494a22653f13341527d86 Mon Sep 17 00:00:00 2001
+From a0cb9177aff9b17cea5119a9b8fb6770784857cf Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 4 Mar 2017 19:20:10 -0700
-Subject: [PATCH 10/10] Welcome to Theme Interfacer! [2/2]
+Subject: [PATCH 10/11] Welcome to Theme Interfacer! [2/2]
 
 Change-Id: I4a28c8840957d385338529540e081eabd3135cc1
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
