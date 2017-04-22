@@ -1,7 +1,7 @@
-From 8839610344f9955b295299f862ae0c1bd2c2b52b Mon Sep 17 00:00:00 2001
+From fb82622f95d7861f8ee38ef16732b98250302bbb Mon Sep 17 00:00:00 2001
 From: Daniel Koman <dankoman30@gmail.com>
 Date: Fri, 17 Apr 2015 11:56:28 -0600
-Subject: [PATCH 24/49] Allow prevention of doze notification color inversion
+Subject: [PATCH 24/50] Allow prevention of doze notification color inversion
 
 Removed empty newline at the end -- KreAch3R
 Removed slims files for aosp roms -- Bgill55

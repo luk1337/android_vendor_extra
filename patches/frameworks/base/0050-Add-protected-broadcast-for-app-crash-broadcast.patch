@@ -1,0 +1,26 @@
+From c2d3217af33fa0dba8d00db33c5c1a9e08cee446 Mon Sep 17 00:00:00 2001
+From: Ivan Iskandar <iiiiskandar14@gmail.com>
+Date: Tue, 18 Apr 2017 11:16:21 +0200
+Subject: [PATCH 50/50] Add protected broadcast for app crash broadcast
+
+Change-Id: I85a1d73343df817944be007c0c696c05377a586d
+---
+ core/res/AndroidManifest.xml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
+index 58fb5f533c1..2489c9882fe 100644
+--- a/core/res/AndroidManifest.xml
++++ b/core/res/AndroidManifest.xml
+@@ -524,6 +524,8 @@
+     <!-- ====================================================================== -->
+     <eat-comment />
+ 
++    <protected-broadcast android:name="projekt.substratum.APP_CRASHED" />
++
+     <!-- ====================================================================== -->
+     <!-- Permissions for accessing user's contacts including personal profile   -->
+     <!-- ====================================================================== -->
+-- 
+2.11.1
+

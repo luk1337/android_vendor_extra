@@ -1,7 +1,7 @@
-From 426653e05cdd3bd6199f1bbfea52367322d1403b Mon Sep 17 00:00:00 2001
+From 98d698443b36451356aeabb6b90cbb5d6d639f05 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Tue, 15 Dec 2015 16:40:23 +0100
-Subject: [PATCH 02/49] OMS7-N: Introduce the OverlayManagerService [2/11]
+Subject: [PATCH 02/50] OMS7-N: Introduce the OverlayManagerService [2/11]
 
 Add a new system service to manage Runtime Resource Overlays. This will
 offload the PackageManagerService and allow administration of overlay

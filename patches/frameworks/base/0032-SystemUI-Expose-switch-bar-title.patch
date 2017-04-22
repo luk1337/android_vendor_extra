@@ -1,7 +1,7 @@
-From e8b28b8ddc0621b5467cdb845742eb616b9190c9 Mon Sep 17 00:00:00 2001
+From 9c0b48b2dd65eec48a01635b1c73c4d7f42fd8d4 Mon Sep 17 00:00:00 2001
 From: daveyannihilation <daveyannihilation@hotmail.com>
 Date: Sun, 1 Jan 2017 01:47:53 -0700
-Subject: [PATCH 32/49] SystemUI: Expose switch bar title
+Subject: [PATCH 32/50] SystemUI: Expose switch bar title
 
 This is needed for the power notifications switchbar in SystemUI Tuner, amongst other things.
 

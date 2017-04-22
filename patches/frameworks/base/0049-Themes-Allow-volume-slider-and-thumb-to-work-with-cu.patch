@@ -1,7 +1,7 @@
-From ec0e11dde27843dfbd8120beb270e5ff09fd45b2 Mon Sep 17 00:00:00 2001
+From e29a569ef202fbc68815e3c6bc2ce23ff4c5da69 Mon Sep 17 00:00:00 2001
 From: Randall Rushing <randall.rushing@gmail.com>
 Date: Sun, 10 Jan 2016 12:09:58 -0800
-Subject: [PATCH 49/49] Themes: Allow volume slider and thumb to work with
+Subject: [PATCH 49/50] Themes: Allow volume slider and thumb to work with
  custom images.
 
 Credit Bryan Owens for giving guidance on what was needed.

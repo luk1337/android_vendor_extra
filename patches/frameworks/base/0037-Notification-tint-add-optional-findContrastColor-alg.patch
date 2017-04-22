@@ -1,7 +1,7 @@
-From f78b947d4c24e58c4e100f83d4066ccac7a2e0e0 Mon Sep 17 00:00:00 2001
+From 8f28e14a9b6ea601fe848805f707a9ecc522cfcf Mon Sep 17 00:00:00 2001
 From: SpiritCroc <spiritcroc@gmail.com>
 Date: Sun, 5 Feb 2017 12:00:54 +0100
-Subject: [PATCH 37/49] Notification tint: add optional findContrastColor
+Subject: [PATCH 37/50] Notification tint: add optional findContrastColor
  algorithm for dark backgrounds
 
 Overlay config_useDarkBgNotificationIconTextTinting to enable dark bg tinting

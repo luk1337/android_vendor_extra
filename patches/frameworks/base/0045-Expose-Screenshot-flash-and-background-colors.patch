@@ -1,7 +1,7 @@
-From f01c615403bc59aa8a436aa16902cb3b1b703fd4 Mon Sep 17 00:00:00 2001
+From f232c55c3d8707d9665d8df68e76279f0932b131 Mon Sep 17 00:00:00 2001
 From: ezio84 <brabus84@gmail.com>
 Date: Tue, 7 Mar 2017 23:33:40 +0100
-Subject: [PATCH 45/49] Expose Screenshot flash and background colors
+Subject: [PATCH 45/50] Expose Screenshot flash and background colors
 
 Keep in mind that Background color already gets 0.5f opacity in the
 GlobalScreenshot class (BACKGROUND_ALPHA with some math).

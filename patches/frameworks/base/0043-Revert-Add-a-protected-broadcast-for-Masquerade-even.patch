@@ -1,7 +1,7 @@
-From d646efcbc913cf5930d187efabb1a466f1efcb6f Mon Sep 17 00:00:00 2001
+From 19cca8630aef4467be7f20bbbbd039f019bd74f8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 4 Mar 2017 00:35:08 +0100
-Subject: [PATCH 43/49] Revert "Add a protected broadcast for Masquerade
+Subject: [PATCH 43/50] Revert "Add a protected broadcast for Masquerade
  events"
 
 Requires https://substratum.review/#/c/374

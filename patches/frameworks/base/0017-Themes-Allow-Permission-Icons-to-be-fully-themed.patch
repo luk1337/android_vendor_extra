@@ -1,7 +1,7 @@
-From 0942917b30f3ac7508c9f3b324321db19b5230f5 Mon Sep 17 00:00:00 2001
+From 9a908affc3c79c20fe08d65293d7a601a36928f5 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Mon, 23 Nov 2015 23:49:15 -0500
-Subject: [PATCH 17/49] Themes: Allow Permission Icons to be fully themed
+Subject: [PATCH 17/50] Themes: Allow Permission Icons to be fully themed
 
 This removes the forced @android:color/black tint on the permission
 icons during app sideload through PackageInstaller.
