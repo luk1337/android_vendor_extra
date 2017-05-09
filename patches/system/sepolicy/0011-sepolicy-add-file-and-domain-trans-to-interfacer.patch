@@ -1,7 +1,7 @@
-From a65b9f9786bda8cca29f808cf8669bebb0c59578 Mon Sep 17 00:00:00 2001
+From 44f026c91d25d3e72d9654efc0c238cb451d6451 Mon Sep 17 00:00:00 2001
 From: Surge Raval <Surge1223@gmail.com>
 Date: Sun, 16 Apr 2017 05:00:13 +0000
-Subject: [PATCH 11/11] sepolicy: add file and domain trans to interfacer
+Subject: [PATCH 11/12] sepolicy: add file and domain trans to interfacer
 
 This will fix bootanimations not applying on 7.1.2 ROMs
 

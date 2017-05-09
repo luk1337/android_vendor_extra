@@ -1,7 +1,7 @@
-From 542b2618ace4fc577949507829ce3f27d9c0514d Mon Sep 17 00:00:00 2001
+From 931433e0e94054c4898276213fa18e0ca93d29e2 Mon Sep 17 00:00:00 2001
 From: LuK1337 <priv.luk@gmail.com>
 Date: Wed, 1 Mar 2017 23:11:49 +0100
-Subject: [PATCH 09/11] sepolicy: Redo masquerade rules
+Subject: [PATCH 09/12] sepolicy: Redo masquerade rules
 
 * Use macros
 * Label custom properties

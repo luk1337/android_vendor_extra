@@ -1,7 +1,7 @@
-From f5397bc7a0b0483d4fe484fd24c82ca941262ea3 Mon Sep 17 00:00:00 2001
+From ff7ba5a6d5524f632134c6bcf43173043479e27e Mon Sep 17 00:00:00 2001
 From: Miccia <bono.michele94@gmail.com>
 Date: Mon, 27 Feb 2017 12:36:21 +0100
-Subject: [PATCH 08/11] sepolicy: Fix application of bootanimation
+Subject: [PATCH 08/12] sepolicy: Fix application of bootanimation
 
 Change-Id: I7365d28fecf18b4d1aa42b2210e023b202dd97a5
 ---

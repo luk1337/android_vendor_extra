@@ -1,7 +1,7 @@
-From 95904cb6390312b0e842b5cbb8fda6a28f524f12 Mon Sep 17 00:00:00 2001
+From 7fb0e2bca061721e879e4dd05c0985fc003407d6 Mon Sep 17 00:00:00 2001
 From: Surge1223 <surge1223@gmail.com>
 Date: Tue, 21 Feb 2017 12:28:05 -0600
-Subject: [PATCH 06/11] sepolicy: rename masquerade domain and allow JobService
+Subject: [PATCH 06/12] sepolicy: rename masquerade domain and allow JobService
  in system_server
 
 This attempts to address the issue of JobService being unable to process

@@ -1,7 +1,7 @@
-From 9e49f50fa1a4fcab0d9458c3406fe70b66218fde Mon Sep 17 00:00:00 2001
+From a420610fb6940291fac20da7d7310b9fe942dfcb Mon Sep 17 00:00:00 2001
 From: d34d <clark@cyngn.com>
 Date: Wed, 4 Jan 2017 10:29:34 -0800
-Subject: [PATCH 02/11] Introduce sepolicy exceptions for theme assets
+Subject: [PATCH 02/12] Introduce sepolicy exceptions for theme assets
 
 Assets such as composed icons and ringtones need to be accessed
 by apps. This patch adds the policy needed to facilitate this.
