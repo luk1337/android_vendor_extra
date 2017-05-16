@@ -1,7 +1,7 @@
-From 4cb1a87a6e75709e9a6b6806958c5f5dfc2d91ba Mon Sep 17 00:00:00 2001
+From 5c8f9969cd9744c01b5e6ef3e93b3d7fe3483ad3 Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Mon, 27 Feb 2017 19:06:31 -0600
-Subject: [PATCH 41/50] FWB: Give power dialogs own set of volume icons for
+Subject: [PATCH 41/51] FWB: Give power dialogs own set of volume icons for
  themes
 
 Change-Id: I5add336c06a83b162dfd0832dfabfb06a2827421

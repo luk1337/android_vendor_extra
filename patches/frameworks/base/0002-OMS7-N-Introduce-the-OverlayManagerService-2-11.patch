@@ -1,7 +1,7 @@
-From 98d698443b36451356aeabb6b90cbb5d6d639f05 Mon Sep 17 00:00:00 2001
+From b0a270f40fddc0fce7b725e690d27b9a174a410a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Tue, 15 Dec 2015 16:40:23 +0100
-Subject: [PATCH 02/50] OMS7-N: Introduce the OverlayManagerService [2/11]
+Subject: [PATCH 02/51] OMS7-N: Introduce the OverlayManagerService [2/11]
 
 Add a new system service to manage Runtime Resource Overlays. This will
 offload the PackageManagerService and allow administration of overlay
@@ -651,7 +651,7 @@ index 9bb21288686..7863919df4d 100644
 +    public abstract void setResourceDirs(int userId, String packageName, String[] resourceDirs);
  }
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index e15a0b8c895..cd200e20481 100644
+index a52480f3a3f..9c09adaa539 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
 @@ -84,6 +84,10 @@
@@ -3026,10 +3026,10 @@ index 00000000000..d6f53737913
 +    }
 +}
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 9e899afe3a3..3aacfb43913 100644
+index 1505cc0a63b..460b2c277fe 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
-@@ -21466,6 +21466,47 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
+@@ -21480,6 +21480,47 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
          public String getNameForUid(int uid) {
              return PackageManagerService.this.getNameForUid(uid);
          }

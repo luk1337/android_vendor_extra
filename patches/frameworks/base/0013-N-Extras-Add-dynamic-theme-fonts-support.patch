@@ -1,7 +1,7 @@
-From db0d6ddfc5366bc4d2c62928d475c72dbb7f5bbc Mon Sep 17 00:00:00 2001
+From dbd4ff78c46c75996f07f1d7b55a83f999ff3508 Mon Sep 17 00:00:00 2001
 From: 0xD34D <clark@scheffsblend.com>
 Date: Wed, 22 Jun 2016 23:54:23 +0300
-Subject: [PATCH 13/50] N-Extras: Add dynamic theme fonts support
+Subject: [PATCH 13/51] N-Extras: Add dynamic theme fonts support
 
 Due to the nature of the removal of assetSeq in OMS7+, we now use the
 more controllable font scale updating code to update the fonts on
@@ -53,7 +53,7 @@ Change-Id: I1f61bd269b42ab6145482a51d25fe5b1b5308f94
  8 files changed, 240 insertions(+), 27 deletions(-)
 
 diff --git a/core/java/android/app/ActivityThread.java b/core/java/android/app/ActivityThread.java
-index 9e479ec6772..0061062943a 100644
+index 3597812983f..c2999437582 100644
 --- a/core/java/android/app/ActivityThread.java
 +++ b/core/java/android/app/ActivityThread.java
 @@ -48,6 +48,7 @@ import android.database.sqlite.SQLiteDebug;
@@ -64,7 +64,7 @@ index 9e479ec6772..0061062943a 100644
  import android.hardware.display.DisplayManagerGlobal;
  import android.net.ConnectivityManager;
  import android.net.IConnectivityManager;
-@@ -4853,8 +4854,12 @@ public final class ActivityThread {
+@@ -4889,8 +4890,12 @@ public final class ActivityThread {
          if (configDiff != 0) {
              // Ask text layout engine to free its caches if there is a locale change
              boolean hasLocaleConfigChange = ((configDiff & ActivityInfo.CONFIG_LOCALE) != 0);
@@ -560,7 +560,7 @@ index 2886f0dd4a2..990c9bd1fbf 100644
      protected void finalize() throws Throwable {
          try {
 diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
-index a94822e5698..7424f1e356f 100644
+index 3802650f3ed..ef1d2381a10 100644
 --- a/services/core/java/com/android/server/am/ActivityManagerService.java
 +++ b/services/core/java/com/android/server/am/ActivityManagerService.java
 @@ -513,6 +513,8 @@ public final class ActivityManagerService extends ActivityManagerNative

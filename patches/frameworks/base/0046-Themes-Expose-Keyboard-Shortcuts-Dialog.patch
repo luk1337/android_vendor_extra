@@ -1,7 +1,7 @@
-From ddc7387cb62e72cfbcb6991e938f301de3fb0a46 Mon Sep 17 00:00:00 2001
+From 69d5cad3677920b89fef6bb000b2f2c54dccb5ef Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Thu, 30 Mar 2017 13:30:04 -0500
-Subject: [PATCH 46/50] Themes: Expose Keyboard Shortcuts Dialog
+Subject: [PATCH 46/51] Themes: Expose Keyboard Shortcuts Dialog
 
 Change-Id: I84d3e57fe8c42d79ff6e0b6502cb6cd49aaaf91b
 Signed-off-by: Bryan Owens <djbryan3540@gmail.com>

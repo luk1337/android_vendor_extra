@@ -1,7 +1,7 @@
-From 959537af95548550869a2e6a517bfa395b0c5b8d Mon Sep 17 00:00:00 2001
+From a0322158bdb31d636ac0146166a2ea5ca909bc64 Mon Sep 17 00:00:00 2001
 From: Evan Anderson <evananderson@aospa.co>
 Date: Mon, 27 Feb 2017 15:16:18 -0500
-Subject: [PATCH 40/50] OMS: Add hide annotation to MODIFY_OVERLAYS permission
+Subject: [PATCH 40/51] OMS: Add hide annotation to MODIFY_OVERLAYS permission
 
 * Modifications in this file affect the public API, so we must hide our
   additions to build in release mode
@@ -13,10 +13,10 @@ Signed-off-by: Evan Anderson <evananderson@aospa.co>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index d4a23a69924..12d12efb3c8 100644
+index 17946c06b47..9177507448f 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
-@@ -3169,7 +3169,8 @@
+@@ -3171,7 +3171,8 @@
      <permission android:name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"
                  android:protectionLevel="signature|privileged" />
  

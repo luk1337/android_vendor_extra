@@ -1,7 +1,7 @@
-From a29653fb00043a5b06135c4ae0cb7a2e17e46eec Mon Sep 17 00:00:00 2001
+From 40e0f1d244f58825e4080ca4f7617008501d176b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Thu, 2 Jun 2016 09:35:31 +0200
-Subject: [PATCH 03/50] OMS7-N: Integrate OverlayManagerService into framework
+Subject: [PATCH 03/51] OMS7-N: Integrate OverlayManagerService into framework
  [3/11]
 
 Hand over ownership of overlays to OverlayManagerService.
@@ -244,10 +244,10 @@ index 50479c8e951..389f3422fb5 100644
              throws RemoteException {
          Parcel data = Parcel.obtain();
 diff --git a/core/java/android/app/ActivityThread.java b/core/java/android/app/ActivityThread.java
-index 9d2ef914738..9e479ec6772 100644
+index eb257c59b5c..3597812983f 100644
 --- a/core/java/android/app/ActivityThread.java
 +++ b/core/java/android/app/ActivityThread.java
-@@ -898,6 +898,14 @@ public final class ActivityThread {
+@@ -916,6 +916,14 @@ public final class ActivityThread {
              sendMessage(H.CONFIGURATION_CHANGED, config);
          }
  
@@ -262,7 +262,7 @@ index 9d2ef914738..9e479ec6772 100644
          public void updateTimeZone() {
              TimeZone.setDefault(null);
          }
-@@ -1406,6 +1414,7 @@ public final class ActivityThread {
+@@ -1424,6 +1432,7 @@ public final class ActivityThread {
          public static final int MULTI_WINDOW_MODE_CHANGED = 152;
          public static final int PICTURE_IN_PICTURE_MODE_CHANGED = 153;
          public static final int LOCAL_VOICE_INTERACTION_STARTED = 154;
@@ -270,7 +270,7 @@ index 9d2ef914738..9e479ec6772 100644
  
          String codeToString(int code) {
              if (DEBUG_MESSAGES) {
-@@ -1462,6 +1471,7 @@ public final class ActivityThread {
+@@ -1480,6 +1489,7 @@ public final class ActivityThread {
                      case MULTI_WINDOW_MODE_CHANGED: return "MULTI_WINDOW_MODE_CHANGED";
                      case PICTURE_IN_PICTURE_MODE_CHANGED: return "PICTURE_IN_PICTURE_MODE_CHANGED";
                      case LOCAL_VOICE_INTERACTION_STARTED: return "LOCAL_VOICE_INTERACTION_STARTED";
@@ -278,7 +278,7 @@ index 9d2ef914738..9e479ec6772 100644
                  }
              }
              return Integer.toString(code);
-@@ -1717,6 +1727,10 @@ public final class ActivityThread {
+@@ -1735,6 +1745,10 @@ public final class ActivityThread {
                      handleLocalVoiceInteractionStarted((IBinder) ((SomeArgs) msg.obj).arg1,
                              (IVoiceInteractor) ((SomeArgs) msg.obj).arg2);
                      break;
@@ -289,7 +289,7 @@ index 9d2ef914738..9e479ec6772 100644
              }
              Object obj = msg.obj;
              if (obj instanceof SomeArgs) {
-@@ -4804,6 +4818,37 @@ public final class ActivityThread {
+@@ -4840,6 +4854,37 @@ public final class ActivityThread {
          }
      }
  
@@ -1026,10 +1026,10 @@ index a0c80fe666e..0aad4c74b05 100644
       * Starts the specified boot phase for all system services that have been started up to
       * this point.
 diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
-index 2e73c72db93..a94822e5698 100644
+index cbfc37c28ca..3802650f3ed 100644
 --- a/services/core/java/com/android/server/am/ActivityManagerService.java
 +++ b/services/core/java/com/android/server/am/ActivityManagerService.java
-@@ -19376,6 +19376,57 @@ public final class ActivityManagerService extends ActivityManagerNative
+@@ -19379,6 +19379,57 @@ public final class ActivityManagerService extends ActivityManagerNative
      }
  
      /**
@@ -1160,7 +1160,7 @@ index ec148dd9fa7..761ef5240ec 100644
  
      private void schedulePersistSettings() {
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 3aacfb43913..298a9df359d 100644
+index 460b2c277fe..7ac16e3c51e 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
 @@ -399,17 +399,16 @@ public class PackageManagerService extends IPackageManager.Stub {
@@ -1345,7 +1345,7 @@ index 3aacfb43913..298a9df359d 100644
          return pkg;
      }
  
-@@ -16628,7 +16537,7 @@ public class PackageManagerService extends IPackageManager.Stub {
+@@ -16642,7 +16551,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                      false /*hidden*/, false /*suspended*/, null, null, null,
                      false /*blockUninstall*/,
                      ps.readUserState(nextUserId).domainVerificationStatus, 0,
@@ -1354,7 +1354,7 @@ index 3aacfb43913..298a9df359d 100644
          }
      }
  
-@@ -21498,14 +21407,13 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
+@@ -21512,14 +21421,13 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
  
          @Override
          public void setResourceDirs(int userId, String packageName, String[] resourceDirs) {

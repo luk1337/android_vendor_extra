@@ -1,7 +1,7 @@
-From 6552655fd7898540efb0c093ece0e4bf43be6028 Mon Sep 17 00:00:00 2001
+From 4090a8e63ec61c9dfc9151ce0dd654f286029e78 Mon Sep 17 00:00:00 2001
 From: bigrushdog <randall.rushing@gmail.com>
 Date: Mon, 19 Dec 2016 04:33:31 -0800
-Subject: [PATCH 31/50] OMS: Introduce MODIFY_OVERLAYS permission for user apps
+Subject: [PATCH 31/51] OMS: Introduce MODIFY_OVERLAYS permission for user apps
 
 This permission will grant the app read and write permissions
 to access OverlayManagerService. If caller does not posess
@@ -16,10 +16,10 @@ Change-Id: Ib6b10b516577f338aee31e759bfd16278f902c20
  3 files changed, 29 insertions(+), 8 deletions(-)
 
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
-index cd200e20481..fe1ef539139 100644
+index 9c09adaa539..66e916e66d0 100644
 --- a/core/res/AndroidManifest.xml
 +++ b/core/res/AndroidManifest.xml
-@@ -3167,6 +3167,12 @@
+@@ -3169,6 +3169,12 @@
      <permission android:name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"
                  android:protectionLevel="signature|privileged" />
  

@@ -1,7 +1,7 @@
-From 68a009749abfbed172a34ce04be0826dab8e50fe Mon Sep 17 00:00:00 2001
+From 774616b16069831a611c90e9651801d5620cd8c3 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Mon, 4 Jul 2016 06:25:15 +0300
-Subject: [PATCH 28/50] OMS7-N: ApplicationsState: add filter for Substratum
+Subject: [PATCH 28/51] OMS7-N: ApplicationsState: add filter for Substratum
  overlays [1/2]
 
 This commit allows the framework to handle the filtering of the

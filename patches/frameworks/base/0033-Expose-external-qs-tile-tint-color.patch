@@ -1,7 +1,7 @@
-From aa55c54d10683696e07f0a0c5cb56e1a8818f834 Mon Sep 17 00:00:00 2001
+From f0d5cc82780e63c6e1e93f71332f6171f92f10b2 Mon Sep 17 00:00:00 2001
 From: Alex Cruz <mazdarider23@gmail.com>
 Date: Tue, 24 Jan 2017 11:14:46 +0100
-Subject: [PATCH 33/50] Expose external qs tile tint color
+Subject: [PATCH 33/51] Expose external qs tile tint color
 
 This should allow themers to get around issues like this (see pic below)
 

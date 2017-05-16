@@ -1,7 +1,7 @@
-From 0815903ef6adc074c9093226da219da1b5e052f4 Mon Sep 17 00:00:00 2001
+From 4c73aa4be895400225cd6c0d7c849e7fddc4d56d Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Sat, 11 Mar 2017 14:11:54 +0200
-Subject: [PATCH 47/50] Hold "volume up" during boot to disable all overlays
+Subject: [PATCH 47/51] Hold "volume up" during boot to disable all overlays
 
 Following the way "safe mode" was coded, you can now long press
 "volume up" during boot to automatically disable all overlays
@@ -32,7 +32,7 @@ Change-Id: I64fb769ea175d37a90a0804f916926b63e5b93ca
  3 files changed, 57 insertions(+)
 
 diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
-index 7424f1e356f..78f6d078924 100644
+index ef1d2381a10..87899167d7f 100644
 --- a/services/core/java/com/android/server/am/ActivityManagerService.java
 +++ b/services/core/java/com/android/server/am/ActivityManagerService.java
 @@ -125,6 +125,8 @@ import android.content.IIntentSender;
@@ -44,7 +44,7 @@ index 7424f1e356f..78f6d078924 100644
  import android.content.pm.ActivityInfo;
  import android.content.pm.ApplicationInfo;
  import android.content.pm.ConfigurationInfo;
-@@ -13086,6 +13088,33 @@ public final class ActivityManagerService extends ActivityManagerNative
+@@ -13089,6 +13091,33 @@ public final class ActivityManagerService extends ActivityManagerNative
                  Context.WINDOW_SERVICE)).addView(v, lp);
      }
  

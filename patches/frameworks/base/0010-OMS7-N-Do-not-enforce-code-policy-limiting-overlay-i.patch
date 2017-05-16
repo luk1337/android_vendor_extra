@@ -1,7 +1,7 @@
-From 27a981435b8d89e12d97f82c841adf21e40f5d34 Mon Sep 17 00:00:00 2001
+From 7b2cd7ad904ddf0e52ab5d61e01cf23634281a77 Mon Sep 17 00:00:00 2001
 From: Nicholas Chum <nicholaschum@gmail.com>
 Date: Thu, 27 Oct 2016 07:08:00 +0200
-Subject: [PATCH 10/50] OMS7-N: Do not enforce code policy limiting overlay
+Subject: [PATCH 10/51] OMS7-N: Do not enforce code policy limiting overlay
  installation [10/11]
 
 Change-Id: Iea317f3771f25dbfcbf4938e88cace12fd97d7eb
@@ -10,7 +10,7 @@ Change-Id: Iea317f3771f25dbfcbf4938e88cace12fd97d7eb
  1 file changed, 4 deletions(-)
 
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 0aee826c411..6c89c2e2129 100644
+index 874444b9861..33bbf257f1c 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
 @@ -8133,10 +8133,6 @@ public class PackageManagerService extends IPackageManager.Stub {

@@ -1,7 +1,7 @@
-From 42fb6344e4752d3bdec8e7f912d9cab933940fd6 Mon Sep 17 00:00:00 2001
+From b04342523f7ea0eea0db19e9e3f17d5db4155eee Mon Sep 17 00:00:00 2001
 From: Branden M <wasabi.dev@gmail.com>
 Date: Wed, 1 Feb 2017 22:22:45 -0600
-Subject: [PATCH 36/50] Themes: Expose Keyguard affordance circle background
+Subject: [PATCH 36/51] Themes: Expose Keyguard affordance circle background
 
 Change-Id: Id4a078cdbc944fa0c0736103045a0382d49ecb80
 ---
