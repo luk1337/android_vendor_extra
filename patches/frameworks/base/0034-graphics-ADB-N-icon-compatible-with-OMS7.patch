@@ -1,7 +1,7 @@
-From 2daf3d3b923694487c66ac83a2ef7572ba50f479 Mon Sep 17 00:00:00 2001
+From ad49dcb1ba0eac143b83d618e5542afd8a968320 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Thu, 2 Feb 2017 01:52:27 +0200
-Subject: [PATCH 34/51] graphics: ADB "N" icon compatible with OMS7
+Subject: [PATCH 34/52] graphics: ADB "N" icon compatible with OMS7
 
 It's the same problem as the booleans again. This time, it affected the adb "N" icon in the statusbar.
 This commit should fix this.

@@ -1,7 +1,7 @@
-From b6ba867fd39e4b01ffadfedca70572febf899aad Mon Sep 17 00:00:00 2001
+From 7d23de6207095a40831683c4b88d2e22b0901f65 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Tue, 18 Apr 2017 11:16:21 +0200
-Subject: [PATCH 50/51] Add protected broadcast for app crash broadcast
+Subject: [PATCH 50/52] Add protected broadcast for app crash broadcast
 
 Change-Id: I85a1d73343df817944be007c0c696c05377a586d
 ---

@@ -1,7 +1,7 @@
-From 4c73aa4be895400225cd6c0d7c849e7fddc4d56d Mon Sep 17 00:00:00 2001
+From 0433715b53cee641e910d227f0dd1f79c92fcaa0 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Sat, 11 Mar 2017 14:11:54 +0200
-Subject: [PATCH 47/51] Hold "volume up" during boot to disable all overlays
+Subject: [PATCH 47/52] Hold "volume up" during boot to disable all overlays
 
 Following the way "safe mode" was coded, you can now long press
 "volume up" during boot to automatically disable all overlays

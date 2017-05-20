@@ -1,0 +1,65 @@
+From 4aa32215301dcd43d8c25996f41c05d1ce358fbc Mon Sep 17 00:00:00 2001
+From: Shane Francis <bigbeeshane@gmail.com>
+Date: Fri, 12 May 2017 14:41:11 +0100
+Subject: [PATCH 52/52] Fix permissions for CTS [1/2]
+
+    * Rename old MODIFY_OVERLAYS to oms.permission.MODIFY_OVERLAYS
+    * Restrict MODIFY_OVERLAYS to system or signature
+
+Change-Id: I094ef303b7026342459d4981677837835f500e22
+---
+ core/res/AndroidManifest.xml                                        | 4 ++--
+ services/core/java/com/android/server/om/OverlayManagerService.java | 6 ++++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
+index 9062a7162fd..01e6a6e13a4 100644
+--- a/core/res/AndroidManifest.xml
++++ b/core/res/AndroidManifest.xml
+@@ -3173,10 +3173,10 @@
+ 
+     <!-- Allows an application to make calls to OverlayManagerService.
+          @hide -->
+-    <permission android:name="android.permission.MODIFY_OVERLAYS"
++    <permission android:name="oms.permission.MODIFY_OVERLAYS"
+         android:label="@string/permlab_modifyOverlays"
+         android:description="@string/permdesc_modifyOverlays"
+-        android:protectionLevel="normal" />
++        android:protectionLevel="signatureOrSystem" />
+ 
+     <application android:process="system"
+                  android:persistent="true"
+diff --git a/services/core/java/com/android/server/om/OverlayManagerService.java b/services/core/java/com/android/server/om/OverlayManagerService.java
+index ac56985ce54..658dd217195 100644
+--- a/services/core/java/com/android/server/om/OverlayManagerService.java
++++ b/services/core/java/com/android/server/om/OverlayManagerService.java
+@@ -194,6 +194,8 @@ public final class OverlayManagerService extends SystemService {
+ 
+     static final String TAG = "OverlayManager";
+ 
++    static final String PERMISSION_MODIFY_OVERLAYS = "oms.permission.MODIFY_OVERLAYS";
++
+     static final boolean DEBUG = false;
+ 
+     private final Object mLock = new Object();
+@@ -551,7 +553,7 @@ public final class OverlayManagerService extends SystemService {
+          */
+         private int handleIncomingUser(final int userId, @NonNull final String message) {
+             if (getContext().checkCallingOrSelfPermission(
+-                    android.Manifest.permission.MODIFY_OVERLAYS) == PackageManager.PERMISSION_GRANTED) {
++                    PERMISSION_MODIFY_OVERLAYS) == PackageManager.PERMISSION_GRANTED) {
+                 return userId;
+             } else {
+                 return ActivityManager.handleIncomingUser(Binder.getCallingPid(),
+@@ -570,7 +572,7 @@ public final class OverlayManagerService extends SystemService {
+             final int callingUid = Binder.getCallingUid();
+ 
+             if (getContext().checkCallingOrSelfPermission(
+-                    android.Manifest.permission.MODIFY_OVERLAYS) != PackageManager.PERMISSION_GRANTED) {
++                    PERMISSION_MODIFY_OVERLAYS) != PackageManager.PERMISSION_GRANTED) {
+                 if (callingUid != Process.SYSTEM_UID && callingUid != 0) {
+                     getContext().enforceCallingOrSelfPermission(
+                             android.Manifest.permission.CHANGE_CONFIGURATION, message);
+-- 
+2.11.1
+

@@ -1,7 +1,7 @@
-From 503f16b69bb125feab7f22d85f3a553a67537c9f Mon Sep 17 00:00:00 2001
+From 9040429afc27a21a224e7d267c50fffe5fe6fc3b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Mon, 25 Apr 2016 16:29:22 +0200
-Subject: [PATCH 04/51] OMS7-N: Set EXTRA_REPLACING correctly in
+Subject: [PATCH 04/52] OMS7-N: Set EXTRA_REPLACING correctly in
  ACTION_PACKAGE_ADDED [4/11]
 
 When broadcasting ACTION_PACKAGE_ADDED the recipients of the Intent are

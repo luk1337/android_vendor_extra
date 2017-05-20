@@ -1,7 +1,7 @@
-From 5d7c0389a211057bdbe0e80d85b86f4c620cd9af Mon Sep 17 00:00:00 2001
+From 7fdff8fb9ed8a74716788356ccc6ccf9fb85439f Mon Sep 17 00:00:00 2001
 From: bigrushdog <randall.rushing@gmail.com>
 Date: Tue, 11 Apr 2017 01:01:04 -0700
-Subject: [PATCH 48/51] Separate tile label color from icon drawable color
+Subject: [PATCH 48/52] Separate tile label color from icon drawable color
 
 Sometimes it is desirable to override default icon tinting with
 transparent tinting. However, doing so makes the label text
