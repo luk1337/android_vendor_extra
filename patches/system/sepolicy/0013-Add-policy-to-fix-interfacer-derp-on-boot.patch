@@ -1,0 +1,50 @@
+From fea6eb7c59965d99f0c0fe019772cdf1f950972d Mon Sep 17 00:00:00 2001
+From: Surge Raval <Surge1223@gmail.com>
+Date: Tue, 30 May 2017 00:59:31 +0200
+Subject: [PATCH 13/13] Add policy to fix interfacer derp on boot
+
+05-29 08:40:17.200 10546 10600 F libc    : Fatal signal 6 (SIGABRT), code -6 in tid 10600 (POSIX timer 0)
+05-29 08:40:17.200   428   428 W         : debuggerd: handling request: pid=10546 uid=1006 gid=1006 tid=10600
+05-29 08:40:17.223 20058 20058 E         : debuggerd: Unable to connect to activity manager (connect failed: Connection refused)
+05-29 08:40:17.225   580   580 E SELinux : SELinux: Could not set context for /data/data/projekt.interfacer:  Permission denied
+05-29 08:40:17.226   580   580 E installd: Failed top-level restorecon for /data/data/projekt.interfacer: Permission denied
+05-29 08:40:17.219   580   580 W installd: type=1400 audit(0.0:135): avc: denied { relabelto } for name="projekt.interfacer" dev="sda15" ino=61332 scontext=u:r:installd:s0 tcontext=u:object_r:theme_data_file:s0 tclass=dir permissive=0
+05-29 08:40:17.226 19831 19831 E PackageManager: Failed to create app data for projekt.interfacer, but trying to recover: com.android.internal.os.InstallerConnection$InstallerException: Failed to execute create_app_data [null, projekt.interfacer, 0, 3, 1000, platform:privapp, 25]: -1
+05-29 08:40:17.228   580   580 E         : Couldn't opendir /data/user_de/0/projekt.interfacer: No such file or directory
+05-29 08:40:17.229 19831 19831 W PackageManager: com.android.internal.os.InstallerConnection$InstallerException: Failed to execute destroy_app_data [null, projekt.interfacer, 0, 3, 61332]: -2
+05-29 08:40:17.229   580   580 E SELinux : SELinux: Could not set context for /data/data/projekt.interfacer:  Permission denied
+05-29 08:40:17.229   580   580 E installd: Failed top-level restorecon for /data/data/projekt.interfacer: Permission denied
+05-29 08:40:17.219   580   580 W installd: type=1400 audit(0.0:136): avc: denied { relabelto } for name="projekt.interfacer" dev="sda15" ino=61488 scontext=u:r:installd:s0 tcontext=u:object_r:theme_data_file:s0 tclass=dir permissive=0
+05-29 08:40:17.230 19831 19831 D PackageManager: Recovery failed!
+05-29 08:40:17.231   580   580 E SELinux : SELinux: Could not set context for /data/data/projekt.interfacer:  Permission denied
+05-29 08:40:17.231   580   580 E installd: Failed top-level restorecon for /data/data/projekt.interfacer: Permission denied
+05-29 08:40:17.232 19831 19831 E PackageManager: Failed to create app data for projekt.interfacer, but trying to recover: com.android.internal.os.InstallerConnection$InstallerException: Failed to execute create_app_data [null, projekt.interfacer, 0, 3, 1000, platform:privapp, 25]: -1
+05-29 08:40:17.219   580   580 W installd: type=1400 audit(0.0:137): avc: denied { relabelto } for name="projekt.interfacer" dev="sda15" ino=61488 scontext=u:r:installd:s0 tcontext=u:object_r:theme_data_file:s0 tclass=dir permissive=0
+05-29 08:40:17.233   580   580 E         : Couldn't opendir /data/user_de/0/projekt.interfacer: No such file or directory
+05-29 08:40:17.233 19831 19831 W PackageManager: com.android.internal.os.InstallerConnection$InstallerException: Failed to execute destroy_app_data [null, projekt.interfacer, 0, 3, 61488]: -2
+05-29 08:40:17.234   580   580 E SELinux : SELinux: Could not set context for /data/data/projekt.interfacer:  Permission denied
+05-29 08:40:17.234   580   580 E installd: Failed top-level restorecon for /data/data/projekt.interfacer: Permission denied
+05-29 08:40:17.234 19831 19831 D PackageManager: Recovery failed!
+05-29 08:40:17.229   580   580 W installd: type=1400 audit(0.0:138): avc: denied { relabelto } for name="projekt.interfacer" dev="sda15" ino=61491 scontext=u:r:installd:s0 tcontext=u:object_r:theme_data_file:s0 tclass=dir permissive=0
+05-29 08:40:17.274 20058 20058 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+
+Change-Id: I39def485bbeea25e2b32baa30e575779afd50ce4
+---
+ installd.te | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/installd.te b/installd.te
+index ab0aadc..6800695 100644
+--- a/installd.te
++++ b/installd.te
+@@ -126,3 +126,7 @@ allow installd devpts:chr_file rw_file_perms;
+ 
+ # execute toybox for app relocation
+ allow installd toolbox_exec:file rx_file_perms;
++
++# allow /data/data/ theme attributes for theme_data explicitly without macros
++allow installd theme_data_file:dir { add_name getattr read relabelto remove_name setattr write open search };
++allow installd theme_data_file:lnk_file { create getattr unlink };
+-- 
+2.9.4
+

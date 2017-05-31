@@ -1,7 +1,7 @@
-From a420610fb6940291fac20da7d7310b9fe942dfcb Mon Sep 17 00:00:00 2001
+From f3023ad17cc9aab41336d0c3c483033e2762ffdf Mon Sep 17 00:00:00 2001
 From: d34d <clark@cyngn.com>
 Date: Wed, 4 Jan 2017 10:29:34 -0800
-Subject: [PATCH 02/12] Introduce sepolicy exceptions for theme assets
+Subject: [PATCH 02/13] Introduce sepolicy exceptions for theme assets
 
 Assets such as composed icons and ringtones need to be accessed
 by apps. This patch adds the policy needed to facilitate this.
@@ -100,5 +100,5 @@ index c6b343c..c650c17 100644
 +allow zygote theme_data_file:file r_file_perms;
 +allow zygote theme_data_file:dir r_dir_perms;
 -- 
-2.11.1
+2.9.4
 

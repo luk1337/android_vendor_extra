@@ -1,7 +1,7 @@
-From 4ef2c96d7fa1f63ebbec4b9ac3ac7fe7b6cd36a0 Mon Sep 17 00:00:00 2001
+From 1c0171ad09ae123a87e31c1d1354de4f40d02427 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Sat, 4 Mar 2017 19:20:10 -0700
-Subject: [PATCH 10/12] Welcome to Theme Interfacer! [2/2]
+Subject: [PATCH 10/13] Welcome to Theme Interfacer! [2/2]
 
 Change-Id: I4a28c8840957d385338529540e081eabd3135cc1
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
@@ -32,10 +32,10 @@ index e6180e3..93fe3a4 100644
  
  # Write to various other parts of /data.
 diff --git a/domain.te b/domain.te
-index 5bc5fcb..634f3bf 100644
+index b473da7..fbd6c26 100644
 --- a/domain.te
 +++ b/domain.te
-@@ -381,7 +381,7 @@ neverallow {
+@@ -385,7 +385,7 @@ neverallow {
    -init # TODO: limit init to relabelfrom for files
    -zygote
    -installd
@@ -44,7 +44,7 @@ index 5bc5fcb..634f3bf 100644
    -postinstall_dexopt
    -cppreopts
    -dex2oat
-@@ -488,7 +488,7 @@ neverallow {
+@@ -492,7 +492,7 @@ neverallow {
    -system_server
    -system_app
    -init
@@ -253,5 +253,5 @@ index 5262a79..a30a09e 100644
  allow system_server mediaextractor_service:service_manager find;
  allow system_server mediacodec_service:service_manager find;
 -- 
-2.11.1
+2.9.4
 

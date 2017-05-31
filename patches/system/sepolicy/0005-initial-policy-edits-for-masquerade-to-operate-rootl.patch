@@ -1,7 +1,7 @@
-From d7c74a0c8d441ebd4db743a56bd22e01609d3c1c Mon Sep 17 00:00:00 2001
+From db29bf3d87f10c7c857ce15f1d33793b21aee8b7 Mon Sep 17 00:00:00 2001
 From: Surge1223 <surge1223@gmail.com>
 Date: Sat, 18 Feb 2017 08:46:15 -0600
-Subject: [PATCH 05/12] initial policy edits for masquerade to operate rootless
+Subject: [PATCH 05/13] initial policy edits for masquerade to operate rootless
 
 Change-Id: Iddfc408f206033772b9d49d335ca94e63b5e5210
 ---
@@ -27,10 +27,10 @@ index 3a2878d..661f67f 100644
  
  # Write to various other parts of /data.
 diff --git a/domain.te b/domain.te
-index a74833c..b18bfa7 100644
+index 59de1f1..f7ce715 100644
 --- a/domain.te
 +++ b/domain.te
-@@ -381,6 +381,7 @@ neverallow {
+@@ -385,6 +385,7 @@ neverallow {
    -init # TODO: limit init to relabelfrom for files
    -zygote
    -installd
@@ -38,7 +38,7 @@ index a74833c..b18bfa7 100644
    -postinstall_dexopt
    -cppreopts
    -dex2oat
-@@ -487,6 +488,7 @@ neverallow {
+@@ -491,6 +492,7 @@ neverallow {
    -system_server
    -system_app
    -init
@@ -126,5 +126,5 @@ index b9a72ed..c2a5320 100644
  ### neverallow rules
  ###
 -- 
-2.11.1
+2.9.4
 

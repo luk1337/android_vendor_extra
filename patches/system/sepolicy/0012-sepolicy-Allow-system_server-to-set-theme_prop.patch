@@ -1,7 +1,7 @@
-From b3bdd5ba0f03e0e85c064defb3842d57ca1990ab Mon Sep 17 00:00:00 2001
+From 9ff626d3b6fefa7a54a6faddf93d2fa29052cdfa Mon Sep 17 00:00:00 2001
 From: Harsh Shandilya <msfjarvis@gmail.com>
 Date: Tue, 9 May 2017 09:18:10 +0530
-Subject: [PATCH 12/12] sepolicy: Allow system_server to set theme_prop
+Subject: [PATCH 12/13] sepolicy: Allow system_server to set theme_prop
 
 [ 6065.716763] init: avc:  denied  { set } for property=sys.refresh_theme
 pid=1131 uid=1000 gid=1000 scontext=u:r:system_server:s0
@@ -27,5 +27,5 @@ index a30a09e..037ecb8 100644
  # Create a socket for receiving info from wpa.
  type_transition system_server wifi_data_file:sock_file system_wpa_socket;
 -- 
-2.11.1
+2.9.4
 

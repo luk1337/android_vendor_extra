@@ -1,7 +1,7 @@
-From 1d859c985c4bea5656dd525b35885a1cd9cd15aa Mon Sep 17 00:00:00 2001
+From da9c8f029beadf84bbdc9be179409ea2ca9ddec4 Mon Sep 17 00:00:00 2001
 From: bigrushdog <randall.rushing@gmail.com>
 Date: Wed, 4 Jan 2017 10:31:29 -0800
-Subject: [PATCH 03/12] sepolicy: fix themed boot animation
+Subject: [PATCH 03/13] sepolicy: fix themed boot animation
 
 W BootAnimation: type=1400 audit(0.0:42): avc: denied { open } for uid=1003 path="/data/system/theme/bootanimation.zip" dev="mmcblk0p42" ino=1657697 scontext=u:r:bootanim:s0 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=0
 
@@ -24,5 +24,5 @@ index 3ae9478..2356d81 100644
  allow bootanim theme_data_file:file r_file_perms;
 +allow bootanim system_data_file:file open;
 -- 
-2.11.1
+2.9.4
 
