@@ -1,7 +1,7 @@
-From 3e15fbb8057baaeeba5a557edb57626e6d1fa53c Mon Sep 17 00:00:00 2001
+From ce1656fed8684dd97e33603c3a2a0e915cf62333 Mon Sep 17 00:00:00 2001
 From: Surge Raval <Surge1223@gmail.com>
 Date: Sun, 16 Apr 2017 05:00:13 +0000
-Subject: [PATCH 11/13] sepolicy: add file and domain trans to interfacer
+Subject: [PATCH 11/14] sepolicy: add file and domain trans to interfacer
 
 This will fix bootanimations not applying on 7.1.2 ROMs
 
@@ -34,5 +34,5 @@ index c2a5320..8dd0f3f 100644
  neverallow untrusted_app anr_data_file:dir ~search;
 +allow untrusted_app system_app_data_file:dir getattr;
 -- 
-2.9.4
+2.13.3
 

@@ -1,7 +1,7 @@
-From c7fcf28a1ef47e74cf91153e8503c19b6175714e Mon Sep 17 00:00:00 2001
+From 6266def22039f76b00daee364c037955b38ac6e2 Mon Sep 17 00:00:00 2001
 From: LuK1337 <priv.luk@gmail.com>
 Date: Wed, 1 Mar 2017 23:11:49 +0100
-Subject: [PATCH 09/13] sepolicy: Redo masquerade rules
+Subject: [PATCH 09/14] sepolicy: Redo masquerade rules
 
 * Use macros
 * Label custom properties
@@ -110,10 +110,10 @@ index 4368a98..0280e7a 100644
  service.                u:object_r:system_prop:s0
  wlan.                   u:object_r:system_prop:s0
 diff --git a/system_server.te b/system_server.te
-index c544803..5262a79 100644
+index e25a98c..2aee375 100644
 --- a/system_server.te
 +++ b/system_server.te
-@@ -351,6 +351,9 @@ set_prop(system_server, ctl_bugreport_prop)
+@@ -348,6 +348,9 @@ set_prop(system_server, ctl_bugreport_prop)
  # cppreopt property
  set_prop(system_server, cppreopt_prop)
  
@@ -123,7 +123,7 @@ index c544803..5262a79 100644
  # Create a socket for receiving info from wpa.
  type_transition system_server wifi_data_file:sock_file system_wpa_socket;
  type_transition system_server wpa_socket:sock_file system_wpa_socket;
-@@ -529,6 +532,9 @@ allow system_server media_rw_data_file:dir search;
+@@ -526,6 +529,9 @@ allow system_server media_rw_data_file:dir search;
  # Allow invoking tools like "timeout"
  allow system_server toolbox_exec:file rx_file_perms;
  
@@ -133,12 +133,12 @@ index c544803..5262a79 100644
  # Postinstall
  #
  # For OTA dexopt, allow calls coming from postinstall.
-@@ -580,5 +586,3 @@ neverallow system_server { dev_type -frp_block_device }:blk_file no_rw_file_perm
+@@ -577,5 +583,3 @@ neverallow system_server { dev_type -frp_block_device }:blk_file no_rw_file_perm
  neverallow system_server self:process execmem;
  neverallow system_server ashmem_device:chr_file execute;
  neverallow system_server system_server_tmpfs:file execute;
 -
 -allow system_server theme_data_file:dir search;
 -- 
-2.9.4
+2.13.3
 

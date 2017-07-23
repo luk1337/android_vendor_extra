@@ -1,7 +1,7 @@
-From e13c58ca101a08f70f0e6c7a8be890b5814b569f Mon Sep 17 00:00:00 2001
+From b7045178383ce5deb3360c15a6af31126baee1ff Mon Sep 17 00:00:00 2001
 From: Miccia <bono.michele94@gmail.com>
 Date: Mon, 27 Feb 2017 12:36:21 +0100
-Subject: [PATCH 08/13] sepolicy: Fix application of bootanimation
+Subject: [PATCH 08/14] sepolicy: Fix application of bootanimation
 
 Change-Id: I7365d28fecf18b4d1aa42b2210e023b202dd97a5
 ---
@@ -23,15 +23,15 @@ index 2f17030..0cbbdb2 100644
 +allow masquerade network_management_service:service_manager find;
 +allow masquerade media_rw_data_file:dir remove_name;
 diff --git a/system_server.te b/system_server.te
-index 5e2a3a8..c544803 100644
+index 32a9600..e25a98c 100644
 --- a/system_server.te
 +++ b/system_server.te
-@@ -580,3 +580,5 @@ neverallow system_server { dev_type -frp_block_device }:blk_file no_rw_file_perm
+@@ -577,3 +577,5 @@ neverallow system_server { dev_type -frp_block_device }:blk_file no_rw_file_perm
  neverallow system_server self:process execmem;
  neverallow system_server ashmem_device:chr_file execute;
  neverallow system_server system_server_tmpfs:file execute;
 +
 +allow system_server theme_data_file:dir search;
 -- 
-2.9.4
+2.13.3
 

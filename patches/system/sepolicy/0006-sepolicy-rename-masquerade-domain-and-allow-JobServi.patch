@@ -1,7 +1,7 @@
-From 20435b01f61fa357c6f2e52fe49a72ac351386bd Mon Sep 17 00:00:00 2001
+From e03e35800d27eef723d03407d45596ddbc1a6a39 Mon Sep 17 00:00:00 2001
 From: Surge1223 <surge1223@gmail.com>
 Date: Tue, 21 Feb 2017 12:28:05 -0600
-Subject: [PATCH 06/13] sepolicy: rename masquerade domain and allow JobService
+Subject: [PATCH 06/14] sepolicy: rename masquerade domain and allow JobService
  in system_server
 
 This attempts to address the issue of JobService being unable to process
@@ -176,10 +176,10 @@ index 19cf907..77b508e 100644
  media.audio_policy                        u:object_r:audioserver_service:s0
  media.camera                              u:object_r:cameraserver_service:s0
 diff --git a/system_server.te b/system_server.te
-index 3ca8182..5e2a3a8 100644
+index 2b93dc2..32a9600 100644
 --- a/system_server.te
 +++ b/system_server.te
-@@ -435,6 +435,7 @@ allow system_server batteryproperties_service:service_manager find;
+@@ -432,6 +432,7 @@ allow system_server batteryproperties_service:service_manager find;
  allow system_server keystore_service:service_manager find;
  allow system_server gatekeeper_service:service_manager find;
  allow system_server fingerprintd_service:service_manager find;
@@ -188,5 +188,5 @@ index 3ca8182..5e2a3a8 100644
  allow system_server mediaextractor_service:service_manager find;
  allow system_server mediacodec_service:service_manager find;
 -- 
-2.9.4
+2.13.3
 

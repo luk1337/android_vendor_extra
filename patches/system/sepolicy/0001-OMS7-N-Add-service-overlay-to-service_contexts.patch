@@ -1,7 +1,7 @@
-From 1de70b8ad770aee39a1d6f3f7760c03758a7b989 Mon Sep 17 00:00:00 2001
+From 7a3a1b4c7662de47c1c6fd73fdfb65d806f4dc5c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?M=C3=A5rten=20Kongstad?= <marten.kongstad@sonymobile.com>
 Date: Mon, 22 Jun 2015 09:31:25 +0200
-Subject: [PATCH 01/13] OMS7-N: Add service 'overlay' to service_contexts
+Subject: [PATCH 01/14] OMS7-N: Add service 'overlay' to service_contexts
 
 The 'overlay' service is the Overlay Manager Service, which tracks
 packages and their Runtime Resource Overlay overlay packages.
@@ -43,10 +43,10 @@ index fffbd4d..19cf907 100644
  permission                                u:object_r:permission_service:s0
  persistent_data_block                     u:object_r:persistent_data_block_service:s0
 diff --git a/system_server.te b/system_server.te
-index 03a7ef3..3ca8182 100644
+index db59b65..2b93dc2 100644
 --- a/system_server.te
 +++ b/system_server.te
-@@ -441,6 +441,7 @@ allow system_server mediacodec_service:service_manager find;
+@@ -438,6 +438,7 @@ allow system_server mediacodec_service:service_manager find;
  allow system_server mediadrmserver_service:service_manager find;
  allow system_server netd_service:service_manager find;
  allow system_server nfc_service:service_manager find;
@@ -55,5 +55,5 @@ index 03a7ef3..3ca8182 100644
  allow system_server system_server_service:service_manager { add find };
  allow system_server surfaceflinger_service:service_manager find;
 -- 
-2.9.4
+2.13.3
 

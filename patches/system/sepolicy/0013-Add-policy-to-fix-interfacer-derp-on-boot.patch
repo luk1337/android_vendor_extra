@@ -1,7 +1,7 @@
-From fea6eb7c59965d99f0c0fe019772cdf1f950972d Mon Sep 17 00:00:00 2001
+From 39a761b641c193dad80d46892943374f15c568f1 Mon Sep 17 00:00:00 2001
 From: Surge Raval <Surge1223@gmail.com>
 Date: Tue, 30 May 2017 00:59:31 +0200
-Subject: [PATCH 13/13] Add policy to fix interfacer derp on boot
+Subject: [PATCH 13/14] Add policy to fix interfacer derp on boot
 
 05-29 08:40:17.200 10546 10600 F libc    : Fatal signal 6 (SIGABRT), code -6 in tid 10600 (POSIX timer 0)
 05-29 08:40:17.200   428   428 W         : debuggerd: handling request: pid=10546 uid=1006 gid=1006 tid=10600
@@ -46,5 +46,5 @@ index ab0aadc..6800695 100644
 +allow installd theme_data_file:dir { add_name getattr read relabelto remove_name setattr write open search };
 +allow installd theme_data_file:lnk_file { create getattr unlink };
 -- 
-2.9.4
+2.13.3
 
