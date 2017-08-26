@@ -1,4 +1,4 @@
-From 58ca717d6b43159879c4875bb0377c5b34d81015 Mon Sep 17 00:00:00 2001
+From 1f63091c9179983e2d42b58affc8b4c95cfa25cc Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <natechancellor@gmail.com>
 Date: Mon, 27 Mar 2017 21:30:52 -0700
 Subject: [PATCH] Remove all traces of CMTE policy
@@ -29,7 +29,7 @@ Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 
 diff --git a/sepolicy/app.te b/sepolicy/app.te
 deleted file mode 100644
-index b2ad553..0000000
+index b2ad5535..00000000
 --- a/sepolicy/app.te
 +++ /dev/null
 @@ -1,3 +0,0 @@
@@ -38,7 +38,7 @@ index b2ad553..0000000
 -allow appdomain themeservice_app_data_file:file r_file_perms;
 diff --git a/sepolicy/bootanim.te b/sepolicy/bootanim.te
 deleted file mode 100644
-index 29c20d5..0000000
+index 29c20d5f..00000000
 --- a/sepolicy/bootanim.te
 +++ /dev/null
 @@ -1,3 +0,0 @@
@@ -47,13 +47,13 @@ index 29c20d5..0000000
 -allow bootanim themeservice_app_data_file:file r_file_perms;
 diff --git a/sepolicy/drmserver.te b/sepolicy/drmserver.te
 deleted file mode 100644
-index 508791f..0000000
+index 508791f4..00000000
 --- a/sepolicy/drmserver.te
 +++ /dev/null
 @@ -1 +0,0 @@
 -allow drmserver themeservice_app_data_file:file r_file_perms;
 diff --git a/sepolicy/file.te b/sepolicy/file.te
-index 707f640..2bf0cab 100644
+index 707f6400..2bf0cabd 100644
 --- a/sepolicy/file.te
 +++ b/sepolicy/file.te
 @@ -1,9 +1,6 @@
@@ -67,7 +67,7 @@ index 707f640..2bf0cab 100644
  type sysfs_devices_system_iosched, file_type, sysfs_type;
  
 diff --git a/sepolicy/file_contexts b/sepolicy/file_contexts
-index 1e58f14..d6fe27c 100644
+index 83131668..b5a4f0df 100644
 --- a/sepolicy/file_contexts
 +++ b/sepolicy/file_contexts
 @@ -1,8 +1,5 @@
@@ -80,7 +80,7 @@ index 1e58f14..d6fe27c 100644
  
  /system/etc/init\.d/90userinit          u:object_r:userinit_exec:s0
 diff --git a/sepolicy/installd.te b/sepolicy/installd.te
-index fc38117..47f0c52 100644
+index fc38117c..47f0c52c 100644
 --- a/sepolicy/installd.te
 +++ b/sepolicy/installd.te
 @@ -1,8 +1,3 @@
@@ -93,11 +93,11 @@ index fc38117..47f0c52 100644
 -allow installd themeservice_app_data_file:lnk_file { create_file_perms relabelfrom relabelto };
 -allow installd themeservice_app_data_file:{ file sock_file fifo_file } { getattr unlink rename relabelfrom relabelto setattr };
 diff --git a/sepolicy/mac_permissions.xml b/sepolicy/mac_permissions.xml
-index f70b722..eb9ed44 100644
+index ee782d7a..93a45fe5 100644
 --- a/sepolicy/mac_permissions.xml
 +++ b/sepolicy/mac_permissions.xml
-@@ -22,10 +22,4 @@
-     </package>
+@@ -15,10 +15,4 @@
+     <seinfo value="release" />
    </signer>
  
 -  <!-- ThemeManagerService -->
@@ -109,7 +109,7 @@ index f70b722..eb9ed44 100644
  </policy>
 diff --git a/sepolicy/mediaserver.te b/sepolicy/mediaserver.te
 deleted file mode 100644
-index 62ed0b7..0000000
+index 62ed0b7b..00000000
 --- a/sepolicy/mediaserver.te
 +++ /dev/null
 @@ -1,3 +0,0 @@
@@ -117,7 +117,7 @@ index 62ed0b7..0000000
 -allow mediaserver themeservice_app_data_file:dir r_dir_perms;
 -allow mediaserver themeservice_app_data_file:file r_file_perms;
 diff --git a/sepolicy/qcom/dumpstate.te b/sepolicy/qcom/dumpstate.te
-index 560ad1e..87bab38 100644
+index 560ad1e8..87bab38f 100644
 --- a/sepolicy/qcom/dumpstate.te
 +++ b/sepolicy/qcom/dumpstate.te
 @@ -5,7 +5,5 @@ allow dumpstate resourcecache_data_file:dir r_dir_perms;
@@ -129,7 +129,7 @@ index 560ad1e..87bab38 100644
  allow dumpstate media_rw_data_file:dir search;
  allow dumpstate wcnss_service_exec:file rx_file_perms;
 diff --git a/sepolicy/seapp_contexts b/sepolicy/seapp_contexts
-index 215f108..e688338 100644
+index 215f1088..e6883387 100644
 --- a/sepolicy/seapp_contexts
 +++ b/sepolicy/seapp_contexts
 @@ -1,3 +1,2 @@
@@ -137,7 +137,7 @@ index 215f108..e688338 100644
  #user=_app seinfo=cmupdater name=com.cyanogenmod.updater domain=system_app type=system_app_data_file
 -user=_app seinfo=themeservice name=org.cyanogenmod.themeservice domain=themeservice_app type=themeservice_app_data_file
 diff --git a/sepolicy/system.te b/sepolicy/system.te
-index a9831b6..4e98e33 100644
+index a9831b68..4e98e33d 100644
 --- a/sepolicy/system.te
 +++ b/sepolicy/system.te
 @@ -5,9 +5,3 @@ allow system_server adbtcp_prop:property_service set;
@@ -151,7 +151,7 @@ index a9831b6..4e98e33 100644
 -allow system_server resourcecache_data_file:dir create_dir_perms;
 -allow system_server resourcecache_data_file:file create_file_perms;
 diff --git a/sepolicy/system_server.te b/sepolicy/system_server.te
-index f88353a..61b8565 100644
+index f88353aa..61b85655 100644
 --- a/sepolicy/system_server.te
 +++ b/sepolicy/system_server.te
 @@ -11,7 +11,3 @@ allow system_server storage_stub_file:dir { getattr };
@@ -164,7 +164,7 @@ index f88353a..61b8565 100644
 -allow system_server themeservice_app_data_file:dir relabelto;
 diff --git a/sepolicy/themeservice_app.te b/sepolicy/themeservice_app.te
 deleted file mode 100644
-index aaa84ab..0000000
+index aaa84ab4..00000000
 --- a/sepolicy/themeservice_app.te
 +++ /dev/null
 @@ -1,19 +0,0 @@
@@ -188,7 +188,7 @@ index aaa84ab..0000000
 -allow themeservice_app themeservice_app_data_file:dir create_dir_perms;
 -allow themeservice_app themeservice_app_data_file:file create_file_perms;
 diff --git a/sepolicy/zygote.te b/sepolicy/zygote.te
-index 951f414..5e5ce5c 100644
+index 951f4143..5e5ce5c6 100644
 --- a/sepolicy/zygote.te
 +++ b/sepolicy/zygote.te
 @@ -1,5 +1,2 @@
@@ -198,5 +198,5 @@ index 951f414..5e5ce5c 100644
  # ps command may do this
  allow untrusted_app zygote:process getsched;
 -- 
-2.9.3
+2.13.1
 
