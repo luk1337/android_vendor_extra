@@ -1,4 +1,4 @@
-From 58f335d0837fca1c79d1ccec154521b0300867df Mon Sep 17 00:00:00 2001
+From 4642673045869fd1377040a4fe72f9ece057c0f8 Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Mon, 27 Feb 2017 20:02:56 -0600
 Subject: [PATCH 17/20] Settings: Expose styles in the manifest for themes
@@ -12,7 +12,7 @@ Signed-off-by: Bryan Owens <djbryan3540@gmail.com>
  create mode 100644 res/values/projekt_styles.xml
 
 diff --git a/AndroidManifest.xml b/AndroidManifest.xml
-index 82a7fb55d8..3e1772482c 100755
+index d60427436d..26933815e8 100755
 --- a/AndroidManifest.xml
 +++ b/AndroidManifest.xml
 @@ -217,7 +217,7 @@
@@ -276,5 +276,5 @@ index 0000000000..54fc2b61fd
 +    <style name="Theme.VoiceActivity" parent="@*android:style/Theme.DeviceDefault.Light.Voice" />
 +</resources>
 -- 
-2.11.1
+2.13.1
 

@@ -1,4 +1,4 @@
-From 8e5290cb3604878f06aad71bf7ef6a45860fe9db Mon Sep 17 00:00:00 2001
+From 0b34dac0a04ce376af4c6f45a3ad59dd199a7a6d Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Sat, 25 Feb 2017 18:24:06 +0200
 Subject: [PATCH 20/20] Development: Allow all Masquerade calling packages for
@@ -116,5 +116,5 @@ index 10e0b73447..e2c0a46b44 100644
              startInactiveAppsFragment();
          } else if (BACKGROUND_CHECK_KEY.equals(preference.getKey())) {
 -- 
-2.11.1
+2.13.1
 

@@ -1,4 +1,4 @@
-From 59d8f9a2b5afc91026a29708239e994d6166d677 Mon Sep 17 00:00:00 2001
+From a53c727cff4e034f5b0814a016b135873fcbf0f6 Mon Sep 17 00:00:00 2001
 From: daveyannihilation <daveyannihilation@hotmail.com>
 Date: Tue, 20 Sep 2016 23:35:04 +0800
 Subject: [PATCH 02/20] Settings: Expose condition card colors
@@ -106,5 +106,5 @@ index c30d7eda21..ea54a02a24 100644
 +    <color name="condition_card_second_button_text_color">@*android:color/primary_text_default_material_dark</color>
  </resources>
 -- 
-2.11.1
+2.13.1
 

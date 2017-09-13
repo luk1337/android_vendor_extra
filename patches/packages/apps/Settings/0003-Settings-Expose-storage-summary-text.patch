@@ -1,4 +1,4 @@
-From 14445dd56fd01d0328bf2e1f8e2b17419ff94f45 Mon Sep 17 00:00:00 2001
+From a25f1d8ff5bd6a2e357832bebb0474ded747ce07 Mon Sep 17 00:00:00 2001
 From: George G <kreach3r@users.noreply.github.com>
 Date: Tue, 3 Nov 2015 23:57:22 +0200
 Subject: [PATCH 03/20] Settings: Expose storage summary text
@@ -120,5 +120,5 @@ index 63890758ba..9d3c7dccf2 100644
          }
  
 -- 
-2.11.1
+2.13.1
 

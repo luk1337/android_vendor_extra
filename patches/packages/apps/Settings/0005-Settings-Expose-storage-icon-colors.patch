@@ -1,4 +1,4 @@
-From 5f431757c03c5e59f6ca13d4d8d1278cbb65a88e Mon Sep 17 00:00:00 2001
+From 456d3c0fa91a2bb0ba1d0bf6ac60b8daea26ee40 Mon Sep 17 00:00:00 2001
 From: SpiritCroc <spiritcroc@gmail.com>
 Date: Thu, 8 Dec 2016 20:40:16 +0100
 Subject: [PATCH 05/20] Settings: Expose storage icon colors
@@ -29,7 +29,7 @@ index afde5ae973..2bee210dfd 100644
 +    <color name="storage_private_5">#ffc0ca33</color>
  </resources>
 diff --git a/src/com/android/settings/deviceinfo/StorageSettings.java b/src/com/android/settings/deviceinfo/StorageSettings.java
-index 5b51a82bde..38be6d7b4f 100755
+index 4b97fc33fd..a7cc2597b4 100755
 --- a/src/com/android/settings/deviceinfo/StorageSettings.java
 +++ b/src/com/android/settings/deviceinfo/StorageSettings.java
 @@ -24,6 +24,7 @@ import android.app.Fragment;
@@ -72,21 +72,21 @@ index 5b51a82bde..38be6d7b4f 100755
  
      private StorageManager mStorageManager;
  
-@@ -167,11 +174,12 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
-         final List<VolumeInfo> volumes = mStorageManager.getVolumes();
+@@ -168,11 +175,12 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
          Collections.sort(volumes, VolumeInfo.getDescriptionComparator());
  
+         long primaryPhysicalTotalSpace = PrivateStorageInfo.getPrimaryPhysicalTotalSpace(volumes);
 +        int[] colorPrivate = getColorPrivate(getResources());
          for (VolumeInfo vol : volumes) {
              if (vol.getType() == VolumeInfo.TYPE_PRIVATE) {
                  final long volumeTotalBytes = PrivateStorageInfo.getTotalSize(vol,
-                         sTotalInternalStorage);
+                         sTotalInternalStorage) - primaryPhysicalTotalSpace;
 -                final int color = COLOR_PRIVATE[privateCount++ % COLOR_PRIVATE.length];
 +                final int color = colorPrivate[privateCount++ % colorPrivate.length];
                  mInternalCategory.addPreference(
                          new StorageVolumePreference(context, vol, color, volumeTotalBytes));
                  if (vol.isMountedReadable()) {
-@@ -181,7 +189,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
+@@ -182,7 +190,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
                  }
              } else if (vol.getType() == VolumeInfo.TYPE_PUBLIC) {
                  StorageVolumePreference ExStorageVolumePreference =
@@ -95,7 +95,7 @@ index 5b51a82bde..38be6d7b4f 100755
  
                  //Disable preference when in change
                  ExStorageVolumePreference.setEnabled(vol.getState()!= VolumeInfo.STATE_CHECKING
-@@ -198,7 +206,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
+@@ -199,7 +207,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
                  // TODO: add actual storage type to record
                  final Drawable icon = context.getDrawable(R.drawable.ic_sim_sd);
                  icon.mutate();
@@ -118,5 +118,5 @@ index 9d3c7dccf2..8a2780a90b 100644
              }
  
 -- 
-2.11.1
+2.13.1
 

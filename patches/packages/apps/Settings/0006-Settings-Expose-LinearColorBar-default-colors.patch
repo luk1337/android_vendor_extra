@@ -1,4 +1,4 @@
-From 550a7b41ac1d427988ba391f34d936be8fc95bc5 Mon Sep 17 00:00:00 2001
+From c5549aef4057b2f67619b46d932c0c59b80459d7 Mon Sep 17 00:00:00 2001
 From: SpiritCroc <spiritcroc@gmail.com>
 Date: Fri, 9 Dec 2016 12:47:54 +0100
 Subject: [PATCH 06/20] Settings: Expose LinearColorBar default colors
@@ -64,5 +64,5 @@ index b637671f73..b0b8b82e8c 100644
 \ No newline at end of file
 +}
 -- 
-2.11.1
+2.13.1
 

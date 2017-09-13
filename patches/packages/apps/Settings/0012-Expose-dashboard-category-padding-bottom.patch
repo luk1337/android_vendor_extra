@@ -1,4 +1,4 @@
-From c5d0122299fa33dd5c04551a202e04c971c5dd70 Mon Sep 17 00:00:00 2001
+From 064299418c1934da629baaa753a1e91a289a0fd8 Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sun, 8 Jan 2017 00:18:47 +0100
 Subject: [PATCH 12/20] Expose dashboard category padding bottom
@@ -50,5 +50,5 @@ index 0000000000..960c4943b6
 +    <dimen name="dashboard_category_padding_bottom">8dip</dimen>
 +</resources>
 -- 
-2.11.1
+2.13.1
 

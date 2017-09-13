@@ -1,4 +1,4 @@
-From 0d4563664ba23fe8c41d41b4819457d2f2dbc7a1 Mon Sep 17 00:00:00 2001
+From 50a45905680f622c817db623e20ce4d231da89fc Mon Sep 17 00:00:00 2001
 From: Bryan Owens <djbryan3540@gmail.com>
 Date: Mon, 27 Feb 2017 22:24:09 -0600
 Subject: [PATCH 19/20] Settings: Expose "ALL" hardcoded and @android colors
@@ -376,7 +376,7 @@ index f5c092198e..8d66eac2f6 100644
 +    <color name="background_color_white">@android:color/white</color>
  </resources>
 diff --git a/src/com/android/settings/deviceinfo/StorageSettings.java b/src/com/android/settings/deviceinfo/StorageSettings.java
-index 38be6d7b4f..27780c2405 100755
+index a7cc2597b4..5eca6e33db 100755
 --- a/src/com/android/settings/deviceinfo/StorageSettings.java
 +++ b/src/com/android/settings/deviceinfo/StorageSettings.java
 @@ -27,6 +27,7 @@ import android.content.Intent;
@@ -387,7 +387,7 @@ index 38be6d7b4f..27780c2405 100755
  import android.os.AsyncTask;
  import android.os.Bundle;
  import android.os.UserHandle;
-@@ -207,6 +208,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
+@@ -208,6 +209,7 @@ public class StorageSettings extends SettingsPreferenceFragment implements Index
                  final Drawable icon = context.getDrawable(R.drawable.ic_sim_sd);
                  icon.mutate();
                  icon.setTint(getColorPublic(getResources()));
@@ -416,5 +416,5 @@ index 8a2780a90b..a6c227c2cd 100644
  
          if (volume.getType() == VolumeInfo.TYPE_PUBLIC
 -- 
-2.11.1
+2.13.1
 

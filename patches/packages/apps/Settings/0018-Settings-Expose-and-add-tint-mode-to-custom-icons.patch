@@ -1,4 +1,4 @@
-From 8bb660b05e3b2e451d90e0ffff1c7ad17fee8ac5 Mon Sep 17 00:00:00 2001
+From 7d4178e7ce37641495de7ef60c58a1e135091161 Mon Sep 17 00:00:00 2001
 From: Randall Rushing <randall.rushing@gmail.com>
 Date: Tue, 5 Apr 2016 11:24:26 -0500
 Subject: [PATCH 18/20] Settings: Expose and add tint mode to custom icons
@@ -69,5 +69,5 @@ index f091f6649e..eae0ca14e9 100644
  
      public void onClick(View v) {
 -- 
-2.11.1
+2.13.1
 

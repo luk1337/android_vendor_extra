@@ -1,4 +1,4 @@
-From 76f3432534432343b2562ec825b5e13ef03c2a1b Mon Sep 17 00:00:00 2001
+From 9400450203c0710f00844302202bfe9d36b332c5 Mon Sep 17 00:00:00 2001
 From: Kuba Schenk <abukcz@gmail.com>
 Date: Thu, 1 Dec 2016 22:00:31 +0100
 Subject: [PATCH 08/20] OMS7-N: Apps: show/hide Substratum icon overlays [2/2]
@@ -146,5 +146,5 @@ index 070754addb..5d3b353766 100644
              switch (mLastSortMode) {
                  case R.id.sort_order_size:
 -- 
-2.11.1
+2.13.1
 

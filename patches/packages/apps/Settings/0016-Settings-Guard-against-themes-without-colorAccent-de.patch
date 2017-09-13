@@ -1,4 +1,4 @@
-From 315730403ffbf452c119cdd3bfb4a040cdd3525f Mon Sep 17 00:00:00 2001
+From c3282e9deb6aafeca9c64d2f9b1a1362d003e806 Mon Sep 17 00:00:00 2001
 From: Clark Scheff <clark@scheffsblend.com>
 Date: Mon, 27 Feb 2017 00:55:37 +0100
 Subject: [PATCH 16/20] Settings: Guard against themes without colorAccent
@@ -44,5 +44,5 @@ index a86be734eb..cd534cd6ec 100644
  
          // We have to do this now because PreferenceFrameLayout looks at it
 -- 
-2.11.1
+2.13.1
 

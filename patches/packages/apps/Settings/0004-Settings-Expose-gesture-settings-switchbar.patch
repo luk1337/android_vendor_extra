@@ -1,4 +1,4 @@
-From 624f7356a320e6a942aeb9add1520d2b5b9a1a75 Mon Sep 17 00:00:00 2001
+From 1dfd78f5063953b4ab88146e8a2e07cfb803aa72 Mon Sep 17 00:00:00 2001
 From: daveyannihilation <daveyannihilation@hotmail.com>
 Date: Fri, 25 Nov 2016 15:20:04 -0700
 Subject: [PATCH 04/20] Settings: Expose gesture settings switchbar
@@ -40,5 +40,5 @@ index 9cb442b1b5..afde5ae973 100644
 +
  </resources>
 -- 
-2.11.1
+2.13.1
 

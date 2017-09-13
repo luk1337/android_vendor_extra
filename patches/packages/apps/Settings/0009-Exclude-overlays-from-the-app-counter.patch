@@ -1,4 +1,4 @@
-From 10bcddc43282009cd6d3f2c007fcd65fb0176c9c Mon Sep 17 00:00:00 2001
+From c4c92418866c2cee90c84fa0c90749a3c72ff26c Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Fri, 9 Dec 2016 02:19:20 +0100
 Subject: [PATCH 09/20] Exclude overlays from the app counter
@@ -44,5 +44,5 @@ index 5d3b353766..ed617814b3 100644
                          }
                          Intent launchIntent = new Intent(Intent.ACTION_MAIN, null)
 -- 
-2.11.1
+2.13.1
 

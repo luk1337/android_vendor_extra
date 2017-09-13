@@ -1,4 +1,4 @@
-From e6633410a07faa16fd054fa3bc8b7df69c32d8f3 Mon Sep 17 00:00:00 2001
+From 63eb230f656edd0e602bf0e4420bac0e6238dc08 Mon Sep 17 00:00:00 2001
 From: SpiritCroc <spiritcroc@gmail.com>
 Date: Sun, 22 Jan 2017 20:51:47 +0100
 Subject: [PATCH 14/20] Settings: Expose bluetooth pin confirm dialog text
@@ -56,5 +56,5 @@ index 09d691e98c..ac786ac2cc 100644
 +    <color name="bluetooth_phonebook_sharing_message_confirm_pin">@*android:color/secondary_text_material_light</color>
  </resources>
 -- 
-2.11.1
+2.13.1
 

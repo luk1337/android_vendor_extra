@@ -1,4 +1,4 @@
-From 36175c23dcd46cef01cf7c5511a1da5d4a06da7a Mon Sep 17 00:00:00 2001
+From 92afbe91673368e04ab97d71a72f5918982afa6e Mon Sep 17 00:00:00 2001
 From: Ivan Iskandar <iiiiskandar14@gmail.com>
 Date: Sun, 8 Jan 2017 01:22:47 +0100
 Subject: [PATCH 13/20] Expose switchbar background color
@@ -73,5 +73,5 @@ index 240c06296b..ce73a397f0 100644
          mTextView.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
          mLabel = getResources().getString(R.string.switch_off_text);
 -- 
-2.11.1
+2.13.1
 
