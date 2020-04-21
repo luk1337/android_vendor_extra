@@ -1,0 +1,2 @@
+# Default ADB shell prompt
+persist.sys.adb.shell=/system/xbin/bash
