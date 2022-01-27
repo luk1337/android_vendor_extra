@@ -1,4 +1,4 @@
 # Google Apps
 ifeq ($(WITH_GMS), true)
-include vendor/gapps/common/BoardConfigVendor.mk
+include vendor/gapps/arm64/BoardConfigVendor.mk
 endif
