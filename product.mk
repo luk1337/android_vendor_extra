@@ -4,7 +4,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 # Google Apps
 ifeq ($(WITH_GMS), true)
-$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
+$(call inherit-product-if-exists, vendor/gapps/arm64/arm64-vendor.mk)
 endif
 
 # iperf3
