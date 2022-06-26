@@ -9,3 +9,6 @@ endif
 
 # iperf3
 PRODUCT_PACKAGES += iperf3
+
+# tinymix
+PRODUCT_PACKAGES += tinymix
