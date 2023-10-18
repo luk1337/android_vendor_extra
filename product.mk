@@ -19,8 +19,5 @@ ifneq (,$(wildcard vendor/ih8sn))
 $(call inherit-product-if-exists, $(EXTRA_PATH)/ih8sn/ih8sn.mk)
 endif
 
-# iperf3
-PRODUCT_PACKAGES += iperf3
-
 # tinymix
 PRODUCT_PACKAGES += tinymix
