@@ -1,5 +1,10 @@
 EXTRA_PATH := vendor/extra
 
+# ADB
+ifneq (,$(wildcard $(EXTRA_PATH)/adbkey.pub))
+PRODUCT_ADB_KEYS := $(EXTRA_PATH)/adbkey.pub
+endif
+
 # Bellis
 ifneq (,$(wildcard packages/apps/Bellis))
 PRODUCT_PACKAGES += Bellis
