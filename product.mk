@@ -31,5 +31,8 @@ endif
 # iperf3
 PRODUCT_PACKAGES += iperf3
 
+# Overlays
+PRODUCT_PACKAGE_OVERLAYS += $(EXTRA_PATH)/overlay-lineage
+
 # tinymix
 PRODUCT_PACKAGES += tinymix

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="configs_first_boot_base">
+        <item>global/adb_enabled=1</item>
+        <item>global/adb_allowed_connection_time=0</item>
+        <item>global/development_settings_enabled=1</item>
+        <item>system/screen_off_timeout=1800000</item>
+    </string-array>
+</resources>
