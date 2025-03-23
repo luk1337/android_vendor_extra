@@ -4,6 +4,7 @@
         <item>global/adb_enabled=1</item>
         <item>global/adb_allowed_connection_time=0</item>
         <item>global/development_settings_enabled=1</item>
+        <item>secure/camera_double_tap_power_gesture_disabled=1</item>
         <item>system/screen_off_timeout=1800000</item>
     </string-array>
 </resources>
