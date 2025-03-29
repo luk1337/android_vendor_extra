@@ -3,6 +3,7 @@ EXTRA_PATH := vendor/extra
 # ADB
 ifneq (,$(wildcard $(EXTRA_PATH)/adbkey.pub))
 PRODUCT_ADB_KEYS := $(EXTRA_PATH)/adbkey.pub
+PRODUCT_COPY_FILES += $(PRODUCT_ADB_KEYS):$(TARGET_COPY_OUT_RECOVERY)/root/$(TARGET_COPY_OUT_PRODUCT)/etc/security/adb_keys
 endif
 
 # Bellis
