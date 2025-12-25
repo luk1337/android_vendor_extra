@@ -33,3 +33,12 @@ PRODUCT_PACKAGE_OVERLAYS += $(EXTRA_PATH)/overlay-lineage
 
 # tinymix
 PRODUCT_PACKAGES += tinymix
+
+# USB serial
+#   modprobe cdc-acm
+#   putty -serial /dev/ttyACM0 -sercfg 115200
+#   or
+#   while true; do test -e /dev/ttyACM0 && sleep 0.1 && cat /dev/ttyACM0 | grep -vE "^\s?\n$"; done
+ifeq ($(WITH_USB_SERIAL), true)
+PRODUCT_COPY_FILES += $(EXTRA_PATH)/usbserial.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/usbserial.rc
+endif
