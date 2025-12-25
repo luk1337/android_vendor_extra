@@ -31,6 +31,12 @@ PRODUCT_PACKAGES += iperf3
 # Overlays
 PRODUCT_PACKAGE_OVERLAYS += $(EXTRA_PATH)/overlay-lineage
 
+# Rescue party
+ifeq ($(WITH_RESCUE_PARTY), false)
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    persist.sys.disable_rescue=true
+endif
+
 # tinymix
 PRODUCT_PACKAGES += tinymix
 
