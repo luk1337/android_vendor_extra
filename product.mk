@@ -12,7 +12,7 @@ PRODUCT_PACKAGES += Bellis
 endif
 
 # Default ADB shell prompt
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
     persist.sys.adb.shell=/system_ext/bin/bash
 
 # Google Apps
@@ -33,7 +33,7 @@ PRODUCT_PACKAGE_OVERLAYS += $(EXTRA_PATH)/overlay-lineage
 
 # Rescue party
 ifeq ($(WITH_RESCUE_PARTY), false)
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
     persist.sys.disable_rescue=true
 endif
 
