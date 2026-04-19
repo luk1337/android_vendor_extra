@@ -37,6 +37,10 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
     persist.sys.disable_rescue=true
 endif
 
+# SUW
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    ro.setupwizard.ignore_sim_locale=true
+
 # tinymix
 PRODUCT_PACKAGES += tinymix
 
