@@ -29,6 +29,7 @@ endif
 PRODUCT_PACKAGES += iperf3
 
 # Overlays
+PRODUCT_PACKAGE_OVERLAYS += $(EXTRA_PATH)/overlay-$(subst lineage_,,$(TARGET_PRODUCT))
 PRODUCT_PACKAGE_OVERLAYS += $(EXTRA_PATH)/overlay-lineage
 
 # Rescue party
